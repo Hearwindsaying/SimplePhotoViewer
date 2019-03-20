@@ -5,36 +5,39 @@ namespace winrt::SimplePhotoViewer::implementation
 {
     ImageSku::ImageSku(Windows::Storage::FileProperties::ImageProperties const& imageProps, Windows::Storage::StorageFile const& imageFile, hstring const& name, hstring const& type)
     {
-        throw hresult_not_implemented();
+		this->m_imageProps = imageProps;
+		this->m_imageFile = imageFile;
+		this->m_imageName = name;
+		this->m_imageFileType = type;
     }
 
-    Windows::Storage::StorageFile ImageSku::ImageFile()
+    Windows::Storage::StorageFile ImageSku::ImageFile() const
     {
-        throw hresult_not_implemented();
+		return this->m_imageFile;
     }
 
-    Windows::Storage::FileProperties::ImageProperties ImageSku::ImageProperties()
+    Windows::Storage::FileProperties::ImageProperties ImageSku::ImageProperties() const
     {
-        throw hresult_not_implemented();
+		return this->m_imageProps;
     }
 
-    hstring ImageSku::ImageName()
+    hstring ImageSku::ImageName() const
     {
-        throw hresult_not_implemented();
+		return this->m_imageName;
     }
 
-    hstring ImageSku::ImageFileType()
+    hstring ImageSku::ImageFileType() const
     {
-        throw hresult_not_implemented();
+		return this->m_imageFileType;
     }
 
     winrt::event_token ImageSku::PropertyChanged(Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler)
     {
-        throw hresult_not_implemented();
+		return this->m_propertyChanged.add(handler);
     }
 
     void ImageSku::PropertyChanged(winrt::event_token const& token) noexcept
     {
-        throw hresult_not_implemented();
+		this->m_propertyChanged.remove(token);
     }
 }
