@@ -6,7 +6,7 @@ namespace winrt::SimplePhotoViewer::implementation
 {
     struct MainPage : MainPageT<MainPage>
     {
-        MainPage();
+        MainPage() = default;
 
         Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> ImageSkus();
     };
