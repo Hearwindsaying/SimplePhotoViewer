@@ -80,7 +80,7 @@ namespace winrt::SimplePhotoViewer::implementation
         virtual bool IsLocalType() const = 0;
     };
 
-    struct XamlUserType : public ::winrt::implements<XamlUserType, IXamlUserType, ::winrt::Windows::UI::Xaml::Markup::IXamlType>
+    struct XamlUserType : public ::winrt::implements<XamlUserType, IXamlUserType, ::winrt::Windows::UI::Xaml::Markup::IXamlType, ::winrt::Windows::UI::Xaml::Markup::IXamlType2>
     {
         explicit XamlUserType(
             std::shared_ptr<XamlTypeInfoProvider> const& provider, 
@@ -112,6 +112,9 @@ namespace winrt::SimplePhotoViewer::implementation
         void AddToMap(IInspectable const& instance, IInspectable const& key, IInspectable const& value) const;
         void RunInitializer() const;
 
+        // IXamlType2
+        IXamlType BoxedType() const;
+
         // Additional Setters
         void IsArray(bool value);
         void IsMarkupExtension(bool value);
@@ -140,6 +143,7 @@ namespace winrt::SimplePhotoViewer::implementation
         void ContentPropertyName(::winrt::hstring const& value);
         void ItemTypeName(::winrt::hstring const& value);
         void KeyTypeName(::winrt::hstring const& value);
+        void SetBoxedType(IXamlType boxedType);
         void AddMemberName(::winrt::hstring const& shortName);
         void AddEnumValue(::winrt::hstring const& name, IInspectable value);
         uint32_t CreateEnumUIntFromString(::winrt::hstring const& input) const;
@@ -147,6 +151,7 @@ namespace winrt::SimplePhotoViewer::implementation
     private:
         std::shared_ptr<XamlTypeInfoProvider> _provider;
         IXamlType _baseType;
+        IXamlType _boxedType;
         ::winrt::hstring _contentPropertyName;
         ::winrt::hstring _itemTypeName;
         ::winrt::hstring _keyTypeName;

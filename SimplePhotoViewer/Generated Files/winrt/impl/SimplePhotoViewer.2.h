@@ -6,6 +6,7 @@
 #include "winrt/impl/Windows.UI.Xaml.Data.1.h"
 #include "winrt/impl/Windows.UI.Xaml.Interop.1.h"
 #include "winrt/impl/Windows.UI.Xaml.Markup.1.h"
+#include "winrt/impl/Windows.UI.Xaml.Media.Imaging.1.h"
 #include "winrt/impl/Windows.UI.Composition.1.h"
 #include "winrt/impl/Windows.UI.Xaml.1.h"
 #include "winrt/impl/Windows.UI.Xaml.Controls.1.h"
@@ -21,12 +22,21 @@ namespace winrt::impl {
 
 WINRT_EXPORT namespace winrt::SimplePhotoViewer {
 
+struct WINRT_EBO DetailPage :
+    SimplePhotoViewer::IDetailPage,
+    impl::base<DetailPage, Windows::UI::Xaml::Controls::Page, Windows::UI::Xaml::Controls::UserControl, Windows::UI::Xaml::Controls::Control, Windows::UI::Xaml::FrameworkElement, Windows::UI::Xaml::UIElement, Windows::UI::Xaml::DependencyObject>,
+    impl::require<DetailPage, Windows::UI::Composition::IAnimationObject, Windows::UI::Xaml::Controls::IControl, Windows::UI::Xaml::Controls::IControl2, Windows::UI::Xaml::Controls::IControl3, Windows::UI::Xaml::Controls::IControl4, Windows::UI::Xaml::Controls::IControl5, Windows::UI::Xaml::Controls::IControl7, Windows::UI::Xaml::Controls::IControlOverrides, Windows::UI::Xaml::Controls::IControlOverrides6, Windows::UI::Xaml::Controls::IControlProtected, Windows::UI::Xaml::Controls::IPage, Windows::UI::Xaml::Controls::IPageOverrides, Windows::UI::Xaml::Controls::IUserControl, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::IFrameworkElement, Windows::UI::Xaml::IFrameworkElement2, Windows::UI::Xaml::IFrameworkElement3, Windows::UI::Xaml::IFrameworkElement4, Windows::UI::Xaml::IFrameworkElement6, Windows::UI::Xaml::IFrameworkElement7, Windows::UI::Xaml::IFrameworkElementOverrides, Windows::UI::Xaml::IFrameworkElementOverrides2, Windows::UI::Xaml::IFrameworkElementProtected7, Windows::UI::Xaml::IUIElement, Windows::UI::Xaml::IUIElement2, Windows::UI::Xaml::IUIElement3, Windows::UI::Xaml::IUIElement4, Windows::UI::Xaml::IUIElement5, Windows::UI::Xaml::IUIElement7, Windows::UI::Xaml::IUIElement8, Windows::UI::Xaml::IUIElement9, Windows::UI::Xaml::IUIElementOverrides, Windows::UI::Xaml::IUIElementOverrides7, Windows::UI::Xaml::IUIElementOverrides8, Windows::UI::Xaml::IUIElementOverrides9>
+{
+    DetailPage(std::nullptr_t) noexcept {}
+    DetailPage();
+};
+
 struct WINRT_EBO ImageSku :
     SimplePhotoViewer::IImageSku,
     impl::require<ImageSku, Windows::UI::Xaml::Data::INotifyPropertyChanged>
 {
     ImageSku(std::nullptr_t) noexcept {}
-    ImageSku(Windows::Storage::FileProperties::ImageProperties const& imageProps, Windows::Storage::StorageFile const& imageFile, param::hstring const& name, param::hstring const& type);
+    ImageSku(Windows::Storage::FileProperties::ImageProperties const& imageProps, Windows::Storage::StorageFile const& imageFile, param::hstring const& name, param::hstring const& type, Windows::UI::Xaml::Media::Imaging::BitmapImage const& imageThumbnail, param::hstring const& nameWithType);
 };
 
 struct WINRT_EBO MainPage :

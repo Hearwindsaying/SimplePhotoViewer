@@ -11,9 +11,11 @@
 
 #include "XamlTypeInfo.xaml.g.h"
 
+#include "DetailPage.h"
 #include "App.h"
 #include "MainPage.h"
 #include "XamlBindingInfo.xaml.g.hpp"
+#include "DetailPage.xaml.g.hpp"
 #include "App.xaml.g.hpp"
 #include "MainPage.xaml.g.hpp"
 
@@ -85,6 +87,12 @@ template<typename TDeclaringType, typename TValue>
 }
 
 template <typename T>
+::winrt::Windows::Foundation::IInspectable GetReferenceTypeMember_SelectedItem(::winrt::Windows::Foundation::IInspectable const& instance)
+{
+    return ::winrt::box_value(instance.as<T>().SelectedItem());
+}
+
+template <typename T>
 ::winrt::Windows::Foundation::IInspectable GetReferenceTypeMember_ImageSkus(::winrt::Windows::Foundation::IInspectable const& instance)
 {
     return ::winrt::box_value(instance.as<T>().ImageSkus());
@@ -125,6 +133,14 @@ void SetValueTypeMember_HasUnrealizedChildren(
 }
 
 template<typename TDeclaringType, typename TValue>
+void SetReferenceTypeMember_SelectedItem(
+    ::winrt::Windows::Foundation::IInspectable const& instance, 
+    ::winrt::Windows::Foundation::IInspectable const& value)
+{
+    instance.as<TDeclaringType>().SelectedItem(value.as<TValue>());
+}
+
+template<typename TDeclaringType, typename TValue>
 void SetReferenceTypeMember_Content(
     ::winrt::Windows::Foundation::IInspectable const& instance, 
     ::winrt::Windows::Foundation::IInspectable const& value)
@@ -156,6 +172,7 @@ struct TypeInfo
     int     createFromStringIndex;
     TypeKind kindOfType;
     unsigned int flags;
+    int boxedTypeIndex;
 };
 
 
@@ -167,77 +184,103 @@ const TypeInfo TypeInfos[] =
     -1,
     0, 0, -1, TypeKind::Metadata,
     TypeInfo_Flags_IsSystemType | TypeInfo_Flags_None,
+    -1,
     //   1
     L"Object", L"",
     nullptr, nullptr, nullptr, nullptr,
     -1,
     0, 0, -1, TypeKind::Metadata,
     TypeInfo_Flags_IsSystemType | TypeInfo_Flags_None,
+    -1,
     //   2
     L"Boolean", L"",
     nullptr, nullptr, nullptr, nullptr,
     -1,
     0, 0, -1, TypeKind::Metadata,
     TypeInfo_Flags_IsSystemType | TypeInfo_Flags_None,
+    -1,
     //   3
+    L"SimplePhotoViewer.ImageSku", L"",
+    nullptr, nullptr, nullptr, nullptr,
+    1, // Object
+    0, 0, -1, TypeKind::Custom,
+    TypeInfo_Flags_IsLocalType | TypeInfo_Flags_IsReturnTypeStub | TypeInfo_Flags_None,
+    -1,
+    //   4
     L"SimplePhotoViewer.MainPage", L"",
     &ActivateLocalType<::winrt::SimplePhotoViewer::implementation::MainPage>, nullptr, nullptr, nullptr,
-    4, // Windows.UI.Xaml.Controls.Page
+    6, // Windows.UI.Xaml.Controls.Page
     0, 0, -1, TypeKind::Custom,
     TypeInfo_Flags_IsLocalType | TypeInfo_Flags_None,
-    //   4
+    -1,
+    //   5
+    L"SimplePhotoViewer.DetailPage", L"",
+    &ActivateLocalType<::winrt::SimplePhotoViewer::implementation::DetailPage>, nullptr, nullptr, nullptr,
+    6, // Windows.UI.Xaml.Controls.Page
+    1, 0, -1, TypeKind::Custom,
+    TypeInfo_Flags_IsLocalType | TypeInfo_Flags_None,
+    -1,
+    //   6
     L"Windows.UI.Xaml.Controls.Page", L"",
     nullptr, nullptr, nullptr, nullptr,
     -1,
-    1, 0, -1, TypeKind::Metadata,
+    3, 0, -1, TypeKind::Metadata,
     TypeInfo_Flags_IsSystemType | TypeInfo_Flags_None,
-    //   5
+    -1,
+    //   7
     L"Windows.UI.Xaml.DependencyObject", L"",
     nullptr, nullptr, nullptr, nullptr,
     -1,
-    1, 0, -1, TypeKind::Metadata,
+    3, 0, -1, TypeKind::Metadata,
     TypeInfo_Flags_IsSystemType | TypeInfo_Flags_None,
-    //   6
+    -1,
+    //   8
     L"Windows.UI.Xaml.ResourceDictionary", L"",
     nullptr, nullptr, nullptr, nullptr,
     -1,
-    1, 0, -1, TypeKind::Metadata,
+    3, 0, -1, TypeKind::Metadata,
     TypeInfo_Flags_IsSystemType | TypeInfo_Flags_None,
-    //   7
+    -1,
+    //   9
     L"Windows.UI.Xaml.Controls.UserControl", L"",
     nullptr, nullptr, nullptr, nullptr,
     -1,
-    1, 0, -1, TypeKind::Metadata,
+    3, 0, -1, TypeKind::Metadata,
     TypeInfo_Flags_IsSystemType | TypeInfo_Flags_None,
-    //   8
+    -1,
+    //  10
     L"Microsoft.UI.Xaml.Controls.TreeViewNode", L"",
     &ActivateType<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode>, nullptr, nullptr, nullptr,
-    5, // Windows.UI.Xaml.DependencyObject
-    1, 0, -1, TypeKind::Metadata,
+    7, // Windows.UI.Xaml.DependencyObject
+    3, 0, -1, TypeKind::Metadata,
     TypeInfo_Flags_IsBindable | TypeInfo_Flags_None,
-    //   9
+    -1,
+    //  11
     L"Microsoft.UI.Xaml.Controls.XamlControlsResources", L"",
     &ActivateType<::winrt::Microsoft::UI::Xaml::Controls::XamlControlsResources>, nullptr, &DictionaryAdd<::winrt::Microsoft::UI::Xaml::Controls::XamlControlsResources, ::winrt::Windows::Foundation::IInspectable, ::winrt::Windows::Foundation::IInspectable>, nullptr,
-    6, // Windows.UI.Xaml.ResourceDictionary
-    8, 0, -1, TypeKind::Metadata,
+    8, // Windows.UI.Xaml.ResourceDictionary
+    10, 0, -1, TypeKind::Metadata,
     TypeInfo_Flags_None,
-    //  10
+    -1,
+    //  12
     L"Windows.Foundation.Collections.IObservableVector`1<Object>", L"",
     nullptr, &CollectionAdd<::winrt::Windows::Foundation::Collections::IObservableVector<::winrt::Windows::Foundation::IInspectable>, ::winrt::Windows::Foundation::IInspectable>, nullptr, nullptr,
     -1,
-    8, 0, -1, TypeKind::Metadata,
+    10, 0, -1, TypeKind::Metadata,
     TypeInfo_Flags_IsReturnTypeStub | TypeInfo_Flags_None,
-    //  11
+    -1,
+    //  13
     L"Windows.Foundation.Collections.IVector`1<Microsoft.UI.Xaml.Controls.TreeViewNode>", L"",
     nullptr, &CollectionAdd<::winrt::Windows::Foundation::Collections::IVector<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode>, ::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode>, nullptr, nullptr,
     -1,
-    8, 0, -1, TypeKind::Metadata,
+    10, 0, -1, TypeKind::Metadata,
     TypeInfo_Flags_IsReturnTypeStub | TypeInfo_Flags_None,
+    -1,
     //  Last type here is for padding
     L"", L"",
     nullptr, nullptr, nullptr, nullptr,
     -1, 
-    8, 0, -1, TypeKind::Custom,
+    10, 0, -1, TypeKind::Custom,
     TypeInfo_Flags_None,
 };
 
@@ -269,62 +312,62 @@ constexpr UINT TypeInfoLookup[] = {
       3,   //  24
       3,   //  25
       3,   //  26
-      4,   //  27
-      4,   //  28
-      4,   //  29
-      5,   //  30
-      5,   //  31
-      5,   //  32
-      6,   //  33
-      6,   //  34
-      7,   //  35
-      7,   //  36
-      8,   //  37
-      8,   //  38
-      8,   //  39
-      9,   //  40
-      9,   //  41
-      9,   //  42
-      9,   //  43
-      9,   //  44
-      9,   //  45
-      9,   //  46
-      9,   //  47
-      9,   //  48
-     10,   //  49
-     10,   //  50
-     10,   //  51
-     10,   //  52
-     10,   //  53
-     10,   //  54
-     10,   //  55
-     10,   //  56
-     10,   //  57
-     10,   //  58
-     11,   //  59
-     11,   //  60
-     11,   //  61
-     11,   //  62
-     11,   //  63
-     11,   //  64
-     11,   //  65
-     11,   //  66
-     11,   //  67
-     11,   //  68
-     11,   //  69
-     11,   //  70
-     11,   //  71
-     11,   //  72
-     11,   //  73
-     11,   //  74
-     11,   //  75
-     11,   //  76
-     11,   //  77
-     11,   //  78
-     11,   //  79
-     11,   //  80
-     11,   //  81
-     12,   //  82
+      5,   //  27
+      5,   //  28
+      6,   //  29
+      7,   //  30
+      7,   //  31
+      7,   //  32
+      8,   //  33
+      8,   //  34
+      9,   //  35
+      9,   //  36
+     10,   //  37
+     10,   //  38
+     10,   //  39
+     11,   //  40
+     11,   //  41
+     11,   //  42
+     11,   //  43
+     11,   //  44
+     11,   //  45
+     11,   //  46
+     11,   //  47
+     11,   //  48
+     12,   //  49
+     12,   //  50
+     12,   //  51
+     12,   //  52
+     12,   //  53
+     12,   //  54
+     12,   //  55
+     12,   //  56
+     12,   //  57
+     12,   //  58
+     13,   //  59
+     13,   //  60
+     13,   //  61
+     13,   //  62
+     13,   //  63
+     13,   //  64
+     13,   //  65
+     13,   //  66
+     13,   //  67
+     13,   //  68
+     13,   //  69
+     13,   //  70
+     13,   //  71
+     13,   //  72
+     13,   //  73
+     13,   //  74
+     13,   //  75
+     13,   //  76
+     13,   //  77
+     13,   //  78
+     13,   //  79
+     13,   //  80
+     13,   //  81
+     14,   //  82
 };
 
 struct MemberInfo 
@@ -345,56 +388,70 @@ const MemberInfo MemberInfos[] =
     L"ImageSkus",
     &GetReferenceTypeMember_ImageSkus<::winrt::SimplePhotoViewer::MainPage>,
     nullptr,
-    10, // Windows.Foundation.Collections.IObservableVector`1<Object>
+    12, // Windows.Foundation.Collections.IObservableVector`1<Object>
     -1,
     true,  false, false,
-    //   1 - Microsoft.UI.Xaml.Controls.TreeViewNode.IsExpanded
+    //   1 - SimplePhotoViewer.DetailPage.SelectedItem
+    L"SelectedItem",
+    &GetReferenceTypeMember_SelectedItem<::winrt::SimplePhotoViewer::DetailPage>,
+    &SetReferenceTypeMember_SelectedItem<::winrt::SimplePhotoViewer::DetailPage, ::winrt::SimplePhotoViewer::ImageSku>,
+    3, // SimplePhotoViewer.ImageSku
+    -1,
+    false, false, false,
+    //   2 - SimplePhotoViewer.DetailPage.ImageSkus
+    L"ImageSkus",
+    &GetReferenceTypeMember_ImageSkus<::winrt::SimplePhotoViewer::DetailPage>,
+    nullptr,
+    12, // Windows.Foundation.Collections.IObservableVector`1<Object>
+    -1,
+    true,  false, false,
+    //   3 - Microsoft.UI.Xaml.Controls.TreeViewNode.IsExpanded
     L"IsExpanded",
     &GetValueTypeMember_IsExpanded<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode, bool>,
     &SetValueTypeMember_IsExpanded<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode, bool>,
     2, // Boolean
     -1,
     false, true,  false,
-    //   2 - Microsoft.UI.Xaml.Controls.TreeViewNode.HasUnrealizedChildren
+    //   4 - Microsoft.UI.Xaml.Controls.TreeViewNode.HasUnrealizedChildren
     L"HasUnrealizedChildren",
     &GetValueTypeMember_HasUnrealizedChildren<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode, bool>,
     &SetValueTypeMember_HasUnrealizedChildren<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode, bool>,
     2, // Boolean
     -1,
     false, false, false,
-    //   3 - Microsoft.UI.Xaml.Controls.TreeViewNode.Content
+    //   5 - Microsoft.UI.Xaml.Controls.TreeViewNode.Content
     L"Content",
     &GetReferenceTypeMember_Content<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode>,
     &SetReferenceTypeMember_Content<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode, ::winrt::Windows::Foundation::IInspectable>,
     1, // Object
     -1,
     false, true,  false,
-    //   4 - Microsoft.UI.Xaml.Controls.TreeViewNode.Children
+    //   6 - Microsoft.UI.Xaml.Controls.TreeViewNode.Children
     L"Children",
     &GetReferenceTypeMember_Children<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode>,
     nullptr,
-    11, // Windows.Foundation.Collections.IVector`1<Microsoft.UI.Xaml.Controls.TreeViewNode>
+    13, // Windows.Foundation.Collections.IVector`1<Microsoft.UI.Xaml.Controls.TreeViewNode>
     -1,
     true,  false, false,
-    //   5 - Microsoft.UI.Xaml.Controls.TreeViewNode.Depth
+    //   7 - Microsoft.UI.Xaml.Controls.TreeViewNode.Depth
     L"Depth",
     &GetValueTypeMember_Depth<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode, int32_t>,
     nullptr,
     0, // Int32
     -1,
     true,  true,  false,
-    //   6 - Microsoft.UI.Xaml.Controls.TreeViewNode.HasChildren
+    //   8 - Microsoft.UI.Xaml.Controls.TreeViewNode.HasChildren
     L"HasChildren",
     &GetValueTypeMember_HasChildren<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode, bool>,
     nullptr,
     2, // Boolean
     -1,
     true,  true,  false,
-    //   7 - Microsoft.UI.Xaml.Controls.TreeViewNode.Parent
+    //   9 - Microsoft.UI.Xaml.Controls.TreeViewNode.Parent
     L"Parent",
     &GetReferenceTypeMember_Parent<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode>,
     nullptr,
-    8, // Microsoft.UI.Xaml.Controls.TreeViewNode
+    10, // Microsoft.UI.Xaml.Controls.TreeViewNode
     -1,
     true,  false, false,
 };
@@ -476,6 +533,7 @@ IXamlType XamlTypeInfoProvider::CreateXamlType(::winrt::hstring const& typeName)
     else
     {
         ::winrt::hstring baseName { pTypeInfo->baseTypeIndex >= 0 ? TypeInfos[pTypeInfo->baseTypeIndex].typeName : L""};
+        ::winrt::hstring boxedName { pTypeInfo->boxedTypeIndex >= 0 ? TypeInfos[pTypeInfo->boxedTypeIndex].typeName : L""};
         auto userType = ::winrt::make_self<XamlUserType>(shared_from_this(), pTypeInfo->typeName, GetXamlTypeByName(baseName));
         userType->_kindOfType = pTypeInfo->kindOfType;
         userType->_activator = pTypeInfo->activator;
@@ -488,6 +546,7 @@ IXamlType XamlTypeInfoProvider::CreateXamlType(::winrt::hstring const& typeName)
         userType->IsBindable(pTypeInfo->flags & TypeInfo_Flags_IsBindable);
         userType->IsMarkupExtension(pTypeInfo->flags & TypeInfo_Flags_IsMarkupExtension);
         userType->_createFromStringMethod = nullptr;
+        userType->SetBoxedType(GetXamlTypeByName(boxedName));
         for (int i = pTypeInfo->firstMemberIndex; i < pNextTypeInfo->firstMemberIndex; ++i)
         {
             userType->AddMemberName(MemberInfos[i].shortName);

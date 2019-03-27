@@ -5,6 +5,7 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />
+    <Page Include="DetailPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="App.idl" />

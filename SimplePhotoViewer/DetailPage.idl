@@ -1,0 +1,13 @@
+import "ImageSku.idl";
+
+namespace SimplePhotoViewer
+{
+    [default_interface]
+    runtimeclass DetailPage : Windows.UI.Xaml.Controls.Page
+    {
+        DetailPage();
+
+		Windows.Foundation.Collections.IObservableVector<IInspectable> ImageSkus{ get; };
+		ImageSku SelectedItem{ get; set; };
+    }
+}

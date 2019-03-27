@@ -416,6 +416,11 @@ namespace winrt::SimplePhotoViewer::implementation
         return _provider->GetXamlTypeByName(_keyTypeName);
     }
 
+    IXamlType XamlUserType::BoxedType() const
+    {
+        return _boxedType;
+    }
+
 
     IXamlMember XamlUserType::GetMember(::winrt::hstring const& name) const
     {
@@ -449,6 +454,12 @@ namespace winrt::SimplePhotoViewer::implementation
 
     ::winrt::Windows::Foundation::IInspectable XamlUserType::CreateFromString(::winrt::hstring const& input) const
     {
+        // For boxed types, run the boxed type's CreateFromString method and boxing
+        if (BoxedType() != nullptr)
+        {
+            return BoxedType().CreateFromString(input);
+        }
+
         if (_createFromStringMethod)
         {
             return (*_createFromStringMethod)(input);
@@ -473,6 +484,11 @@ namespace winrt::SimplePhotoViewer::implementation
     {
         _keyTypeName = value; 
     }
+    void XamlUserType::SetBoxedType(IXamlType boxedType)
+    {
+        _boxedType = boxedType;
+    }
+
 
     void XamlUserType::AddMemberName(::winrt::hstring const& shortName)
     {

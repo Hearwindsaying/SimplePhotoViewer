@@ -3,7 +3,7 @@
 
 namespace winrt::SimplePhotoViewer::implementation
 {
-    ImageSku::ImageSku(Windows::Storage::FileProperties::ImageProperties const& imageProps, Windows::Storage::StorageFile const& imageFile, hstring const& name, hstring const& type)
+    ImageSku::ImageSku(Windows::Storage::FileProperties::ImageProperties const& imageProps, Windows::Storage::StorageFile const& imageFile, hstring const& name, hstring const& type, Windows::UI::Xaml::Media::Imaging::BitmapImage const& imageThumbnail, hstring const& nameWithType)
     {
         throw hresult_not_implemented();
     }
@@ -24,6 +24,16 @@ namespace winrt::SimplePhotoViewer::implementation
     }
 
     hstring ImageSku::ImageFileType()
+    {
+        throw hresult_not_implemented();
+    }
+
+    hstring ImageSku::ImageNameWithType()
+    {
+        throw hresult_not_implemented();
+    }
+
+    Windows::UI::Xaml::Media::Imaging::BitmapImage ImageSku::ImageThumbnail()
     {
         throw hresult_not_implemented();
     }

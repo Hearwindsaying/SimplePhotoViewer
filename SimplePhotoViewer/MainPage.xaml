@@ -3,11 +3,106 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SimplePhotoViewer"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" 
+    
+    NavigationCacheMode="Enabled">
+
+    
+    <!--ItemsSource="{x:Bind ImageSkus, Mode=OneWay}"-->
 
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button x:Name="myButton" Click="ClickHandler">Click Me</Button>
+        <!--<Button x:Name="myButton" Click="ClickHandler">Click Me</Button>-->
+        <Button x:Name="PlayButton" Click="PlayButton_ClickHandler" Content="Play" IsEnabled="True"/>
+        <ScrollViewer>
+            <GridView x:Name="ImageGridView"
+                  Margin="0,0,0,8"
+                  IsItemClickEnabled="True"
+                  ItemsSource="{x:Bind ImageSkus, Mode=OneWay}"
+                  SelectionMode="Extended" Opacity="1"
+                  >
+                <GridView.ItemTemplate>
+                    <DataTemplate 
+                      x:DataType="local:ImageSku">
+
+                        <StackPanel>
+                            <Image x:Name="ItemImage"
+                                    Opacity="1" 
+                                    Height="200"
+                                    Width="200"
+                                    Margin="4"
+                                    Source="{x:Bind ImageThumbnail, Mode=OneWay}"
+                                    Stretch="Uniform">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip Content="{x:Bind ImageName, Mode=OneWay}"/>
+                                </ToolTipService.ToolTip>
+                            </Image>
+                            <TextBlock Text="{x:Bind ImageNameWithType, Mode=OneWay}" TextAlignment="Center"></TextBlock>
+                        </StackPanel>
+
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+                <GridView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid MaximumRowsOrColumns="4" Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </GridView.ItemsPanel>
+            </GridView>
+        </ScrollViewer>
+
+
+        <!--<GridView SelectionMode="Multiple">
+            <GridView.ItemTemplate>
+                <DataTemplate x:Name="ImageGalleryDataTemplate">
+                    <Image Source="Placeholder.png" Height="180" Width="180" Stretch="UniformToFill"/>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid MaximumRowsOrColumns="3" Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+        </GridView>-->
+
+
+
+
+
+        <!--<TreeView>
+            <TreeView.RootNodes>
+                <TreeViewNode Content="xxx"></TreeViewNode>
+            </TreeView.RootNodes>
+        </TreeView>-->
+
+
+
+        <!--<controls:TreeView x:Name="myTreeView"  ItemInvoked="Node_ClickHandler"  >
+            -->
+        <!--<controls:TreeView.ItemTemplate>
+                <DataTemplate>
+                    <controls:TreeViewItem  IsExpanded="True">
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="0,0,10,0"/>
+                            <TextBlock Text="{x:Bind Name}" />
+                        </StackPanel>
+                    </controls:TreeViewItem>
+                </DataTemplate>
+            </controls:TreeView.ItemTemplate>-->
+        <!--
+            
+            <controls:TreeView.RootNodes>
+                <controls:TreeViewNode Content="Flavors" IsExpanded="True" >
+                    <controls:TreeViewNode.Children>
+                        <controls:TreeViewNode  Content="Vanilla"/>
+                        <controls:TreeViewNode  Content="Strawberry"/>
+                        <controls:TreeViewNode  Content="Chocolate"/>
+                    </controls:TreeViewNode.Children>
+                </controls:TreeViewNode>
+            </controls:TreeView.RootNodes>
+        </controls:TreeView>-->
+
     </StackPanel>
 </Page>

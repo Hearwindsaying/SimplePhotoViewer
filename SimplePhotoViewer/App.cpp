@@ -75,7 +75,8 @@ void App::OnLaunched(LaunchActivatedEventArgs const& e)
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                rootFrame.Navigate(xaml_typename<SimplePhotoViewer::MainPage>(), box_value(e.Arguments()));
+				rootFrame.Navigate(xaml_typename<SimplePhotoViewer::MainPage>(), box_value(e.Arguments()));
+				/*rootFrame.Navigate(xaml_typename<SimplePhotoViewer::MainPage>(), box_value(e.Arguments()));*/
             }
             // Place the frame in the current Window
             Window::Current().Content(rootFrame);
@@ -92,7 +93,7 @@ void App::OnLaunched(LaunchActivatedEventArgs const& e)
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                rootFrame.Navigate(xaml_typename<SimplePhotoViewer::MainPage>(), box_value(e.Arguments()));
+				rootFrame.Navigate(xaml_typename<SimplePhotoViewer::MainPage>(), box_value(e.Arguments()));
             }
             // Ensure the current window is active
             Window::Current().Activate();

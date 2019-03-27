@@ -13,14 +13,14 @@ namespace winrt::SimplePhotoViewer::implementation
     using IInspectable = ::winrt::Windows::Foundation::IInspectable;
 
     template <typename D, typename ... I>
-    struct MainPageT : public ::winrt::SimplePhotoViewer::implementation::MainPage_base<D,
+    struct DetailPageT : public ::winrt::SimplePhotoViewer::implementation::DetailPage_base<D,
         ::winrt::Windows::UI::Xaml::Markup::IComponentConnector,
         ::winrt::Windows::UI::Xaml::Markup::IComponentConnector2,
         I...>
     {
-        using base_type = typename MainPageT::base_type;
+        using base_type = typename DetailPageT::base_type;
         using base_type::base_type;
-        using class_type = typename MainPageT::class_type;
+        using class_type = typename DetailPageT::class_type;
 
         void InitializeComponent();
         void Connect(int32_t connectionId, IInspectable const& target);
@@ -28,22 +28,13 @@ namespace winrt::SimplePhotoViewer::implementation
         void UnloadObject(::winrt::Windows::UI::Xaml::DependencyObject const& dependencyObject);
         void DisconnectUnloadedObject(int32_t connectionId);
 
-        ::winrt::Windows::UI::Xaml::Controls::Button PlayButton()
+        ::winrt::Windows::UI::Xaml::Controls::FlipView DetailPageFlipView()
         {
-            return _PlayButton;
+            return _DetailPageFlipView;
         }
-        void PlayButton(::winrt::Windows::UI::Xaml::Controls::Button value)
+        void DetailPageFlipView(::winrt::Windows::UI::Xaml::Controls::FlipView value)
         {
-            _PlayButton = value;
-        }
-
-        ::winrt::Windows::UI::Xaml::Controls::GridView ImageGridView()
-        {
-            return _ImageGridView;
-        }
-        void ImageGridView(::winrt::Windows::UI::Xaml::Controls::GridView value)
-        {
-            _ImageGridView = value;
+            _DetailPageFlipView = value;
         }
         
          ::winrt::com_ptr<::winrt::SimplePhotoViewer::implementation::XamlBindings> Bindings;
@@ -52,11 +43,10 @@ namespace winrt::SimplePhotoViewer::implementation
         bool _contentLoaded{false};
 
     private:
-        struct MainPage_obj4_Bindings;
-        struct MainPage_obj1_Bindings;
+        struct DetailPage_obj4_Bindings;
+        struct DetailPage_obj1_Bindings;
 
-        ::winrt::Windows::UI::Xaml::Controls::Button _PlayButton{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::GridView _ImageGridView{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::FlipView _DetailPageFlipView{nullptr};
     };
 }
 

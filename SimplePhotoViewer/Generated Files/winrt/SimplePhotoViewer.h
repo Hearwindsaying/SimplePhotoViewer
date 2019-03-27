@@ -13,12 +13,32 @@ static_assert(winrt::check_version(CPPWINRT_VERSION, "1.0.180821.2"), "Mismatche
 #include "winrt/impl/Windows.UI.Xaml.Data.2.h"
 #include "winrt/impl/Windows.UI.Xaml.Interop.2.h"
 #include "winrt/impl/Windows.UI.Xaml.Markup.2.h"
+#include "winrt/impl/Windows.UI.Xaml.Media.Imaging.2.h"
 #include "winrt/impl/Windows.UI.Composition.2.h"
 #include "winrt/impl/Windows.UI.Xaml.2.h"
 #include "winrt/impl/Windows.UI.Xaml.Controls.2.h"
 #include "winrt/impl/SimplePhotoViewer.2.h"
 
 namespace winrt::impl {
+
+template <typename D> Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> consume_SimplePhotoViewer_IDetailPage<D>::ImageSkus() const
+{
+    Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> value{ nullptr };
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IDetailPage)->get_ImageSkus(put_abi(value)));
+    return value;
+}
+
+template <typename D> SimplePhotoViewer::ImageSku consume_SimplePhotoViewer_IDetailPage<D>::SelectedItem() const
+{
+    SimplePhotoViewer::ImageSku value{ nullptr };
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IDetailPage)->get_SelectedItem(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_SimplePhotoViewer_IDetailPage<D>::SelectedItem(SimplePhotoViewer::ImageSku const& value) const
+{
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IDetailPage)->put_SelectedItem(get_abi(value)));
+}
 
 template <typename D> Windows::Storage::StorageFile consume_SimplePhotoViewer_IImageSku<D>::ImageFile() const
 {
@@ -48,10 +68,24 @@ template <typename D> hstring consume_SimplePhotoViewer_IImageSku<D>::ImageFileT
     return value;
 }
 
-template <typename D> SimplePhotoViewer::ImageSku consume_SimplePhotoViewer_IImageSkuFactory<D>::CreateInstance(Windows::Storage::FileProperties::ImageProperties const& imageProps, Windows::Storage::StorageFile const& imageFile, param::hstring const& name, param::hstring const& type) const
+template <typename D> hstring consume_SimplePhotoViewer_IImageSku<D>::ImageNameWithType() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IImageSku)->get_ImageNameWithType(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::Media::Imaging::BitmapImage consume_SimplePhotoViewer_IImageSku<D>::ImageThumbnail() const
+{
+    Windows::UI::Xaml::Media::Imaging::BitmapImage value{ nullptr };
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IImageSku)->get_ImageThumbnail(put_abi(value)));
+    return value;
+}
+
+template <typename D> SimplePhotoViewer::ImageSku consume_SimplePhotoViewer_IImageSkuFactory<D>::CreateInstance(Windows::Storage::FileProperties::ImageProperties const& imageProps, Windows::Storage::StorageFile const& imageFile, param::hstring const& name, param::hstring const& type, Windows::UI::Xaml::Media::Imaging::BitmapImage const& imageThumbnail, param::hstring const& nameWithType) const
 {
     SimplePhotoViewer::ImageSku value{ nullptr };
-    check_hresult(WINRT_SHIM(SimplePhotoViewer::IImageSkuFactory)->CreateInstance(get_abi(imageProps), get_abi(imageFile), get_abi(name), get_abi(type), put_abi(value)));
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IImageSkuFactory)->CreateInstance(get_abi(imageProps), get_abi(imageFile), get_abi(name), get_abi(type), get_abi(imageThumbnail), get_abi(nameWithType), put_abi(value)));
     return value;
 }
 
@@ -61,6 +95,48 @@ template <typename D> Windows::Foundation::Collections::IObservableVector<Window
     check_hresult(WINRT_SHIM(SimplePhotoViewer::IMainPage)->get_ImageSkus(put_abi(value)));
     return value;
 }
+
+template <typename D>
+struct produce<D, SimplePhotoViewer::IDetailPage> : produce_base<D, SimplePhotoViewer::IDetailPage>
+{
+    int32_t WINRT_CALL get_ImageSkus(void** value) noexcept final
+    {
+        try
+        {
+            *value = nullptr;
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(ImageSkus, WINRT_WRAP(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable>));
+            *value = detach_from<Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable>>(this->shim().ImageSkus());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL get_SelectedItem(void** value) noexcept final
+    {
+        try
+        {
+            *value = nullptr;
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(SelectedItem, WINRT_WRAP(SimplePhotoViewer::ImageSku));
+            *value = detach_from<SimplePhotoViewer::ImageSku>(this->shim().SelectedItem());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL put_SelectedItem(void* value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(SelectedItem, WINRT_WRAP(void), SimplePhotoViewer::ImageSku const&);
+            this->shim().SelectedItem(*reinterpret_cast<SimplePhotoViewer::ImageSku const*>(&value));
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+};
 
 template <typename D>
 struct produce<D, SimplePhotoViewer::IImageSku> : produce_base<D, SimplePhotoViewer::IImageSku>
@@ -116,19 +192,45 @@ struct produce<D, SimplePhotoViewer::IImageSku> : produce_base<D, SimplePhotoVie
         }
         catch (...) { return to_hresult(); }
     }
-};
 
-template <typename D>
-struct produce<D, SimplePhotoViewer::IImageSkuFactory> : produce_base<D, SimplePhotoViewer::IImageSkuFactory>
-{
-    int32_t WINRT_CALL CreateInstance(void* imageProps, void* imageFile, void* name, void* type, void** value) noexcept final
+    int32_t WINRT_CALL get_ImageNameWithType(void** value) noexcept final
     {
         try
         {
             *value = nullptr;
             typename D::abi_guard guard(this->shim());
-            WINRT_ASSERT_DECLARATION(CreateInstance, WINRT_WRAP(SimplePhotoViewer::ImageSku), Windows::Storage::FileProperties::ImageProperties const&, Windows::Storage::StorageFile const&, hstring const&, hstring const&);
-            *value = detach_from<SimplePhotoViewer::ImageSku>(this->shim().CreateInstance(*reinterpret_cast<Windows::Storage::FileProperties::ImageProperties const*>(&imageProps), *reinterpret_cast<Windows::Storage::StorageFile const*>(&imageFile), *reinterpret_cast<hstring const*>(&name), *reinterpret_cast<hstring const*>(&type)));
+            WINRT_ASSERT_DECLARATION(ImageNameWithType, WINRT_WRAP(hstring));
+            *value = detach_from<hstring>(this->shim().ImageNameWithType());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL get_ImageThumbnail(void** value) noexcept final
+    {
+        try
+        {
+            *value = nullptr;
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(ImageThumbnail, WINRT_WRAP(Windows::UI::Xaml::Media::Imaging::BitmapImage));
+            *value = detach_from<Windows::UI::Xaml::Media::Imaging::BitmapImage>(this->shim().ImageThumbnail());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+};
+
+template <typename D>
+struct produce<D, SimplePhotoViewer::IImageSkuFactory> : produce_base<D, SimplePhotoViewer::IImageSkuFactory>
+{
+    int32_t WINRT_CALL CreateInstance(void* imageProps, void* imageFile, void* name, void* type, void* imageThumbnail, void* nameWithType, void** value) noexcept final
+    {
+        try
+        {
+            *value = nullptr;
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(CreateInstance, WINRT_WRAP(SimplePhotoViewer::ImageSku), Windows::Storage::FileProperties::ImageProperties const&, Windows::Storage::StorageFile const&, hstring const&, hstring const&, Windows::UI::Xaml::Media::Imaging::BitmapImage const&, hstring const&);
+            *value = detach_from<SimplePhotoViewer::ImageSku>(this->shim().CreateInstance(*reinterpret_cast<Windows::Storage::FileProperties::ImageProperties const*>(&imageProps), *reinterpret_cast<Windows::Storage::StorageFile const*>(&imageFile), *reinterpret_cast<hstring const*>(&name), *reinterpret_cast<hstring const*>(&type), *reinterpret_cast<Windows::UI::Xaml::Media::Imaging::BitmapImage const*>(&imageThumbnail), *reinterpret_cast<hstring const*>(&nameWithType)));
             return 0;
         }
         catch (...) { return to_hresult(); }
@@ -156,8 +258,12 @@ struct produce<D, SimplePhotoViewer::IMainPage> : produce_base<D, SimplePhotoVie
 
 WINRT_EXPORT namespace winrt::SimplePhotoViewer {
 
-inline ImageSku::ImageSku(Windows::Storage::FileProperties::ImageProperties const& imageProps, Windows::Storage::StorageFile const& imageFile, param::hstring const& name, param::hstring const& type) :
-    ImageSku(impl::call_factory<ImageSku, SimplePhotoViewer::IImageSkuFactory>([&](auto&& f) { return f.CreateInstance(imageProps, imageFile, name, type); }))
+inline DetailPage::DetailPage() :
+    DetailPage(impl::call_factory<DetailPage>([](auto&& f) { return f.template ActivateInstance<DetailPage>(); }))
+{}
+
+inline ImageSku::ImageSku(Windows::Storage::FileProperties::ImageProperties const& imageProps, Windows::Storage::StorageFile const& imageFile, param::hstring const& name, param::hstring const& type, Windows::UI::Xaml::Media::Imaging::BitmapImage const& imageThumbnail, param::hstring const& nameWithType) :
+    ImageSku(impl::call_factory<ImageSku, SimplePhotoViewer::IImageSkuFactory>([&](auto&& f) { return f.CreateInstance(imageProps, imageFile, name, type, imageThumbnail, nameWithType); }))
 {}
 
 inline MainPage::MainPage() :
@@ -171,6 +277,53 @@ inline XamlMetaDataProvider::XamlMetaDataProvider() :
 }
 
 namespace winrt::impl {
+
+struct property_SimplePhotoViewer_IDetailPage
+{ struct named {
+    struct ImageSkus
+    {
+        struct name { static constexpr std::wstring_view value{ L"ImageSkus"sv }; };
+        using property_type = winrt::Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable>;
+        using target_type = winrt::SimplePhotoViewer::IDetailPage;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.ImageSkus();
+            }
+        };
+    };
+    struct SelectedItem
+    {
+        struct name { static constexpr std::wstring_view value{ L"SelectedItem"sv }; };
+        using property_type = winrt::SimplePhotoViewer::ImageSku;
+        using target_type = winrt::SimplePhotoViewer::IDetailPage;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.SelectedItem();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.SelectedItem(std::forward<Value>(value));
+            }
+        };
+    };};
+    struct list { using type = impl::typelist<named::ImageSkus, named::SelectedItem>; };
+};
 
 struct property_SimplePhotoViewer_IImageSku
 { struct named {
@@ -225,6 +378,23 @@ struct property_SimplePhotoViewer_IImageSku
             }
         };
     };
+    struct ImageNameWithType
+    {
+        struct name { static constexpr std::wstring_view value{ L"ImageNameWithType"sv }; };
+        using property_type = winrt::hstring;
+        using target_type = winrt::SimplePhotoViewer::IImageSku;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.ImageNameWithType();
+            }
+        };
+    };
     struct ImageProperties
     {
         struct name { static constexpr std::wstring_view value{ L"ImageProperties"sv }; };
@@ -241,8 +411,25 @@ struct property_SimplePhotoViewer_IImageSku
                 return target.ImageProperties();
             }
         };
+    };
+    struct ImageThumbnail
+    {
+        struct name { static constexpr std::wstring_view value{ L"ImageThumbnail"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage;
+        using target_type = winrt::SimplePhotoViewer::IImageSku;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.ImageThumbnail();
+            }
+        };
     };};
-    struct list { using type = impl::typelist<named::ImageFile, named::ImageFileType, named::ImageName, named::ImageProperties>; };
+    struct list { using type = impl::typelist<named::ImageFile, named::ImageFileType, named::ImageName, named::ImageNameWithType, named::ImageProperties, named::ImageThumbnail>; };
 };
 
 struct property_SimplePhotoViewer_IMainPage
@@ -265,6 +452,53 @@ struct property_SimplePhotoViewer_IMainPage
         };
     };};
     struct list { using type = impl::typelist<named::ImageSkus>; };
+};
+
+struct property_SimplePhotoViewer_DetailPage
+{ struct named {
+    struct SelectedItem
+    {
+        struct name { static constexpr std::wstring_view value{ L"SelectedItem"sv }; };
+        using property_type = winrt::SimplePhotoViewer::ImageSku;
+        using target_type = winrt::SimplePhotoViewer::DetailPage;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.SelectedItem();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.SelectedItem(std::forward<Value>(value));
+            }
+        };
+    };
+    struct ImageSkus
+    {
+        struct name { static constexpr std::wstring_view value{ L"ImageSkus"sv }; };
+        using property_type = winrt::Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable>;
+        using target_type = winrt::SimplePhotoViewer::DetailPage;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.ImageSkus();
+            }
+        };
+    };};
+    struct list { using type = impl::typelist<named::SelectedItem, named::ImageSkus>; };
 };
 
 struct property_SimplePhotoViewer_ImageSku
@@ -320,6 +554,23 @@ struct property_SimplePhotoViewer_ImageSku
             }
         };
     };
+    struct ImageNameWithType
+    {
+        struct name { static constexpr std::wstring_view value{ L"ImageNameWithType"sv }; };
+        using property_type = winrt::hstring;
+        using target_type = winrt::SimplePhotoViewer::ImageSku;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.ImageNameWithType();
+            }
+        };
+    };
     struct ImageProperties
     {
         struct name { static constexpr std::wstring_view value{ L"ImageProperties"sv }; };
@@ -336,8 +587,25 @@ struct property_SimplePhotoViewer_ImageSku
                 return target.ImageProperties();
             }
         };
+    };
+    struct ImageThumbnail
+    {
+        struct name { static constexpr std::wstring_view value{ L"ImageThumbnail"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage;
+        using target_type = winrt::SimplePhotoViewer::ImageSku;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.ImageThumbnail();
+            }
+        };
     };};
-    struct list { using type = impl::typelist<named::ImageFile, named::ImageFileType, named::ImageName, named::ImageProperties>; };
+    struct list { using type = impl::typelist<named::ImageFile, named::ImageFileType, named::ImageName, named::ImageNameWithType, named::ImageProperties, named::ImageThumbnail>; };
 };
 
 struct property_SimplePhotoViewer_MainPage
@@ -365,24 +633,32 @@ struct property_SimplePhotoViewer_MainPage
 }
 
 WINRT_EXPORT namespace winrt::experimental::reflect {
+template <> struct named_property<SimplePhotoViewer::IDetailPage> : impl::property_SimplePhotoViewer_IDetailPage::named {};
+template <> struct properties<SimplePhotoViewer::IDetailPage> : impl::property_SimplePhotoViewer_IDetailPage::list {};
 template <> struct named_property<SimplePhotoViewer::IImageSku> : impl::property_SimplePhotoViewer_IImageSku::named {};
 template <> struct properties<SimplePhotoViewer::IImageSku> : impl::property_SimplePhotoViewer_IImageSku::list {};
 template <> struct named_property<SimplePhotoViewer::IMainPage> : impl::property_SimplePhotoViewer_IMainPage::named {};
 template <> struct properties<SimplePhotoViewer::IMainPage> : impl::property_SimplePhotoViewer_IMainPage::list {};
+template <> struct named_property<SimplePhotoViewer::DetailPage> : impl::property_SimplePhotoViewer_DetailPage::named {};
+template <> struct properties<SimplePhotoViewer::DetailPage> : impl::property_SimplePhotoViewer_DetailPage::list {};
 template <> struct named_property<SimplePhotoViewer::ImageSku> : impl::property_SimplePhotoViewer_ImageSku::named {};
 template <> struct properties<SimplePhotoViewer::ImageSku> : impl::property_SimplePhotoViewer_ImageSku::list {};
 template <> struct named_property<SimplePhotoViewer::MainPage> : impl::property_SimplePhotoViewer_MainPage::named {};
 template <> struct properties<SimplePhotoViewer::MainPage> : impl::property_SimplePhotoViewer_MainPage::list {};
 
 template <>
+struct base_type<SimplePhotoViewer::DetailPage> { using type = Windows::UI::Xaml::Controls::Page; };
+template <>
 struct base_type<SimplePhotoViewer::MainPage> { using type = Windows::UI::Xaml::Controls::Page; };
 }
 
 WINRT_EXPORT namespace std {
 
+template<> struct hash<winrt::SimplePhotoViewer::IDetailPage> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IDetailPage> {};
 template<> struct hash<winrt::SimplePhotoViewer::IImageSku> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IImageSku> {};
 template<> struct hash<winrt::SimplePhotoViewer::IImageSkuFactory> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IImageSkuFactory> {};
 template<> struct hash<winrt::SimplePhotoViewer::IMainPage> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IMainPage> {};
+template<> struct hash<winrt::SimplePhotoViewer::DetailPage> : winrt::impl::hash_base<winrt::SimplePhotoViewer::DetailPage> {};
 template<> struct hash<winrt::SimplePhotoViewer::ImageSku> : winrt::impl::hash_base<winrt::SimplePhotoViewer::ImageSku> {};
 template<> struct hash<winrt::SimplePhotoViewer::MainPage> : winrt::impl::hash_base<winrt::SimplePhotoViewer::MainPage> {};
 template<> struct hash<winrt::SimplePhotoViewer::XamlMetaDataProvider> : winrt::impl::hash_base<winrt::SimplePhotoViewer::XamlMetaDataProvider> {};
