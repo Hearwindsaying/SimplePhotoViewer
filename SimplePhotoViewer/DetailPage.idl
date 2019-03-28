@@ -8,6 +8,6 @@ namespace SimplePhotoViewer
         DetailPage();
 
 		Windows.Foundation.Collections.IObservableVector<IInspectable> ImageSkus{ get; };
-		ImageSku SelectedItem{ get; set; };
+		ImageSku SelectedItem{ get; set; }; 
     }
 }

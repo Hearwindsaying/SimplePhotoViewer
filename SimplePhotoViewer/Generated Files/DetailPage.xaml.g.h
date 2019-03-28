@@ -28,6 +28,15 @@ namespace winrt::SimplePhotoViewer::implementation
         void UnloadObject(::winrt::Windows::UI::Xaml::DependencyObject const& dependencyObject);
         void DisconnectUnloadedObject(int32_t connectionId);
 
+        ::winrt::Windows::UI::Xaml::Controls::ListView ThumbnailListView()
+        {
+            return _ThumbnailListView;
+        }
+        void ThumbnailListView(::winrt::Windows::UI::Xaml::Controls::ListView value)
+        {
+            _ThumbnailListView = value;
+        }
+
         ::winrt::Windows::UI::Xaml::Controls::FlipView DetailPageFlipView()
         {
             return _DetailPageFlipView;
@@ -43,9 +52,11 @@ namespace winrt::SimplePhotoViewer::implementation
         bool _contentLoaded{false};
 
     private:
-        struct DetailPage_obj4_Bindings;
+        struct DetailPage_obj3_Bindings;
+        struct DetailPage_obj6_Bindings;
         struct DetailPage_obj1_Bindings;
 
+        ::winrt::Windows::UI::Xaml::Controls::ListView _ThumbnailListView{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::FlipView _DetailPageFlipView{nullptr};
     };
 }

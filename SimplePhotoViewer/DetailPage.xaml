@@ -9,60 +9,70 @@
     
     NavigationCacheMode="Enabled">
 
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Height="565" Width="692">
 
-        <Button Click="GoBack_ClickHandler" Opacity="0.995" Content="GoBack" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="92,0,0,0" Width="72"/>
+    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <ScrollViewer Margin="335,75,352,269">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Height="1011" Width="1551">
 
-        <FlipView x:Name="DetailPageFlipView" 
+                <FlipView x:Name="DetailPageFlipView" 
                   ItemsSource="{x:Bind Mode=OneWay, Path=ImageSkus}" 
                   Opacity="1" 
-                  Visibility="Visible">
-            <FlipView.ItemTemplate>
-                <DataTemplate x:DataType="local:ImageSku">
-                    <Image x:Name="ItemImage"
+                  Visibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Height="875" Margin="0,0,-1044,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <FlipView.ItemTemplate>
+                        <DataTemplate x:DataType="local:ImageSku">
+                            <StackPanel>
+                                <Image x:Name="ItemImage"
+                                    Opacity="1" 
+                                   
+                                    Margin="4"
+                                    Source="{x:Bind Mode=OneWay, Path=ImageContent}"
+                                    Stretch="Uniform"/>
+                            </StackPanel>
+                            <!--<Image x:Name="ItemImage"
                                     Opacity="1" 
                                     Height="200"
                                     Width="200"
                                     Margin="4"
-                                    Source="{x:Bind Mode=OneWay, Path=ImageThumbnail}"
-                                    Stretch="Uniform"/>
-                </DataTemplate>
-            </FlipView.ItemTemplate>
-        </FlipView>
-        <!--<ScrollViewer>
-            <GridView x:Name="ImageGridView"
-                  Margin="0,0,0,8"
+                                    Source="{x:Bind ImageContent, Mode=OneWay }"
+                                    Stretch="Uniform"/>-->
+                        </DataTemplate>
+                    </FlipView.ItemTemplate>
+                </FlipView>
+
+                <Button Click="GoBack_ClickHandler" Opacity="0.995" Content="GoBack" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="238,0,0,0" Width="95"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <ScrollViewer HorizontalScrollMode="Auto" Margin="0,590,-232,-659.4" RenderTransformOrigin="0.5,0.5" RelativePanel.AlignHorizontalCenterWithPanel="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+            <ListView x:Name="ThumbnailListView"
                   IsItemClickEnabled="True"
                   ItemsSource="{x:Bind ImageSkus, Mode=OneWay}"
-                  SelectionMode="Extended" Opacity="1"
+                  SelectionMode="Extended" Opacity="1" Height="205" Width="1480" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                   >
-                <GridView.ItemTemplate>
+                <ListView.ItemTemplate>
                     <DataTemplate 
                       x:DataType="local:ImageSku">
-
-                        <StackPanel>
-                            <Image x:Name="ItemImage"
+                        <Image x:Name="ItemImage"
                                     Opacity="1" 
                                     Height="200"
                                     Width="200"
                                     Margin="4"
                                     Source="{x:Bind ImageThumbnail, Mode=OneWay}"
                                     Stretch="Uniform">
-                                <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind ImageName, Mode=OneWay}"/>
-                                </ToolTipService.ToolTip>
-                            </Image>
-                            <TextBlock Text="{x:Bind ImageNameWithType, Mode=OneWay}" TextAlignment="Center"></TextBlock>
-                        </StackPanel>
-
+                        </Image>
                     </DataTemplate>
-                </GridView.ItemTemplate>
-                <GridView.ItemsPanel>
+                </ListView.ItemTemplate>
+                <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <ItemsWrapGrid MaximumRowsOrColumns="4" Orientation="Horizontal"/>
+                        <ItemsStackPanel Orientation="Horizontal"/>
                     </ItemsPanelTemplate>
-                </GridView.ItemsPanel>
-            </GridView>
-        </ScrollViewer>-->
-    </StackPanel>
+                </ListView.ItemsPanel>
+            </ListView>
+
+
+        </ScrollViewer>
+    </RelativePanel>
+
+
+
 </Page>

@@ -38,6 +38,16 @@ namespace winrt::SimplePhotoViewer::implementation
         throw hresult_not_implemented();
     }
 
+    Windows::UI::Xaml::Media::Imaging::BitmapImage ImageSku::ImageContent()
+    {
+        throw hresult_not_implemented();
+    }
+
+    void ImageSku::ImageContent(Windows::UI::Xaml::Media::Imaging::BitmapImage const& value)
+    {
+        throw hresult_not_implemented();
+    }
+
     winrt::event_token ImageSku::PropertyChanged(Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler)
     {
         throw hresult_not_implemented();

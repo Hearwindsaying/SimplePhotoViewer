@@ -9,5 +9,6 @@ namespace SimplePhotoViewer
 		String ImageFileType{ get; };
 		String ImageNameWithType{ get; };
 		Windows.UI.Xaml.Media.Imaging.BitmapImage ImageThumbnail{ get; };
+		Windows.UI.Xaml.Media.Imaging.BitmapImage ImageContent{ get; set; };
 	}
 }

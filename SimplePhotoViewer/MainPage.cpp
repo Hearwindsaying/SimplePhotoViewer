@@ -72,7 +72,16 @@ namespace winrt::SimplePhotoViewer::implementation
 
 			auto imageSku = winrt::make<ImageSku>(imageProperties, file, file.DisplayName(), file.DisplayType(), bitmapImage, file.Name());
 
+			/*Windows::Storage::Streams::IRandomAccessStream stream{ co_await file.OpenAsync(Windows::Storage::FileAccessMode::Read) };
+			Windows::UI::Xaml::Media::Imaging::BitmapImage bitmap{};
+			bitmap.SetSource(stream);
+			imageSku.ImageContent(bitmap);*/
+
+
+
 			this->ImageSkus().Append(imageSku);
+
+			
 		}
 		wchar_t testchar[20] = { '6','6','e' };
 		OutputDebugString(testchar);

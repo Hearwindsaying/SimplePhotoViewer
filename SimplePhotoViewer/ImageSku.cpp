@@ -50,6 +50,17 @@ namespace winrt::SimplePhotoViewer::implementation
 	//	//raise property change;
 	//}
 
+	Windows::UI::Xaml::Media::Imaging::BitmapImage ImageSku::ImageContent()const
+	{
+		return this->m_imageContent;
+	}
+
+	void ImageSku::ImageContent(Windows::UI::Xaml::Media::Imaging::BitmapImage const& value)
+	{
+		this->m_imageContent = value;
+		this->m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"ImageContent" });
+	}
+
     winrt::event_token ImageSku::PropertyChanged(Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler)
     {
 		return this->m_propertyChanged.add(handler);

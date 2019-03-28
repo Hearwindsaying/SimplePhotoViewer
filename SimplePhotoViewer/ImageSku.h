@@ -21,6 +21,8 @@ namespace winrt::SimplePhotoViewer::implementation
         hstring ImageName() const;
         hstring ImageFileType() const;
 		hstring ImageNameWithType() const;
+		Windows::UI::Xaml::Media::Imaging::BitmapImage ImageContent() const;
+		void ImageContent(Windows::UI::Xaml::Media::Imaging::BitmapImage const& value);
 
 		//Observable property related event register and revoker, note that it's automatically registered by MVVM framework.
         winrt::event_token PropertyChanged(Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler);
@@ -31,6 +33,7 @@ namespace winrt::SimplePhotoViewer::implementation
 		Windows::Storage::StorageFile m_imageFile{ nullptr };
 		Windows::Storage::FileProperties::ImageProperties m_imageProps{ nullptr };
 		Windows::UI::Xaml::Media::Imaging::BitmapImage m_imageThumbnail{ nullptr };
+		Windows::UI::Xaml::Media::Imaging::BitmapImage m_imageContent{ nullptr };
 		hstring m_imageName;
 		hstring m_imageFileType;
 		hstring m_imageNameWithType;

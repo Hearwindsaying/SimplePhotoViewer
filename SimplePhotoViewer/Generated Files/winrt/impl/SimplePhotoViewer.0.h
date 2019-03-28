@@ -77,7 +77,7 @@ template <> struct name<SimplePhotoViewer::ImageSku>{ static constexpr auto & va
 template <> struct name<SimplePhotoViewer::MainPage>{ static constexpr auto & value{ L"SimplePhotoViewer.MainPage" }; };
 template <> struct name<SimplePhotoViewer::XamlMetaDataProvider>{ static constexpr auto & value{ L"SimplePhotoViewer.XamlMetaDataProvider" }; };
 template <> struct guid_storage<SimplePhotoViewer::IDetailPage>{ static constexpr guid value{ 0x9A6327D8,0xB530,0x5D48,{ 0x97,0xCD,0x81,0x86,0x99,0x1B,0x0E,0x2F } }; };
-template <> struct guid_storage<SimplePhotoViewer::IImageSku>{ static constexpr guid value{ 0xE3D8A25B,0xE281,0x5847,{ 0xA0,0xEA,0x9B,0xA2,0xC5,0x0E,0x5E,0x2B } }; };
+template <> struct guid_storage<SimplePhotoViewer::IImageSku>{ static constexpr guid value{ 0xAB9C27AE,0x9A5F,0x52EE,{ 0xBC,0xA9,0x94,0xD6,0x67,0xA3,0xC4,0x5F } }; };
 template <> struct guid_storage<SimplePhotoViewer::IImageSkuFactory>{ static constexpr guid value{ 0x76E60B04,0x17AA,0x5776,{ 0x8D,0x6A,0xE0,0x5D,0x2F,0x56,0x2D,0x77 } }; };
 template <> struct guid_storage<SimplePhotoViewer::IMainPage>{ static constexpr guid value{ 0x8C58E351,0xD5B2,0x5DED,{ 0xA4,0x9C,0xED,0x45,0x75,0xDD,0xFD,0xCE } }; };
 template <> struct default_interface<SimplePhotoViewer::DetailPage>{ using type = SimplePhotoViewer::IDetailPage; };
@@ -100,6 +100,8 @@ template <> struct abi<SimplePhotoViewer::IImageSku>{ struct type : IInspectable
     virtual int32_t WINRT_CALL get_ImageFileType(void** value) noexcept = 0;
     virtual int32_t WINRT_CALL get_ImageNameWithType(void** value) noexcept = 0;
     virtual int32_t WINRT_CALL get_ImageThumbnail(void** value) noexcept = 0;
+    virtual int32_t WINRT_CALL get_ImageContent(void** value) noexcept = 0;
+    virtual int32_t WINRT_CALL put_ImageContent(void* value) noexcept = 0;
 };};
 
 template <> struct abi<SimplePhotoViewer::IImageSkuFactory>{ struct type : IInspectable
@@ -130,6 +132,8 @@ struct consume_SimplePhotoViewer_IImageSku
     hstring ImageFileType() const;
     hstring ImageNameWithType() const;
     Windows::UI::Xaml::Media::Imaging::BitmapImage ImageThumbnail() const;
+    Windows::UI::Xaml::Media::Imaging::BitmapImage ImageContent() const;
+    void ImageContent(Windows::UI::Xaml::Media::Imaging::BitmapImage const& value) const;
 };
 template <> struct consume<SimplePhotoViewer::IImageSku> { template <typename D> using type = consume_SimplePhotoViewer_IImageSku<D>; };
 

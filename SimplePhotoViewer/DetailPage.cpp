@@ -28,18 +28,29 @@ namespace winrt::SimplePhotoViewer::implementation
 		this->m_SelectedItem = value;
 	}
 
-	void DetailPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs e)
+	Windows::Foundation::IAsyncAction DetailPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs e)
 	{
 		/*Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> imageCollection = e.Parameter().try_as< Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable>>();*/
 
 		this->m_imageSkus = e.Parameter().try_as< Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable>>();
 
-		if (this->m_imageSkus.Size() > 0)
+		/*if (this->m_imageSkus.Size() > 0)
 		{
 			SimplePhotoViewer::ImageSku isk = this->m_imageSkus.GetAt(0).try_as<SimplePhotoViewer::ImageSku>();
 
 			
+		}*/
+		for (auto&& singleItem : this->m_imageSkus)
+		{
+			auto singleImageSku = singleItem.try_as<SimplePhotoViewer::ImageSku>();
+			Windows::Storage::Streams::IRandomAccessStream stream{ co_await singleImageSku.ImageFile().OpenAsync(Windows::Storage::FileAccessMode::Read) };
+			Windows::UI::Xaml::Media::Imaging::BitmapImage bitmap{};
+			bitmap.SetSource(stream);
+			singleImageSku.ImageContent(bitmap);
+
 		}
+		/*auto myContent = this->m_imageSkus.GetAt(0).try_as<SimplePhotoViewer::ImageSku>().ImageContent();*/
+
 	}
 
 	void DetailPage::GoBack_ClickHandler(Windows::Foundation::IInspectable const& param, Windows::UI::Xaml::RoutedEventArgs const&)

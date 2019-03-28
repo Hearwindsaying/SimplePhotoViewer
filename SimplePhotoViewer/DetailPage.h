@@ -18,7 +18,7 @@ namespace winrt::SimplePhotoViewer::implementation
 		SimplePhotoViewer::ImageSku SelectedItem() const;
 		void SelectedItem(SimplePhotoViewer::ImageSku const& value);
 
-		/*Windows::Foundation::IAsyncAction*/void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs e);
+		Windows::Foundation::IAsyncAction OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs e);
 		void GoBack_ClickHandler(Windows::Foundation::IInspectable const& param, Windows::UI::Xaml::RoutedEventArgs const&);
 
 	private:
