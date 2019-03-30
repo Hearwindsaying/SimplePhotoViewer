@@ -45,50 +45,47 @@ namespace winrt::SimplePhotoViewer::implementation
 
 		hstring myContent = winrt::unbox_value<hstring>(firstRootNodeChildren.GetAt(3).Content());*/
 
-		
-
-		auto defaultFolder = co_await this->LoadDefaultFolder();
-
-		Windows::Storage::Search::QueryOptions options{};
-		options.FolderDepth(Windows::Storage::Search::FolderDepth::Deep);
-		options.FileTypeFilter().Append(L".jpg");
-		options.FileTypeFilter().Append(L".png");
-
-
-		auto result = defaultFolder.CreateFileQueryWithOptions(options);
-		auto imageFiles = co_await result.GetFilesAsync();
-
-		//// Populate Photos collection.
-		for (auto&& file : imageFiles)
+		if (this->m_imageSkus.Size() == 0)
 		{
-			auto imageProperties = co_await file.Properties().GetImagePropertiesAsync();
+			auto defaultFolder = co_await this->LoadDefaultFolder();
+
+			Windows::Storage::Search::QueryOptions options{};
+			options.FolderDepth(Windows::Storage::Search::FolderDepth::Deep);
+			options.FileTypeFilter().Append(L".jpg");
+			options.FileTypeFilter().Append(L".png");
 
 
-			auto thumbnail = co_await file.GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::SingleItem);
-			//or:auto thumbnail = co_await file.GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::PicturesView);
-			Windows::UI::Xaml::Media::Imaging::BitmapImage bitmapImage{};
-			bitmapImage.SetSource(thumbnail);
-			thumbnail.Close();
+			auto result = defaultFolder.CreateFileQueryWithOptions(options);
+			auto imageFiles = co_await result.GetFilesAsync();
 
-			auto imageSku = winrt::make<ImageSku>(imageProperties, file, file.DisplayName(), file.DisplayType(), bitmapImage, file.Name());
-
-			/*Windows::Storage::Streams::IRandomAccessStream stream{ co_await file.OpenAsync(Windows::Storage::FileAccessMode::Read) };
-			Windows::UI::Xaml::Media::Imaging::BitmapImage bitmap{};
-			bitmap.SetSource(stream);
-			imageSku.ImageContent(bitmap);*/
+			//// Populate Photos collection.
+			for (auto&& file : imageFiles)
+			{
+				auto imageProperties = co_await file.Properties().GetImagePropertiesAsync();
 
 
+				auto thumbnail = co_await file.GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::SingleItem);
+				//or:auto thumbnail = co_await file.GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::PicturesView);
+				Windows::UI::Xaml::Media::Imaging::BitmapImage bitmapImage{};
+				bitmapImage.SetSource(thumbnail);
+				thumbnail.Close();
 
-			this->ImageSkus().Append(imageSku);
+				auto imageSku = winrt::make<ImageSku>(imageProperties, file, file.DisplayName(), file.DisplayType(), bitmapImage, file.Name());
 
-			
+				/*Windows::Storage::Streams::IRandomAccessStream stream{ co_await file.OpenAsync(Windows::Storage::FileAccessMode::Read) };
+				Windows::UI::Xaml::Media::Imaging::BitmapImage bitmap{};
+				bitmap.SetSource(stream);
+				imageSku.ImageContent(bitmap);*/
+
+
+
+				this->ImageSkus().Append(imageSku);
+
+
+			}
+			wchar_t testchar[20] = { '6','6','e' };
+			OutputDebugString(testchar);
 		}
-		wchar_t testchar[20] = { '6','6','e' };
-		OutputDebugString(testchar);
-
-		//Retrieve thumbnail of images, set image source:
-		
-		 
 	}
 	Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> MainPage::LoadDefaultFolder()
 	{
