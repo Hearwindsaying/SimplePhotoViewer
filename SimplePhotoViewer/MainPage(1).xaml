@@ -1,0 +1,90 @@
+﻿<Page
+    x:Class="SimplePhotoViewer.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SimplePhotoViewer"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" 
+    
+    NavigationCacheMode="Enabled">
+
+    
+    <!--ItemsSource="{x:Bind ImageSkus, Mode=OneWay}"-->
+
+    <StackPanel Orientation="Horizontal" Margin="10, 10, 10, 10">
+
+        <Rectangle Width="150" Height="520"  Margin="0, 0, 10, 0" FocusVisualSecondaryBrush="Black" Stroke="Black" VerticalAlignment="Top"/>
+
+        <StackPanel Orientation="Vertical" Width="780">
+            <Grid>
+                <TextBlock Text="Path: E:\banner" FontSize="25" HorizontalAlignment="Left" />
+                <Button Content="Search" Height="30" FontSize="15" HorizontalAlignment="Right" Margin="0, 0, 5, 0"/>
+                <TextBox FontSize="15" Width="150" Height="35" HorizontalAlignment="Right" Margin="0, 0, 75, 0"/>
+            </Grid>
+
+            <Grid>
+                <Image Source="../Assets/file.png" Stretch="Uniform" Width="50" Height="50" HorizontalAlignment="Left"/>
+                <TextBlock Text="baner" Margin="60, 5, 0, 0" HorizontalAlignment="Left" />
+                <TextBlock Text="图片数：16" Margin="60, 25, 0, 0" HorizontalAlignment="Left" />
+                <Button Content="删除" Width="50" Height="35" Margin="150, 5, 0, 0" HorizontalAlignment="Left"/>
+                <Button Content="复制" Width="50" Height="35" Margin="220, 5, 0, 0" HorizontalAlignment="Left"/>
+                <Button Content="粘贴" Width="50" Height="35" Margin="290, 5, 0, 0" HorizontalAlignment="Left"/>
+                <Button Content="命名" Width="50" Height="35" Margin="360, 5, 0, 0" HorizontalAlignment="Left"/>
+                <Button x:Name="PlayButton" Click="PlayButton_ClickHandler" IsEnabled="True" Content="放大" Width="50" Height="35" Margin="430, 5, 0, 0" HorizontalAlignment="Left"/>
+            </Grid>
+
+            <!--<Grid>
+                <ScrollBar Grid.RowSpan="4" Grid.Column="4" Width="15" Height="430" HorizontalAlignment="Right" />
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="145" />
+                    <RowDefinition Height="145" />
+                    <RowDefinition Height="145" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="160" />
+                    <ColumnDefinition Width="160" />
+                    <ColumnDefinition Width="160" />
+                    <ColumnDefinition Width="160" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+            </Grid>-->
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="780" Height="430" Margin="10, 5, 0, 0">
+                <!--<Button x:Name="myButton" Click="ClickHandler">Click Me</Button>-->
+                <!--<Button x:Name="PlayButton" Click="PlayButton_ClickHandler" Content="Play" IsEnabled="True"/>-->
+                <!--<ScrollViewer>-->
+                <GridView x:Name="ImageGridView" IsItemClickEnabled="True" ItemsSource="{x:Bind ImageSkus, Mode=OneWay}" SelectionMode="Extended" Opacity="1"  Margin="9">
+                    <GridView.ItemTemplate>
+                        <DataTemplate x:DataType="local:ImageSku">
+                            <StackPanel>
+                                <Image x:Name="ItemImage" Opacity="1" Height="90" Width="120" Margin="2" Source="{x:Bind ImageThumbnail, Mode=OneWay}" Stretch="Uniform">
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip Content="{x:Bind ImageName, Mode=OneWay}"/>
+                                    </ToolTipService.ToolTip>
+                                </Image>
+                                <TextBlock Text="{x:Bind ImageNameWithType, Mode=OneWay}" MaxWidth="110" TextWrapping="Wrap" TextAlignment="Center"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+
+                    <!--变四列-->
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsWrapGrid MaximumRowsOrColumns="6" Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+
+
+                </GridView>
+                <!--</ScrollViewer>-->
+
+            </StackPanel>
+
+        </StackPanel>
+
+    </StackPanel>
+
+    
+</Page>

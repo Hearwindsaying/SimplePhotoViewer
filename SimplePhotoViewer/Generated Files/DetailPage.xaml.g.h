@@ -28,6 +28,60 @@ namespace winrt::SimplePhotoViewer::implementation
         void UnloadObject(::winrt::Windows::UI::Xaml::DependencyObject const& dependencyObject);
         void DisconnectUnloadedObject(int32_t connectionId);
 
+        ::winrt::Windows::UI::Xaml::Controls::Button Bigger()
+        {
+            return _Bigger;
+        }
+        void Bigger(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _Bigger = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button Smaller()
+        {
+            return _Smaller;
+        }
+        void Smaller(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _Smaller = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button Left_2()
+        {
+            return _Left_2;
+        }
+        void Left_2(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _Left_2 = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button Right_2()
+        {
+            return _Right_2;
+        }
+        void Right_2(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _Right_2 = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button LeftTurn()
+        {
+            return _LeftTurn;
+        }
+        void LeftTurn(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _LeftTurn = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button RightTurn()
+        {
+            return _RightTurn;
+        }
+        void RightTurn(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _RightTurn = value;
+        }
+
         ::winrt::Windows::UI::Xaml::Controls::ScrollViewer ThumbnailScrollViewer()
         {
             return _ThumbnailScrollViewer;
@@ -61,10 +115,16 @@ namespace winrt::SimplePhotoViewer::implementation
         bool _contentLoaded{false};
 
     private:
-        struct DetailPage_obj4_Bindings;
-        struct DetailPage_obj6_Bindings;
+        struct DetailPage_obj12_Bindings;
+        struct DetailPage_obj14_Bindings;
         struct DetailPage_obj1_Bindings;
 
+        ::winrt::Windows::UI::Xaml::Controls::Button _Bigger{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _Smaller{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _Left_2{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _Right_2{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _LeftTurn{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _RightTurn{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::ScrollViewer _ThumbnailScrollViewer{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::ListView _ThumbnailListView{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::FlipView _DetailPageFlipView{nullptr};

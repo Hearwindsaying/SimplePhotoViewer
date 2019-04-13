@@ -3,6 +3,7 @@ namespace SimplePhotoViewer
 	runtimeclass ImageSku : Windows.UI.Xaml.Data.INotifyPropertyChanged
 	{
 		ImageSku(Windows.Storage.FileProperties.ImageProperties imageProps, Windows.Storage.StorageFile imageFile, String name, String type, Windows.UI.Xaml.Media.Imaging.BitmapImage imageThumbnail, String nameWithType);
+		ImageSku(String defaultTipString);
 		Windows.Storage.StorageFile ImageFile{ get; };
 		Windows.Storage.FileProperties.ImageProperties ImageProperties{ get; };
 		String ImageName{ get; };

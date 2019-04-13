@@ -16,11 +16,11 @@
 namespace winrt::SimplePhotoViewer::implementation {
 
 template <typename D, typename... I>
-struct WINRT_EBO ImageSku_base : implements<D, SimplePhotoViewer::IImageSku, Windows::UI::Xaml::Data::INotifyPropertyChanged, I...>
+struct WINRT_EBO DirectoryItem_base : implements<D, SimplePhotoViewer::IDirectoryItem, Windows::UI::Xaml::Data::INotifyPropertyChanged, I...>
 {
-    using base_type = ImageSku_base;
-    using class_type = SimplePhotoViewer::ImageSku;
-    using implements_type = typename ImageSku_base::implements_type;
+    using base_type = DirectoryItem_base;
+    using class_type = SimplePhotoViewer::DirectoryItem;
+    using implements_type = typename DirectoryItem_base::implements_type;
     using implements_type::implements_type;
     
 #if _MSC_VER < 1914
@@ -40,7 +40,7 @@ struct WINRT_EBO ImageSku_base : implements<D, SimplePhotoViewer::IImageSku, Win
 
     hstring GetRuntimeClassName() const
     {
-        return L"SimplePhotoViewer.ImageSku";
+        return L"SimplePhotoViewer.DirectoryItem";
     }
 };
 
@@ -49,13 +49,13 @@ struct WINRT_EBO ImageSku_base : implements<D, SimplePhotoViewer::IImageSku, Win
 namespace winrt::SimplePhotoViewer::factory_implementation {
 
 template <typename D, typename T, typename... I>
-struct WINRT_EBO ImageSkuT : implements<D, Windows::Foundation::IActivationFactory, SimplePhotoViewer::IImageSkuFactory, I...>
+struct WINRT_EBO DirectoryItemT : implements<D, Windows::Foundation::IActivationFactory, SimplePhotoViewer::IDirectoryItemFactory, I...>
 {
-    using instance_type = SimplePhotoViewer::ImageSku;
+    using instance_type = SimplePhotoViewer::DirectoryItem;
 
     hstring GetRuntimeClassName() const
     {
-        return L"SimplePhotoViewer.ImageSku";
+        return L"SimplePhotoViewer.DirectoryItem";
     }
 
     Windows::Foundation::IInspectable ActivateInstance() const
@@ -63,29 +63,29 @@ struct WINRT_EBO ImageSkuT : implements<D, Windows::Foundation::IActivationFacto
         throw hresult_not_implemented();
     }
 
-    SimplePhotoViewer::ImageSku CreateInstance(Windows::Storage::FileProperties::ImageProperties const& imageProps, Windows::Storage::StorageFile const& imageFile, hstring const& name, hstring const& type, Windows::UI::Xaml::Media::Imaging::BitmapImage const& imageThumbnail, hstring const& nameWithType)
+    SimplePhotoViewer::DirectoryItem CreateInstance(hstring const& itemName, Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& subItems, Windows::Storage::StorageFolder const& itemFolder)
     {
-        return make<T>(imageProps, imageFile, name, type, imageThumbnail, nameWithType);
+        return make<T>(itemName, subItems, itemFolder);
     }
 
-    SimplePhotoViewer::ImageSku CreateInstance2(hstring const& defaultTipString)
+    SimplePhotoViewer::DirectoryItem CreateInstance2(hstring const& itemName, Windows::Storage::StorageFolder const& itemFolder)
     {
-        return make<T>(defaultTipString);
+        return make<T>(itemName, itemFolder);
     }
 };
 
 }
 
-#if defined(WINRT_FORCE_INCLUDE_IMAGESKU_XAML_G_H) || __has_include("ImageSku.xaml.g.h")
+#if defined(WINRT_FORCE_INCLUDE_DIRECTORYITEM_XAML_G_H) || __has_include("DirectoryItem.xaml.g.h")
 
-#include "ImageSku.xaml.g.h"
+#include "DirectoryItem.xaml.g.h"
 
 #else
 
 namespace winrt::SimplePhotoViewer::implementation
 {
     template <typename D, typename... I>
-    using ImageSkuT = ImageSku_base<D, I...>;
+    using DirectoryItemT = DirectoryItem_base<D, I...>;
 }
 
 #endif

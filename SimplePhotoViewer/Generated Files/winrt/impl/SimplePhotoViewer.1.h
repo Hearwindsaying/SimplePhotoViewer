@@ -21,6 +21,20 @@ struct WINRT_EBO IDetailPage :
     IDetailPage(std::nullptr_t = nullptr) noexcept {}
 };
 
+struct WINRT_EBO IDirectoryItem :
+    Windows::Foundation::IInspectable,
+    impl::consume_t<IDirectoryItem>
+{
+    IDirectoryItem(std::nullptr_t = nullptr) noexcept {}
+};
+
+struct WINRT_EBO IDirectoryItemFactory :
+    Windows::Foundation::IInspectable,
+    impl::consume_t<IDirectoryItemFactory>
+{
+    IDirectoryItemFactory(std::nullptr_t = nullptr) noexcept {}
+};
+
 struct WINRT_EBO IImageSku :
     Windows::Foundation::IInspectable,
     impl::consume_t<IImageSku>

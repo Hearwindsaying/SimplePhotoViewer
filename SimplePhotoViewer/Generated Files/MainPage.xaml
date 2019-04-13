@@ -10,99 +10,102 @@
     
     NavigationCacheMode="Enabled">
 
-    
-    <!--ItemsSource="{x:Bind ImageSkus, Mode=OneWay}"-->
 
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <!--<Button x:Name="myButton" Click="ClickHandler">Click Me</Button>-->
-        <Button x:ConnectionId='2' x:Name="PlayButton"                                 Content="Play" IsEnabled="True"/>
-        <ScrollViewer>
-            <GridView x:ConnectionId='3' x:Name="ImageGridView"
-                  Margin="0,0,0,8"
-                  IsItemClickEnabled="True"
-                                                               
-                  SelectionMode="Extended" Opacity="1"
-                  >
-                <GridView.ItemTemplate>
-                    <DataTemplate 
-                                                 >
-
-                        <StackPanel x:ConnectionId='4'>
-                            <Image x:ConnectionId='5' x:Name="ItemImage"
-                                    Opacity="1" 
-                                    Height="200"
-                                    Width="200"
-                                    Margin="4"
-                                                                                 
-                                    Stretch="Uniform">
-                                <ToolTipService.ToolTip>
-                                    <ToolTip x:ConnectionId='7'                                          />
-                                </ToolTipService.ToolTip>
-                            </Image>
-                            <TextBlock x:ConnectionId='6'                                                TextAlignment="Center"></TextBlock>
-                        </StackPanel>
-
-                    </DataTemplate>
-                </GridView.ItemTemplate>
-                <GridView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ItemsWrapGrid MaximumRowsOrColumns="4" Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </GridView.ItemsPanel>
-            </GridView>
-        </ScrollViewer>
-
-
-        <!--<GridView SelectionMode="Multiple">
-            <GridView.ItemTemplate>
-                <DataTemplate x:Name="ImageGalleryDataTemplate">
-                    <Image Source="Placeholder.png" Height="180" Width="180" Stretch="UniformToFill"/>
-                </DataTemplate>
-            </GridView.ItemTemplate>
-            <GridView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <ItemsWrapGrid MaximumRowsOrColumns="3" Orientation="Horizontal"/>
-                </ItemsPanelTemplate>
-            </GridView.ItemsPanel>
-        </GridView>-->
-
-
-
-
-
-        <!--<TreeView>
-            <TreeView.RootNodes>
-                <TreeViewNode Content="xxx"></TreeViewNode>
-            </TreeView.RootNodes>
-        </TreeView>-->
-
-
-
-        <!--<controls:TreeView x:Name="myTreeView"  ItemInvoked="Node_ClickHandler"  >
-            -->
-        <!--<controls:TreeView.ItemTemplate>
-                <DataTemplate>
-                    <controls:TreeViewItem  IsExpanded="True">
-
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Margin="0,0,10,0"/>
-                            <TextBlock Text="{x:Bind Name}" />
-                        </StackPanel>
+    <StackPanel Orientation="Horizontal" Margin="10, 10, 10, 10">
+        <controls:TreeView x:ConnectionId='2' x:Name="DirectoryTreeView"
+                           HorizontalAlignment="Stretch" 
+                           Height="1060" 
+                           Margin="0,0,-151.2,0" 
+                           VerticalAlignment="Stretch"
+                                                                              
+                           CanDrag="False"
+                           CanDragItems="False"
+                           CanReorderItems="False"
+                                                              
+                                                              
+                                                              >
+            <controls:TreeView.ItemTemplate>
+                <DataTemplate                                 >
+                    <controls:TreeViewItem x:ConnectionId='16'                                             >
+                        <TextBlock x:ConnectionId='17'                                  ></TextBlock>
                     </controls:TreeViewItem>
                 </DataTemplate>
-            </controls:TreeView.ItemTemplate>-->
-        <!--
-            
-            <controls:TreeView.RootNodes>
-                <controls:TreeViewNode Content="Flavors" IsExpanded="True" >
-                    <controls:TreeViewNode.Children>
-                        <controls:TreeViewNode  Content="Vanilla"/>
-                        <controls:TreeViewNode  Content="Strawberry"/>
-                        <controls:TreeViewNode  Content="Chocolate"/>
-                    </controls:TreeViewNode.Children>
-                </controls:TreeViewNode>
-            </controls:TreeView.RootNodes>
-        </controls:TreeView>-->
+            </controls:TreeView.ItemTemplate>
+        </controls:TreeView>
+        <Rectangle Width="150" Height="520"  Margin="0, 0, 10, 0" FocusVisualSecondaryBrush="Black" Stroke="Black" VerticalAlignment="Top"/>
+
+        <StackPanel Orientation="Vertical" Width="780">
+            <Grid>
+                <!--<TextBlock Text="Path: E:\banner" FontSize="25" HorizontalAlignment="Left" />-->
+
+                <AutoSuggestBox x:ConnectionId='14' x:Name="SearchAutoSuggetsBox" HorizontalAlignment="Stretch" Margin="390,0,0,0" VerticalAlignment="Top"
+                                QueryIcon="Find" RequestedTheme="Light" PlaceholderText="在当前文件夹中搜索"
+                                                                             
+                                                                   
+                                                                         
+                                UpdateTextOnSelect="False"
+                                >
+                    <AutoSuggestBox.ItemTemplate>
+                        <DataTemplate                            >
+                            <TextBlock x:ConnectionId='15'                                               ></TextBlock>
+                        </DataTemplate>
+                    </AutoSuggestBox.ItemTemplate>
+                </AutoSuggestBox>
+                <!--<Button Content="Search" Height="30" FontSize="15" HorizontalAlignment="Right" Margin="0, 0, 5, 0" d:IsHidden="True"/>
+                <TextBox FontSize="15" Width="150" Height="35" HorizontalAlignment="Right" Margin="0, 0, 75, 0" d:IsHidden="True"/>-->
+            </Grid>
+
+            <Grid>
+                <Image Source="../Assets/file.png" Stretch="Uniform" Width="50" Height="50" HorizontalAlignment="Left"/>
+                <TextBlock x:ConnectionId='8'                                                    Margin="60, 5, 0, 0" HorizontalAlignment="Left" />
+                <TextBlock Text="图片数：" Margin="60, 25, 0, 0" HorizontalAlignment="Left" />
+                <TextBlock Text="已选中：" Margin="59,-28,0,53" HorizontalAlignment="Left" />
+                <TextBlock x:ConnectionId='9'                                                               Margin="105,-31,0,56" HorizontalAlignment="Left" Width="42" />
+                <TextBlock x:ConnectionId='10'                                                       Margin="109,26,0,-1" HorizontalAlignment="Left" />
+                <Button x:ConnectionId='11'                      Content="test" Width="50" Height="35" Margin="150, 5, 0, 0" HorizontalAlignment="Left"/>
+                <Button Content="复制" Width="50" Height="35" Margin="220, 5, 0, 0" HorizontalAlignment="Left"/>
+                <Button Content="粘贴" Width="50" Height="35" Margin="290, 5, 0, 0" HorizontalAlignment="Left"/>
+                <Button x:ConnectionId='12' Content="删除" Width="50" Height="36" Margin="499,12,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                        x:Name="DeleteButton"                                   IsEnabled="False" />
+                <Button Content="命名" Width="50" Height="35" Margin="360, 5, 0, 0" HorizontalAlignment="Left"/>
+                <Button x:ConnectionId='13' x:Name="PlayButton"                                 IsEnabled="True" Content="放大" Width="50" Height="35" Margin="430, 5, 0, 0" HorizontalAlignment="Left"/>
+            </Grid>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="780" Height="430" Margin="10, 5, 0, 0">
+                <!--<Button x:Name="myButton" Click="ClickHandler">Click Me</Button>-->
+                <!--<Button x:Name="PlayButton" Click="PlayButton_ClickHandler" Content="Play" IsEnabled="True"/>-->
+                <!--<ScrollViewer>-->
+                <GridView x:ConnectionId='3' x:Name="ImageGridView" IsItemClickEnabled="True" 
+                                                                        
+                          SelectionMode="Extended"                                                 
+                          Opacity="1"  Margin="9">
+                    <GridView.ItemTemplate>
+                        <DataTemplate                            >
+                            <StackPanel x:ConnectionId='4'>
+                                <Image x:ConnectionId='5' x:Name="ItemImage" Opacity="1" Height="90" Width="120" Margin="2"                                               Stretch="Uniform">
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip x:ConnectionId='7'                                          />
+                                    </ToolTipService.ToolTip>
+                                </Image>
+                                <TextBlock x:ConnectionId='6'                                                MaxWidth="110" TextWrapping="Wrap" TextAlignment="Center"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+
+                    <!--变四列-->
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsWrapGrid MaximumRowsOrColumns="6" Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+
+
+                </GridView>
+                <!--</ScrollViewer>-->
+
+            </StackPanel>
+
+        </StackPanel>
 
     </StackPanel>
 </Page>

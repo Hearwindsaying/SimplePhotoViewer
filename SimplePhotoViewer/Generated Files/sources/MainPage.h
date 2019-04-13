@@ -9,6 +9,15 @@ namespace winrt::SimplePhotoViewer::implementation
         MainPage() = default;
 
         Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> ImageSkus();
+        void ImageSkus(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& value);
+        Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> TreeViewFolders();
+        Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> SearchResults();
+        hstring CurrentSelectedFolder();
+        void CurrentSelectedFolder(hstring const& value);
+        uint32_t CurrentFolderImageNumber();
+        uint32_t CurrentFolderSelectedImageNumber();
+        winrt::event_token PropertyChanged(Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler);
+        void PropertyChanged(winrt::event_token const& token) noexcept;
     };
 }
 

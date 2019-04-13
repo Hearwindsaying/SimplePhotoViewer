@@ -2,6 +2,7 @@
 
 #include "pch.h"
 #include "DetailPage.h"
+#include "DirectoryItem.h"
 #include "ImageSku.h"
 #include "MainPage.h"
 #include "XamlMetaDataProvider.h"
@@ -41,6 +42,12 @@ int32_t WINRT_CALL WINRT_GetActivationFactory(void* classId, void** factory) noe
         if (requal(name, L"SimplePhotoViewer.DetailPage"))
         {
             *factory = winrt::detach_abi(winrt::make<winrt::SimplePhotoViewer::factory_implementation::DetailPage>());
+            return 0;
+        }
+
+        if (requal(name, L"SimplePhotoViewer.DirectoryItem"))
+        {
+            *factory = winrt::detach_abi(winrt::make<winrt::SimplePhotoViewer::factory_implementation::DirectoryItem>());
             return 0;
         }
 

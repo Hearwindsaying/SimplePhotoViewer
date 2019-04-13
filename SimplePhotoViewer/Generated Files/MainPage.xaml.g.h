@@ -28,13 +28,13 @@ namespace winrt::SimplePhotoViewer::implementation
         void UnloadObject(::winrt::Windows::UI::Xaml::DependencyObject const& dependencyObject);
         void DisconnectUnloadedObject(int32_t connectionId);
 
-        ::winrt::Windows::UI::Xaml::Controls::Button PlayButton()
+        ::winrt::Microsoft::UI::Xaml::Controls::TreeView DirectoryTreeView()
         {
-            return _PlayButton;
+            return _DirectoryTreeView;
         }
-        void PlayButton(::winrt::Windows::UI::Xaml::Controls::Button value)
+        void DirectoryTreeView(::winrt::Microsoft::UI::Xaml::Controls::TreeView value)
         {
-            _PlayButton = value;
+            _DirectoryTreeView = value;
         }
 
         ::winrt::Windows::UI::Xaml::Controls::GridView ImageGridView()
@@ -45,6 +45,33 @@ namespace winrt::SimplePhotoViewer::implementation
         {
             _ImageGridView = value;
         }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button DeleteButton()
+        {
+            return _DeleteButton;
+        }
+        void DeleteButton(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _DeleteButton = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button PlayButton()
+        {
+            return _PlayButton;
+        }
+        void PlayButton(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _PlayButton = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::AutoSuggestBox SearchAutoSuggetsBox()
+        {
+            return _SearchAutoSuggetsBox;
+        }
+        void SearchAutoSuggetsBox(::winrt::Windows::UI::Xaml::Controls::AutoSuggestBox value)
+        {
+            _SearchAutoSuggetsBox = value;
+        }
         
          ::winrt::com_ptr<::winrt::SimplePhotoViewer::implementation::XamlBindings> Bindings;
 
@@ -53,10 +80,15 @@ namespace winrt::SimplePhotoViewer::implementation
 
     private:
         struct MainPage_obj4_Bindings;
+        struct MainPage_obj15_Bindings;
+        struct MainPage_obj16_Bindings;
         struct MainPage_obj1_Bindings;
 
-        ::winrt::Windows::UI::Xaml::Controls::Button _PlayButton{nullptr};
+        ::winrt::Microsoft::UI::Xaml::Controls::TreeView _DirectoryTreeView{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::GridView _ImageGridView{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _DeleteButton{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _PlayButton{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::AutoSuggestBox _SearchAutoSuggetsBox{nullptr};
     };
 }
 

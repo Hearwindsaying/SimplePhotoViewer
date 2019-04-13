@@ -8,6 +8,7 @@ namespace winrt::SimplePhotoViewer::implementation
     {
         ImageSku() = delete;
         ImageSku(Windows::Storage::FileProperties::ImageProperties const& imageProps, Windows::Storage::StorageFile const& imageFile, hstring const& name, hstring const& type, Windows::UI::Xaml::Media::Imaging::BitmapImage const& imageThumbnail, hstring const& nameWithType);
+        ImageSku(hstring const& defaultTipString);
 
         Windows::Storage::StorageFile ImageFile();
         Windows::Storage::FileProperties::ImageProperties ImageProperties();

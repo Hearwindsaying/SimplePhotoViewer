@@ -12,6 +12,7 @@ namespace winrt::SimplePhotoViewer::implementation
 		//Constructors 
         ImageSku() = default;
         ImageSku(Windows::Storage::FileProperties::ImageProperties const& imageProps, Windows::Storage::StorageFile const& imageFile, hstring const& name, hstring const& type, Windows::UI::Xaml::Media::Imaging::BitmapImage const& imageThumbnail, hstring const& nameWithType);
+		ImageSku(hstring const& defaultTipString):m_imageNameWithType(defaultTipString){}
 
 		//Properties
         Windows::Storage::StorageFile ImageFile() const;

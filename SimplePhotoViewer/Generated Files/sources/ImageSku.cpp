@@ -8,6 +8,11 @@ namespace winrt::SimplePhotoViewer::implementation
         throw hresult_not_implemented();
     }
 
+    ImageSku::ImageSku(hstring const& defaultTipString)
+    {
+        throw hresult_not_implemented();
+    }
+
     Windows::Storage::StorageFile ImageSku::ImageFile()
     {
         throw hresult_not_implemented();

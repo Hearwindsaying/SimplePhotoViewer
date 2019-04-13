@@ -95,6 +95,7 @@
       <DependentUpon>DetailPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="DirectoryItem.h" />
     <ClInclude Include="ImageSku.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.h">
@@ -103,6 +104,7 @@
     <ClInclude Include="MainPage.h">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="Utility.h" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -136,6 +138,7 @@
       <DependentUpon>DetailPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="DirectoryItem.cpp" />
     <ClCompile Include="Generated Files\module.g.cpp" />
     <ClCompile Include="ImageSku.cpp" />
     <ClCompile Include="pch.cpp">
@@ -156,6 +159,7 @@
       <DependentUpon>DetailPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
+    <Midl Include="DirectoryItem.idl" />
     <Midl Include="ImageSku.idl" />
     <Midl Include="MainPage.idl">
       <DependentUpon>MainPage.xaml</DependentUpon>

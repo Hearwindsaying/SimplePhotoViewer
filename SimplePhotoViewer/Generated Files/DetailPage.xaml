@@ -10,75 +10,81 @@
     NavigationCacheMode="Enabled">
 
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="335*"/>
-            <RowDefinition Height="529*"/>
-            <RowDefinition Height="216*"/>
-        </Grid.RowDefinitions>
+    <Grid Margin="20, 20, 20, 20">
+        <RelativePanel Height="520">
+            <ScrollViewer Margin="0,0,0,0" 
+                          Grid.RowSpan="2" 
+                          HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Auto"
+                          ZoomMode="Enabled"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch">
+                <FlipView x:ConnectionId='13' x:Name="DetailPageFlipView"                                                    Opacity="1" Visibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True" Margin="0, 0, 0, 40" Foreground="{x:Null}" FocusVisualPrimaryBrush="{x:Null}" Background="{x:Null}" FocusVisualSecondaryBrush="{x:Null}">
+                    <FlipView.ItemTemplate>
+                        <DataTemplate                             >
+                            <StackPanel x:ConnectionId='14' FocusVisualPrimaryBrush="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Image x:ConnectionId='15' x:Name="ItemImage" Opacity="1" Margin="0"                                                  Stretch="Uniform" FocusVisualPrimaryBrush="{x:Null}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </FlipView.ItemTemplate>
 
-        <ScrollViewer Margin="0,0,0,0" Grid.RowSpan="2">
-            <FlipView x:ConnectionId='5' x:Name="DetailPageFlipView" 
-                                                                             
-                          Opacity="1" 
-                          Visibility="Visible" 
-                          ScrollViewer.HorizontalScrollBarVisibility="Auto" 
-                          ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                          HorizontalAlignment="Center" VerticalAlignment="Center"
-                          
-                            >
-                <FlipView.ItemTemplate>
-                    <DataTemplate                            >
-                        <Image x:ConnectionId='6' x:Name="ItemImage"
-                                   Opacity="1" 
-                                   Margin="4"
-                                                                                   
-                                   Stretch="Uniform"/>
-                    </DataTemplate>
-                </FlipView.ItemTemplate>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </FlipView>
+            </ScrollViewer>
+        </RelativePanel>
 
-                <ItemsPanelTemplate>
-                    <VirtualizingStackPanel />
-                </ItemsPanelTemplate>
-            </FlipView>
-        </ScrollViewer>
-
-        <ScrollViewer x:ConnectionId='2' x:Name="ThumbnailScrollViewer"
-                      HorizontalScrollMode="Enabled" 
-                      Margin="204,40,0,95" 
-                      HorizontalScrollBarVisibility="Auto" 
-                      VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Left" Width="895" VerticalAlignment="Stretch">
-            <ListView x:ConnectionId='3' x:Name="ThumbnailListView"
-                  IsItemClickEnabled="True"
-                                                     
-                                                               
-                  SelectionMode="Extended" Opacity="1" HorizontalAlignment="Left" VerticalAlignment="Top"
-                      
-                  >
-                <ListView.ItemTemplate>
-                    <DataTemplate 
+        <RelativePanel VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="171" Margin="0,0,0,0" >
+            <ScrollViewer x:ConnectionId='10'   x:Name="ThumbnailScrollViewer"
+                        HorizontalScrollMode="Auto"
+                        HorizontalScrollBarVisibility="Auto"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch">
+                <ListView x:ConnectionId='11'   x:Name="ThumbnailListView"
+                        IsItemClickEnabled="True"
+                                                           
+                                                                     
+                        SelectionMode="Extended" Opacity="1" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <ListView.ItemTemplate>
+                        <DataTemplate 
                                                  >
-                        <Image x:ConnectionId='4' x:Name="ItemImage"
+                            <Image x:ConnectionId='12' x:Name="ItemImage"
                                     Opacity="1" 
                                     Height="60"
                                     Width="60"
                                                                                  
                                     Stretch="Uniform">
-                        </Image>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ItemsStackPanel Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-            </ListView>
+                            </Image>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsStackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                </ListView>
 
 
-        </ScrollViewer>
+            </ScrollViewer>
+        </RelativePanel>
+
+        <RelativePanel Height="Auto" VerticalAlignment="Bottom">
+            <Grid RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+                <Button x:ConnectionId='2' Style="{StaticResource NavigationBackButtonNormalStyle}"                            />
+                <Button x:ConnectionId='3' Name="Bigger" Content="放大" HorizontalAlignment="Center" Margin="-206,0,0,0" />
+                <Button x:ConnectionId='4' Name="Smaller" Content="缩小" HorizontalAlignment="Center" Margin="-300,0,0,0" />
+                <Button x:ConnectionId='5' Name="Left_2" Content="上一张" HorizontalAlignment="Center" Margin="-60,0,0,0" />
+                <Button x:ConnectionId='6' Name="Right_2" Content="下一张" HorizontalAlignment="Center" Margin="60,0,0,0" />
+                <Button x:ConnectionId='7' Name="LeftTurn" Content="左转" HorizontalAlignment="Center" Margin="206,0,0,0" />
+                <Button x:ConnectionId='8' Name="RightTurn" Content="右转" HorizontalAlignment="Center" Margin="300,0,0,0" />
+                <Button x:ConnectionId='9' Content="播放" HorizontalAlignment="Left" Margin="1155,5,0,0" VerticalAlignment="Top" Width="65" 
+                                                       />
+            </Grid>
+        </RelativePanel>
+
+
+
     </Grid>
 
 

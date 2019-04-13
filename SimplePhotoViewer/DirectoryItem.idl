@@ -1,0 +1,12 @@
+namespace SimplePhotoViewer
+{
+	runtimeclass DirectoryItem : Windows.UI.Xaml.Data.INotifyPropertyChanged
+	{
+		DirectoryItem(String itemName, Windows.Foundation.Collections.IObservableVector<IInspectable> subItems, Windows.Storage.StorageFolder itemFolder);
+		DirectoryItem(String itemName, Windows.Storage.StorageFolder itemFolder);
+		
+		Windows.Foundation.Collections.IObservableVector<IInspectable> SubItems{ get;set; };
+		String Item{get;set;};
+		Windows.Storage.StorageFolder ItemFolder{ get; set; };
+	}
+}

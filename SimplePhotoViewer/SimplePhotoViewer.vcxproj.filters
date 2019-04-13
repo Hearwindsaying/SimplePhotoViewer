@@ -11,6 +11,8 @@
     <Midl Include="App.idl" />
     <Midl Include="MainPage.idl" />
     <Midl Include="ImageSku.idl" />
+    <Midl Include="DirectoryItem.idl" />
+    <Midl Include="DetailPage.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -18,12 +20,17 @@
     <ClCompile Include="MainPage.cpp" />
     <ClCompile Include="ImageSku.cpp" />
     <ClCompile Include="Generated Files\module.g.cpp" />
+    <ClCompile Include="DirectoryItem.cpp" />
+    <ClCompile Include="DetailPage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.h" />
     <ClInclude Include="MainPage.h" />
     <ClInclude Include="ImageSku.h" />
+    <ClInclude Include="DirectoryItem.h" />
+    <ClInclude Include="DetailPage.h" />
+    <ClInclude Include="Utility.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Wide310x150Logo.scale-200.png">
