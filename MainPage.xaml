@@ -1,0 +1,39 @@
+﻿<Page
+    x:Class="_19_4_8.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:_19_4_8"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid >
+        <Grid.Background>
+            <AcrylicBrush BackgroundSource="HostBackdrop" TintColor="WhiteSmoke" TintOpacity="0.8"/>
+        </Grid.Background>
+        
+        <NavigationView x:Name="MainMenu" Width="200" HorizontalAlignment="Left" PaneDisplayMode="Left" 
+                    PaneTitle="图片管理"
+                    IsBackButtonVisible="Collapsed" IsSettingsVisible="False" 
+                    ><!--返回按钮设置为否，设置按钮为否-->
+                <NavigationView.MenuItems>
+                    <NavigationViewItemHeader Content="图片" />
+                    <NavigationViewItem Icon="Home" Content="缩略图" Tag="MainPage" />
+                    <NavigationViewItem Icon="Pictures" Content="大图" Tag="DetailPage" />
+                    <NavigationViewItemSeparator/><!--分割线-->
+                    <NavigationViewItemHeader Content="文件夹" />
+                </NavigationView.MenuItems>
+
+                <NavigationView.PaneFooter>
+                    <StackPanel Orientation="Vertical">
+                        <NavigationViewItem Icon="SelectAll" Content="全选" Tag="MainPage" />
+                        <NavigationViewItem Icon="Stop" Content="清除选择" Tag="DetailPage" />
+                        <NavigationViewItem Icon="ClearSelection" Content="逆选" Tag="MainPage" />
+                    </StackPanel>
+                </NavigationView.PaneFooter>
+       
+    </NavigationView>
+    </Grid>
+    
+</Page>

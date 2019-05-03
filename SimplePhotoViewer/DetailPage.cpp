@@ -87,6 +87,7 @@ namespace winrt::SimplePhotoViewer::implementation
 		auto clickedItem = e.ClickedItem();
 		this->DetailPageFlipView().SelectedItem(clickedItem);
 
+		//this->DetailPageFlipView().ItemTemplate().
 		/*this->ThumbnailListView().ScrollIntoView();*/
 		/*this->ThumbnailListView().ScrollIntoView(m_imageSkus.GetAt(10));*/
 	}

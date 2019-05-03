@@ -28,22 +28,175 @@ namespace winrt::SimplePhotoViewer::implementation
         void UnloadObject(::winrt::Windows::UI::Xaml::DependencyObject const& dependencyObject);
         void DisconnectUnloadedObject(int32_t connectionId);
 
-        ::winrt::Microsoft::UI::Xaml::Controls::TreeView DirectoryTreeView()
+        ::winrt::Windows::UI::Xaml::Controls::SplitView splitView()
+        {
+            return _splitView;
+        }
+        void splitView(::winrt::Windows::UI::Xaml::Controls::SplitView value)
+        {
+            _splitView = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Grid TopLeftGrid()
+        {
+            return _TopLeftGrid;
+        }
+        void TopLeftGrid(::winrt::Windows::UI::Xaml::Controls::Grid value)
+        {
+            _TopLeftGrid = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Grid TreeView_Grid()
+        {
+            return _TreeView_Grid;
+        }
+        void TreeView_Grid(::winrt::Windows::UI::Xaml::Controls::Grid value)
+        {
+            _TreeView_Grid = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::ListView ListView2()
+        {
+            return _ListView2;
+        }
+        void ListView2(::winrt::Windows::UI::Xaml::Controls::ListView value)
+        {
+            _ListView2 = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::TreeView DirectoryTreeView()
         {
             return _DirectoryTreeView;
         }
-        void DirectoryTreeView(::winrt::Microsoft::UI::Xaml::Controls::TreeView value)
+        void DirectoryTreeView(::winrt::Windows::UI::Xaml::Controls::TreeView value)
         {
             _DirectoryTreeView = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::GridView ImageGridView()
+        ::winrt::Windows::UI::Xaml::Controls::ListView ListView1()
         {
-            return _ImageGridView;
+            return _ListView1;
         }
-        void ImageGridView(::winrt::Windows::UI::Xaml::Controls::GridView value)
+        void ListView1(::winrt::Windows::UI::Xaml::Controls::ListView value)
         {
-            _ImageGridView = value;
+            _ListView1 = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button SplitView_Button()
+        {
+            return _SplitView_Button;
+        }
+        void SplitView_Button(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _SplitView_Button = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::TextBlock SimplePhotoViewer_TextBlock()
+        {
+            return _SimplePhotoViewer_TextBlock;
+        }
+        void SimplePhotoViewer_TextBlock(::winrt::Windows::UI::Xaml::Controls::TextBlock value)
+        {
+            _SimplePhotoViewer_TextBlock = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::RelativePanel Windows_RelativePanel()
+        {
+            return _Windows_RelativePanel;
+        }
+        void Windows_RelativePanel(::winrt::Windows::UI::Xaml::Controls::RelativePanel value)
+        {
+            _Windows_RelativePanel = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Canvas dragSelectionCanvas()
+        {
+            return _dragSelectionCanvas;
+        }
+        void dragSelectionCanvas(::winrt::Windows::UI::Xaml::Controls::Canvas value)
+        {
+            _dragSelectionCanvas = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Grid PointerDetectedGrid()
+        {
+            return _PointerDetectedGrid;
+        }
+        void PointerDetectedGrid(::winrt::Windows::UI::Xaml::Controls::Grid value)
+        {
+            _PointerDetectedGrid = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Grid DisplayGrid()
+        {
+            return _DisplayGrid;
+        }
+        void DisplayGrid(::winrt::Windows::UI::Xaml::Controls::Grid value)
+        {
+            _DisplayGrid = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::StackPanel Deleteme_StackPanel()
+        {
+            return _Deleteme_StackPanel;
+        }
+        void Deleteme_StackPanel(::winrt::Windows::UI::Xaml::Controls::StackPanel value)
+        {
+            _Deleteme_StackPanel = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button SlidePlay()
+        {
+            return _SlidePlay;
+        }
+        void SlidePlay(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _SlidePlay = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button ThePreviousPicture()
+        {
+            return _ThePreviousPicture;
+        }
+        void ThePreviousPicture(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _ThePreviousPicture = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button TheLatterPicture()
+        {
+            return _TheLatterPicture;
+        }
+        void TheLatterPicture(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _TheLatterPicture = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button Copy()
+        {
+            return _Copy;
+        }
+        void Copy(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _Copy = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button Shear()
+        {
+            return _Shear;
+        }
+        void Shear(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _Shear = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button Paste()
+        {
+            return _Paste;
+        }
+        void Paste(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _Paste = value;
         }
 
         ::winrt::Windows::UI::Xaml::Controls::Button DeleteButton()
@@ -55,13 +208,85 @@ namespace winrt::SimplePhotoViewer::implementation
             _DeleteButton = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::Button PlayButton()
+        ::winrt::Windows::UI::Xaml::Controls::Button Cancel()
         {
-            return _PlayButton;
+            return _Cancel;
         }
-        void PlayButton(::winrt::Windows::UI::Xaml::Controls::Button value)
+        void Cancel(::winrt::Windows::UI::Xaml::Controls::Button value)
         {
-            _PlayButton = value;
+            _Cancel = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button Enlarge()
+        {
+            return _Enlarge;
+        }
+        void Enlarge(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _Enlarge = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button Reduce()
+        {
+            return _Reduce;
+        }
+        void Reduce(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _Reduce = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button Counterclockwise()
+        {
+            return _Counterclockwise;
+        }
+        void Counterclockwise(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _Counterclockwise = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button Clockwise()
+        {
+            return _Clockwise;
+        }
+        void Clockwise(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _Clockwise = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button Rename()
+        {
+            return _Rename;
+        }
+        void Rename(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _Rename = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button OpenFile()
+        {
+            return _OpenFile;
+        }
+        void OpenFile(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _OpenFile = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button ToneConversion()
+        {
+            return _ToneConversion;
+        }
+        void ToneConversion(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _ToneConversion = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::GridView ImageGridView()
+        {
+            return _ImageGridView;
+        }
+        void ImageGridView(::winrt::Windows::UI::Xaml::Controls::GridView value)
+        {
+            _ImageGridView = value;
         }
 
         ::winrt::Windows::UI::Xaml::Controls::AutoSuggestBox SearchAutoSuggetsBox()
@@ -72,6 +297,42 @@ namespace winrt::SimplePhotoViewer::implementation
         {
             _SearchAutoSuggetsBox = value;
         }
+
+        ::winrt::Windows::UI::Xaml::Controls::Grid FolderPath()
+        {
+            return _FolderPath;
+        }
+        void FolderPath(::winrt::Windows::UI::Xaml::Controls::Grid value)
+        {
+            _FolderPath = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button Forward()
+        {
+            return _Forward;
+        }
+        void Forward(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _Forward = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button Back()
+        {
+            return _Back;
+        }
+        void Back(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _Back = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Border dragSelectionBorder()
+        {
+            return _dragSelectionBorder;
+        }
+        void dragSelectionBorder(::winrt::Windows::UI::Xaml::Controls::Border value)
+        {
+            _dragSelectionBorder = value;
+        }
         
          ::winrt::com_ptr<::winrt::SimplePhotoViewer::implementation::XamlBindings> Bindings;
 
@@ -79,16 +340,45 @@ namespace winrt::SimplePhotoViewer::implementation
         bool _contentLoaded{false};
 
     private:
-        struct MainPage_obj4_Bindings;
-        struct MainPage_obj15_Bindings;
-        struct MainPage_obj16_Bindings;
+        struct MainPage_obj7_Bindings;
+        struct MainPage_obj33_Bindings;
+        struct MainPage_obj38_Bindings;
         struct MainPage_obj1_Bindings;
 
-        ::winrt::Microsoft::UI::Xaml::Controls::TreeView _DirectoryTreeView{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::GridView _ImageGridView{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::SplitView _splitView{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Grid _TopLeftGrid{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Grid _TreeView_Grid{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::ListView _ListView2{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::TreeView _DirectoryTreeView{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::ListView _ListView1{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _SplitView_Button{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::TextBlock _SimplePhotoViewer_TextBlock{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::RelativePanel _Windows_RelativePanel{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Canvas _dragSelectionCanvas{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Grid _PointerDetectedGrid{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Grid _DisplayGrid{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::StackPanel _Deleteme_StackPanel{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _SlidePlay{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _ThePreviousPicture{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _TheLatterPicture{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _Copy{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _Shear{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _Paste{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Button _DeleteButton{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _PlayButton{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _Cancel{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _Enlarge{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _Reduce{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _Counterclockwise{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _Clockwise{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _Rename{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _OpenFile{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _ToneConversion{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::GridView _ImageGridView{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::AutoSuggestBox _SearchAutoSuggetsBox{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Grid _FolderPath{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _Forward{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _Back{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Border _dragSelectionBorder{nullptr};
     };
 }
 
