@@ -109,6 +109,15 @@ namespace winrt::SimplePhotoViewer::implementation
             _Windows_RelativePanel = value;
         }
 
+        ::winrt::Windows::UI::Xaml::Controls::Grid PointerDetectedGrid()
+        {
+            return _PointerDetectedGrid;
+        }
+        void PointerDetectedGrid(::winrt::Windows::UI::Xaml::Controls::Grid value)
+        {
+            _PointerDetectedGrid = value;
+        }
+
         ::winrt::Windows::UI::Xaml::Controls::Canvas dragSelectionCanvas()
         {
             return _dragSelectionCanvas;
@@ -118,13 +127,22 @@ namespace winrt::SimplePhotoViewer::implementation
             _dragSelectionCanvas = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::Grid PointerDetectedGrid()
+        ::winrt::Windows::UI::Xaml::Controls::Border dragSelectionBorder()
         {
-            return _PointerDetectedGrid;
+            return _dragSelectionBorder;
         }
-        void PointerDetectedGrid(::winrt::Windows::UI::Xaml::Controls::Grid value)
+        void dragSelectionBorder(::winrt::Windows::UI::Xaml::Controls::Border value)
         {
-            _PointerDetectedGrid = value;
+            _dragSelectionBorder = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Grid TitleGrid()
+        {
+            return _TitleGrid;
+        }
+        void TitleGrid(::winrt::Windows::UI::Xaml::Controls::Grid value)
+        {
+            _TitleGrid = value;
         }
 
         ::winrt::Windows::UI::Xaml::Controls::Grid DisplayGrid()
@@ -217,42 +235,6 @@ namespace winrt::SimplePhotoViewer::implementation
             _Cancel = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::Button Enlarge()
-        {
-            return _Enlarge;
-        }
-        void Enlarge(::winrt::Windows::UI::Xaml::Controls::Button value)
-        {
-            _Enlarge = value;
-        }
-
-        ::winrt::Windows::UI::Xaml::Controls::Button Reduce()
-        {
-            return _Reduce;
-        }
-        void Reduce(::winrt::Windows::UI::Xaml::Controls::Button value)
-        {
-            _Reduce = value;
-        }
-
-        ::winrt::Windows::UI::Xaml::Controls::Button Counterclockwise()
-        {
-            return _Counterclockwise;
-        }
-        void Counterclockwise(::winrt::Windows::UI::Xaml::Controls::Button value)
-        {
-            _Counterclockwise = value;
-        }
-
-        ::winrt::Windows::UI::Xaml::Controls::Button Clockwise()
-        {
-            return _Clockwise;
-        }
-        void Clockwise(::winrt::Windows::UI::Xaml::Controls::Button value)
-        {
-            _Clockwise = value;
-        }
-
         ::winrt::Windows::UI::Xaml::Controls::Button Rename()
         {
             return _Rename;
@@ -271,15 +253,6 @@ namespace winrt::SimplePhotoViewer::implementation
             _OpenFile = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::Button ToneConversion()
-        {
-            return _ToneConversion;
-        }
-        void ToneConversion(::winrt::Windows::UI::Xaml::Controls::Button value)
-        {
-            _ToneConversion = value;
-        }
-
         ::winrt::Windows::UI::Xaml::Controls::GridView ImageGridView()
         {
             return _ImageGridView;
@@ -296,6 +269,15 @@ namespace winrt::SimplePhotoViewer::implementation
         void SearchAutoSuggetsBox(::winrt::Windows::UI::Xaml::Controls::AutoSuggestBox value)
         {
             _SearchAutoSuggetsBox = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Grid RealFolderPath_Grid()
+        {
+            return _RealFolderPath_Grid;
+        }
+        void RealFolderPath_Grid(::winrt::Windows::UI::Xaml::Controls::Grid value)
+        {
+            _RealFolderPath_Grid = value;
         }
 
         ::winrt::Windows::UI::Xaml::Controls::Grid FolderPath()
@@ -324,15 +306,6 @@ namespace winrt::SimplePhotoViewer::implementation
         {
             _Back = value;
         }
-
-        ::winrt::Windows::UI::Xaml::Controls::Border dragSelectionBorder()
-        {
-            return _dragSelectionBorder;
-        }
-        void dragSelectionBorder(::winrt::Windows::UI::Xaml::Controls::Border value)
-        {
-            _dragSelectionBorder = value;
-        }
         
          ::winrt::com_ptr<::winrt::SimplePhotoViewer::implementation::XamlBindings> Bindings;
 
@@ -341,8 +314,8 @@ namespace winrt::SimplePhotoViewer::implementation
 
     private:
         struct MainPage_obj7_Bindings;
-        struct MainPage_obj33_Bindings;
-        struct MainPage_obj38_Bindings;
+        struct MainPage_obj32_Bindings;
+        struct MainPage_obj37_Bindings;
         struct MainPage_obj1_Bindings;
 
         ::winrt::Windows::UI::Xaml::Controls::SplitView _splitView{nullptr};
@@ -354,8 +327,10 @@ namespace winrt::SimplePhotoViewer::implementation
         ::winrt::Windows::UI::Xaml::Controls::Button _SplitView_Button{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::TextBlock _SimplePhotoViewer_TextBlock{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::RelativePanel _Windows_RelativePanel{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Canvas _dragSelectionCanvas{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Grid _PointerDetectedGrid{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Canvas _dragSelectionCanvas{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Border _dragSelectionBorder{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Grid _TitleGrid{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Grid _DisplayGrid{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::StackPanel _Deleteme_StackPanel{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Button _SlidePlay{nullptr};
@@ -366,19 +341,14 @@ namespace winrt::SimplePhotoViewer::implementation
         ::winrt::Windows::UI::Xaml::Controls::Button _Paste{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Button _DeleteButton{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Button _Cancel{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _Enlarge{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _Reduce{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _Counterclockwise{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _Clockwise{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Button _Rename{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Button _OpenFile{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _ToneConversion{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::GridView _ImageGridView{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::AutoSuggestBox _SearchAutoSuggetsBox{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Grid _RealFolderPath_Grid{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Grid _FolderPath{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Button _Forward{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Button _Back{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Border _dragSelectionBorder{nullptr};
     };
 }
 

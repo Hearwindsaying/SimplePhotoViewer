@@ -608,6 +608,7 @@ std::vector<::winrt::Windows::UI::Xaml::Markup::IXamlMetadataProvider> const& Xa
     if (_otherProviders.empty())
     {
         _otherProviders.push_back(::winrt::Microsoft::UI::Xaml::XamlTypeInfo::XamlControlsXamlMetaDataProvider());
+        _otherProviders.push_back(::winrt::Microsoft::UI::Xaml::XamlTypeInfo::XamlControlsXamlMetaDataProvider());
     }
     return _otherProviders;
 }

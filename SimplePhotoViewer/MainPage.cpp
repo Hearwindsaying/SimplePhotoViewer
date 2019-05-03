@@ -31,7 +31,7 @@ namespace winrt::SimplePhotoViewer::implementation
 		auto coreTitleBar = Windows::ApplicationModel::Core::CoreApplication::GetCurrentView().TitleBar();//获取应用程序的活动视图->的标题栏对象//获取的是一个CoreApplicationViewTitleBar对象，主要控制标题栏相关功能。
 		auto appTitleBar = Windows::UI::ViewManagement::ApplicationView::GetForCurrentView().TitleBar();//获取的是一个ApplicationViewTitleBar对象，主要用于控制标题栏显示样式。
 		coreTitleBar.ExtendViewIntoTitleBar(true);//标题栏对象里面的扩充标题栏属性
-		//Windows::UI::Xaml::Window::Current().SetTitleBar(FolderPath);//文件夹名那一栏就可以正常拖拽
+		Windows::UI::Xaml::Window::Current().SetTitleBar(this->RealFolderPath_Grid());//文件夹名那一栏就可以正常拖拽
 
 		this->m_imageSkus = single_threaded_observable_vector<Windows::Foundation::IInspectable>();
 		this->m_treeViewFolders = single_threaded_observable_vector<Windows::Foundation::IInspectable>();
@@ -244,57 +244,97 @@ namespace winrt::SimplePhotoViewer::implementation
 				/*co_await this->FillTreeNodes(rootNode);*/
 			}
 		}
-		
 
-		if (this->m_imageSkus.Size() == 0)
-		{
-			auto defaultFolder = co_await this->LoadDefaultFolder();
+		//if (this->m_imageSkus.Size() == 0)
+		//{
+		//	auto defaultFolder = co_await this->LoadDefaultFolder();
 
-			Windows::Storage::Search::QueryOptions options{};
-			options.FolderDepth(Windows::Storage::Search::FolderDepth::Deep);
-			options.FileTypeFilter().Append(L".jpg");
-			options.FileTypeFilter().Append(L".png");
-			options.FileTypeFilter().Append(L".bmp");
-			options.FileTypeFilter().Append(L".tif");
-			options.FileTypeFilter().Append(L".gif");
-
-
-			auto result = defaultFolder.CreateFileQueryWithOptions(options);
-			auto imageFiles = co_await result.GetFilesAsync();
-			this->CurrentFolderImageNumber(imageFiles.Size());
-
-			//// Populate Photos collection.
-			/*deleteme:index*/
-			auto statisticInc = 0;
-			for (auto&& file : imageFiles)
-			{
-				auto imageProperties = co_await file.Properties().GetImagePropertiesAsync();
+		//	Windows::Storage::Search::QueryOptions options{};
+		//	options.FolderDepth(Windows::Storage::Search::FolderDepth::Deep);
+		//	options.FileTypeFilter().Append(L".jpg");
+		//	options.FileTypeFilter().Append(L".png");
+		//	options.FileTypeFilter().Append(L".bmp");
+		//	options.FileTypeFilter().Append(L".tif");
+		//	options.FileTypeFilter().Append(L".gif");
 
 
-				auto thumbnail = co_await file.GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::SingleItem);
-				//or:auto thumbnail = co_await file.GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::PicturesView);
-				Windows::UI::Xaml::Media::Imaging::BitmapImage bitmapImage{};
-				bitmapImage.SetSource(thumbnail);
-				thumbnail.Close();
-				std::wstring wstr = std::to_wstring(statisticInc++);
-				auto imageSku = winrt::make<ImageSku>(imageProperties, file, file.DisplayName() + hstring(wstr), file.DisplayType(), bitmapImage, file.Name());
+		//	auto result = defaultFolder.CreateFileQueryWithOptions(options);
+		//	auto imageFiles = co_await result.GetFilesAsync();
+		//	this->CurrentFolderImageNumber(imageFiles.Size());
 
-				/*Windows::Storage::Streams::IRandomAccessStream stream{ co_await file.OpenAsync(Windows::Storage::FileAccessMode::Read) };
-				Windows::UI::Xaml::Media::Imaging::BitmapImage bitmap{};
-				bitmap.SetSource(stream);
-				imageSku.ImageContent(bitmap);*/
+		//	//// Populate Photos collection.
+		//	for (auto&& file : imageFiles)
+		//	{
+		//		auto imageProperties = co_await file.Properties().GetImagePropertiesAsync();
+
+
+		//		auto thumbnail = co_await file.GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::SingleItem);
+		//		//or:auto thumbnail = co_await file.GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::PicturesView);
+		//		Windows::UI::Xaml::Media::Imaging::BitmapImage bitmapImage{};
+		//		bitmapImage.SetSource(thumbnail);
+		//		thumbnail.Close();
+		//		auto imageSku = winrt::make<ImageSku>(imageProperties, file, file.DisplayName(), file.DisplayType(), bitmapImage, file.Name());
+
+		//		/*Windows::Storage::Streams::IRandomAccessStream stream{ co_await file.OpenAsync(Windows::Storage::FileAccessMode::Read) };
+		//		Windows::UI::Xaml::Media::Imaging::BitmapImage bitmap{};
+		//		bitmap.SetSource(stream);
+		//		imageSku.ImageContent(bitmap);*/
 
 
 
-				this->ImageSkus().Append(imageSku);
+		//		this->ImageSkus().Append(imageSku);
 
 
-			}
-			wchar_t testchar[20] = { '6','6','e' };
-			OutputDebugString(testchar);
-		}
+		//	}
+		//	wchar_t testchar[20] = { '6','6','e' };
+		//	OutputDebugString(testchar);
+		//}
 	}
 	
+	/*Refresh current displaying folder using specified storageFolder*/
+	/*See also:DirectoryItem_Invoked()*/
+	Windows::Foundation::IAsyncAction MainPage::RefreshCurrentFolder(Windows::Storage::StorageFolder const storageFolder)
+	{
+		this->m_imageSkus.Clear();
+
+		auto defaultFolder = co_await this->LoadDefaultFolder();
+
+		Windows::Storage::Search::QueryOptions options{};
+		options.FolderDepth(Windows::Storage::Search::FolderDepth::Shallow);
+		options.FileTypeFilter().Append(L".jpg");
+		options.FileTypeFilter().Append(L".png");
+		options.FileTypeFilter().Append(L".bmp");
+		options.FileTypeFilter().Append(L".tif");
+		options.FileTypeFilter().Append(L".gif");
+
+
+		auto result = defaultFolder.CreateFileQueryWithOptions(options);
+		auto imageFiles = co_await result.GetFilesAsync();
+
+		this->CurrentFolderImageNumber(imageFiles.Size());
+
+		//// Populate Photos collection.
+		for (auto&& file : imageFiles)
+		{
+			auto imageProperties = co_await file.Properties().GetImagePropertiesAsync();
+
+
+			auto thumbnail = co_await file.GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::SingleItem);
+			//or:auto thumbnail = co_await file.GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::PicturesView);
+			Windows::UI::Xaml::Media::Imaging::BitmapImage bitmapImage{};
+			bitmapImage.SetSource(thumbnail);
+			thumbnail.Close();
+
+			auto imageSku = winrt::make<ImageSku>(imageProperties, file, file.DisplayName(), file.DisplayType(), bitmapImage, file.Name());
+
+			/*Windows::Storage::Streams::IRandomAccessStream stream{ co_await file.OpenAsync(Windows::Storage::FileAccessMode::Read) };
+			Windows::UI::Xaml::Media::Imaging::BitmapImage bitmap{};
+			bitmap.SetSource(stream);
+			imageSku.ImageContent(bitmap);*/
+			this->ImageSkus().Append(imageSku);
+		}
+	}
+
 	Windows::Foundation::IAsyncAction MainPage::DirectoryItem_Expanding(Windows::UI::Xaml::Controls::TreeView const sender, Windows::UI::Xaml::Controls::TreeViewExpandingEventArgs const args)
 	{
 		using StorageFolder = Windows::Storage::StorageFolder;
@@ -412,46 +452,7 @@ namespace winrt::SimplePhotoViewer::implementation
 		this->currentSelectedFolderPathName = itemFolder.Path();
 		this->CurrentSelectedFolder(itemFolder.Name());
 
-		this->m_imageSkus.Clear();
-
-		auto defaultFolder = co_await this->LoadDefaultFolder();
-
-		Windows::Storage::Search::QueryOptions options{};
-		options.FolderDepth(Windows::Storage::Search::FolderDepth::Shallow);
-		options.FileTypeFilter().Append(L".jpg");
-		options.FileTypeFilter().Append(L".png");
-
-
-		auto result = defaultFolder.CreateFileQueryWithOptions(options);
-		auto imageFiles = co_await result.GetFilesAsync();
-
-		this->CurrentFolderImageNumber(imageFiles.Size());
-
-		//// Populate Photos collection.
-		for (auto&& file : imageFiles)
-		{
-			auto imageProperties = co_await file.Properties().GetImagePropertiesAsync();
-
-
-			auto thumbnail = co_await file.GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::SingleItem);
-			//or:auto thumbnail = co_await file.GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::PicturesView);
-			Windows::UI::Xaml::Media::Imaging::BitmapImage bitmapImage{};
-			bitmapImage.SetSource(thumbnail);
-			thumbnail.Close();
-
-			auto imageSku = winrt::make<ImageSku>(imageProperties, file, file.DisplayName(), file.DisplayType(), bitmapImage, file.Name());
-
-			/*Windows::Storage::Streams::IRandomAccessStream stream{ co_await file.OpenAsync(Windows::Storage::FileAccessMode::Read) };
-			Windows::UI::Xaml::Media::Imaging::BitmapImage bitmap{};
-			bitmap.SetSource(stream);
-			imageSku.ImageContent(bitmap);*/
-
-
-
-			this->ImageSkus().Append(imageSku);
-
-
-		}
+		co_await this->RefreshCurrentFolder(nullptr);
 
 	}
 	
@@ -462,6 +463,7 @@ namespace winrt::SimplePhotoViewer::implementation
 		this->DeleteButton().IsEnabled(selectedNum ? true : false);
 	}
 
+	/*Load current folder selected by TreeViewItem*/
 	Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> MainPage::LoadDefaultFolder()
 	{
 		//std::wstring level2FolderName{ L"D:\\Project\\TestResource" };

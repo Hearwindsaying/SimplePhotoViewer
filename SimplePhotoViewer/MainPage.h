@@ -40,6 +40,9 @@ namespace winrt::SimplePhotoViewer::implementation
 		Windows::Foundation::IAsyncAction ClickHandler(Windows::Foundation::IInspectable const, Windows::UI::Xaml::RoutedEventArgs const);
 		
 		void PlayButton_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&);
+
+		void SplitViewButton_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) {}
+
 		void ThePreviousPicture_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&){}
 		void TheLatterPicture_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) {}
 		void Copy_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) {}
@@ -100,6 +103,8 @@ namespace winrt::SimplePhotoViewer::implementation
 	private:
 		Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> LoadDefaultFolder();
 		Windows::Foundation::IAsyncAction FillTreeNodes(Windows::UI::Xaml::Controls::TreeViewNode const node);
+
+		Windows::Foundation::IAsyncAction RefreshCurrentFolder(Windows::Storage::StorageFolder const storageFolder);
 
 		/*TODO:should author and cosume relevant event for elegance.*/
 		void CurrentFolderImageNumber(uint32_t value)

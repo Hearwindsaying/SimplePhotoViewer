@@ -10,162 +10,14 @@
     
     NavigationCacheMode="Enabled">
 
-    <!--<SplitView x:Name="ShellSplitView"
-                   IsPaneOpen="True"
-                   CompactPaneLength="48"
-                   OpenPaneLength="280"
-                   DisplayMode="CompactInline"
-                   FontFamily="Segoe UI">
-        <SplitView.Pane>
-            <Grid x:Name="SplitViewPane"
-                      Padding="0 32 0 0" RenderTransformOrigin="0.5,0.509" Margin="0,0,0,110">
-                <Grid.Background>
-                    <AcrylicBrush BackgroundSource="HostBackdrop" TintColor="WhiteSmoke" TintOpacity="0.8"/>
-                </Grid.Background>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="auto" />
-                </Grid.RowDefinitions>
-                -->
-    <!--Navigation Tree-->
-    <!--
-
-                <ScrollViewer>
-                    <TreeView x:Name="DirectoryTreeView"
-                           HorizontalAlignment="Stretch" 
-                           Height="1060" 
-                           Margin="0,0,-151.2,0" 
-                           VerticalAlignment="Stretch"
-                           ItemsSource="{x:Bind TreeViewFolders, Mode=OneWay}"
-                           CanDrag="False"
-                           CanDragItems="False"
-                           CanReorderItems="False"
-                           Expanding="DirectoryItem_Expanding"
-                           Collapsed="DirectoryItem_Collapsed"
-                           ItemInvoked="DirectoryItem_Invoked">
-                        <TreeView.ItemTemplate>
-                            <DataTemplate x:DataType="local:DirectoryItem">
-                                <TreeViewItem ItemsSource="{x:Bind SubItems, Mode=OneWay}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <Image Width="20" Source="D:\Project\SimplePhotoViewer\SimplePhotoViewer\SimplePhotoViewer\Assets/folder.png"/>
-                                        <TextBlock Margin="0,0,10,0"/>
-                                        <TextBlock Text="{x:Bind Item}" />
-                                    </StackPanel>
-                                </TreeViewItem>
-                            </DataTemplate>
-                        </TreeView.ItemTemplate>
-                    </TreeView>
-                </ScrollViewer>
-            </Grid>
-        </SplitView.Pane>
-
-        <SplitView.Content>
-            <StackPanel Orientation="Horizontal" Margin="0,10,10,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-                <StackPanel Orientation="Vertical" Height="1060" Margin="0,0,-1630,0">
-                    <Grid>
-                        <Grid.Background>
-                            <AcrylicBrush BackgroundSource="HostBackdrop" TintColor="WhiteSmoke" TintOpacity="0.8"/>
-                        </Grid.Background>
-
-
-
-                        <TextBlock Text="Path: E:\banner" FontSize="25" HorizontalAlignment="Left" />
-
-                        <AutoSuggestBox x:Name="SearchAutoSuggetsBox" HorizontalAlignment="Stretch" Margin="390,0,0,0" VerticalAlignment="Top"
-                                QueryIcon="Find" RequestedTheme="Light" PlaceholderText="在当前文件夹中搜索"
-                                SuggestionChosen="SearchBox_SuggestionChosen"
-                                TextChanged="SearchBox_TextChanged"
-                                QuerySubmitted="SearchBox_QuerySubmitted"
-                                UpdateTextOnSelect="False"
-                                >
-                            <AutoSuggestBox.ItemTemplate>
-                                <DataTemplate x:DataType="local:ImageSku">
-                                    <TextBlock Text="{x:Bind ImageNameWithType, Mode=OneWay}"></TextBlock>
-                                </DataTemplate>
-                            </AutoSuggestBox.ItemTemplate>
-                        </AutoSuggestBox>
-                    </Grid>
-
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="1455" Height="981" Margin="0,5,0.4,0">
-                        <Button x:Name="myButton" Click="ClickHandler" d:IsHidden="True">Click Me</Button>
-                        <ScrollViewer>
-                            <Grid Width="1396"
-                                  PointerPressed="Windows_MouseDown"
-                                  PointerMoved="Windows_MouseHold"
-                                  PointerReleased="Windows_MouseUp"
-                                  x:Name="GridViewGrid" Height="836">
-                                <Image Source="../Assets/file.png" Stretch="Uniform" Width="50" Height="50" HorizontalAlignment="Left"/>
-                                <TextBlock Text="{x:Bind Mode=OneWay, Path=CurrentSelectedFolder}" Margin="60, 5, 0, 0" HorizontalAlignment="Left" />
-                                <TextBlock Text="图片数：" Margin="60, 25, 0, 0" HorizontalAlignment="Left" />
-                                <TextBlock Text="已选中：" Margin="59,-28,0,53" HorizontalAlignment="Left" />
-                                <TextBlock Text="{x:Bind Mode=OneWay, Path=CurrentFolderSelectedImageNumber}" Margin="105,-31,0,56" HorizontalAlignment="Left" Width="42" />
-                                <TextBlock Text="{x:Bind Mode=OneWay, Path=CurrentFolderImageNumber}" Margin="109,26,0,-1" HorizontalAlignment="Left" />
-                                <Button Click="ClickHandler" Content="test" Width="50" Height="35" Margin="150, 5, 0, 0" HorizontalAlignment="Left"/>
-                                <Button Content="复制" Width="50" Height="35" Margin="220, 5, 0, 0" HorizontalAlignment="Left"/>
-                                <Button Content="粘贴" Width="50" Height="35" Margin="290, 5, 0, 0" HorizontalAlignment="Left"/>
-                                <Button Content="删除" Width="50" Height="36" Margin="499,12,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
-                        x:Name="DeleteButton" Click="DeleteButton_ClickHandler" IsEnabled="False" />
-                                <Button Content="命名" Width="50" Height="35" Margin="360, 5, 0, 0" HorizontalAlignment="Left"/>
-                                <Button x:Name="PlayButton" Click="PlayButton_ClickHandler" IsEnabled="True" Content="放大" Width="50" Height="35" Margin="430, 5, 0, 0" HorizontalAlignment="Left"/>
-
-
-
-                                <Canvas x:Name="dragSelectionCanvas" Visibility="Visible" Margin="0,0,85,52" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-                                    <GridView x:Name="ImageGridView" IsItemClickEnabled="True" 
-                                            ItemsSource="{x:Bind Mode=OneWay, Path=ImageSkus}" 
-                                            SelectionMode="Extended" SelectionChanged="GridViewItem_SelectionChanged"
-                                            Opacity="100" Height="812" Canvas.Left="9" Canvas.Top="9" Width="1362"
-                                              Canvas.ZIndex="0" Visibility="Visible">
-                                        <GridView.ItemTemplate>
-                                            <DataTemplate x:DataType="local:ImageSku">
-                                                <StackPanel>
-                                                    <Image x:Name="ItemImage" Opacity="1" Height="90" Width="120" Margin="2" Source="{x:Bind Mode=OneWay, Path=ImageThumbnail}" Stretch="Uniform">
-                                                        <ToolTipService.ToolTip>
-                                                            <ToolTip Content="{x:Bind Mode=OneWay, Path=ImageName}"/>
-                                                        </ToolTipService.ToolTip>
-                                                    </Image>
-                                                    <TextBlock Text="{x:Bind Mode=OneWay, Path=ImageNameWithType}" MaxWidth="110" TextWrapping="Wrap" TextAlignment="Center"/>
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </GridView.ItemTemplate>
-
-                                        -->
-    <!--变四列-->
-    <!--
-                                        <GridView.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <ItemsWrapGrid MaximumRowsOrColumns="6" Orientation="Horizontal"/>
-                                            </ItemsPanelTemplate>
-                                        </GridView.ItemsPanel>
-                                    </GridView>
-                                    <Border x:Name="dragSelectionBorder"
-                                        Visibility="Collapsed"
-                                        BorderBrush="Blue"
-                                        BorderThickness="1"
-                                        Background="LightBlue"
-                                        CornerRadius="1"
-                                        Opacity="1" Height="280" Width="450"
-                                            Canvas.ZIndex="1" Canvas.Left="231" Canvas.Top="189" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                                    <TextBlock Text="test" TextWrapping="NoWrap" Style="{StaticResource TitleTextBlockStyle}" Canvas.Left="27" Canvas.Top="60" VerticalAlignment="Stretch" Canvas.ZIndex="2"/>
-                                </Canvas>
-
-                            </Grid>
-                        </ScrollViewer>
-
-                    </StackPanel>
-
-                </StackPanel>
-
-            </StackPanel>
-        </SplitView.Content>
-    </SplitView>-->
-
-
     <SplitView x:ConnectionId='2' x:Name="splitView" PaneBackground="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
            IsPaneOpen="True"  OpenPaneLength="200" CompactPaneLength="38" DisplayMode="CompactInline">
         <!--左边栏-->
         <SplitView.Pane>
             <Grid>
+                <Grid.Background>
+                    <AcrylicBrush BackgroundSource="HostBackdrop" TintColor="WhiteSmoke" TintOpacity="0.6"/>
+                </Grid.Background>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -179,13 +31,13 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Button x:ConnectionId='10' Name="SplitView_Button"
+                    <Button x:ConnectionId='10' Name="SplitView_Button"                                     
                             FontFamily="Segoe MDL2 Assets" Content="&#xE14C;"
                             Background="Transparent"
-                            Width="38" Height="35" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center"
+                            Width="38" Height="32" 
                             />
                     <TextBlock x:ConnectionId='11'  x:Name="SimplePhotoViewer_TextBlock" Text="简单图片浏览器" Style="{StaticResource BaseTextBlockStyle}"
-                                Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="36" Width="162" FontWeight="Bold" FlowDirection="LeftToRight" Margin="0,0,0,0"/>
+                                 Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,5"/>
                 </Grid>
 
                 <!--第二行：缩略图、大图、幻灯片-->
@@ -193,7 +45,7 @@
                     <ListView x:ConnectionId='9' Name="ListView1" VerticalAlignment="Stretch" IsItemClickEnabled="True" SelectionMode="None">
                         <ListView.Items>
                             <ListViewItem IsEnabled="False">
-                                <StackPanel Orientation="Horizontal" ToolTipService.ToolTip="缩略图">
+                                <StackPanel Orientation="Horizontal" ToolTipService.ToolTip="缩略图（当前界面）">
                                     <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE10F;" VerticalAlignment="Center"/>
                                     <TextBlock Text="缩略图" VerticalAlignment="Center" Margin="12,0,0,0"/>
                                 </StackPanel>
@@ -243,7 +95,7 @@
                 <Grid Grid.Row ="3">
                     <ListView x:ConnectionId='5' Name="ListView2" VerticalAlignment="Stretch" IsItemClickEnabled="True" SelectionMode="None">
                         <ListView.Items>
-                            <ListViewItem Rotation="1">
+                            <ListViewItem>
                                 <StackPanel Orientation="Horizontal" >
                                     <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE14E;" VerticalAlignment="Center"/>
                                     <TextBlock Text="全选" VerticalAlignment="Center" Margin="12,0,0,0"/>
@@ -272,17 +124,9 @@
         <SplitView.Content>
             <RelativePanel x:ConnectionId='12' x:Name="Windows_RelativePanel">
 
-                <Canvas x:ConnectionId='13' x:Name="dragSelectionCanvas" Visibility="Collapsed" >
-                    <Border x:ConnectionId='42' x:Name="dragSelectionBorder"
-                                Visibility="Visible"
-                                BorderBrush="Blue"
-                                BorderThickness="1"
-                                Background="LightBlue"
-                                CornerRadius="1"
-                                Opacity="0.5" Height="188" Width="110" Canvas.Left="50" Canvas.Top="365"/>
-                </Canvas>
 
-                <Grid x:ConnectionId='14'   RelativePanel.AlignLeftWithPanel="True"
+
+                <Grid x:ConnectionId='13'   RelativePanel.AlignLeftWithPanel="True"
                         RelativePanel.AlignTopWithPanel="True"
                         RelativePanel.AlignRightWithPanel="True"
                         RelativePanel.AlignBottomWithPanel="True"
@@ -295,43 +139,51 @@
                     </Grid.RowDefinitions>
 
                     <!--第一行：简单功能行-->
-                    <Grid Margin="0,0,138,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Grid x:ConnectionId='16' x:Name="TitleGrid" Margin="0,0,138,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Grid.Background>
+                            <AcrylicBrush BackgroundSource="HostBackdrop" TintColor="White" TintOpacity="0.9"/>
+                        </Grid.Background>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <Grid HorizontalAlignment="Stretch" Margin="0,0,0,340" VerticalAlignment="Stretch">
+                        <Grid Margin="0,0,0.4,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
-                                <Button x:ConnectionId='41' Name="Back"
+                                <Button x:ConnectionId='43' Name="Back"
                                     FontFamily="Segoe MDL2 Assets" Content="&#xE112;"
                                     ToolTipService.ToolTip="前一页" Background="Transparent"
                                     />
                             </Grid>
                             <Grid Grid.Column="1">
-                                <Button x:ConnectionId='40' Name="Forward" 
+                                <Button x:ConnectionId='42' Name="Forward" 
                                     FontFamily="Segoe MDL2 Assets" Content="&#xE111;"
                                     ToolTipService.ToolTip="后一页" Background="Transparent"
                                     />
                             </Grid>
-                            <Grid x:ConnectionId='39' Name="FolderPath" Grid.Column="1" Grid.ColumnSpan="2" Margin="34.8,10,0,-1040">
-                                <TextBlock Text="> 文件夹路径" VerticalAlignment="Center" Margin="5,0,0,0" Height="1040" HorizontalAlignment="Stretch"/>
+
+                            <Grid x:ConnectionId='38' Grid.Column="2" x:Name="RealFolderPath_Grid">
+                                <TextBlock x:ConnectionId='41'                                                   />
+                            </Grid>
+
+                            <Grid x:ConnectionId='39' x:Name="FolderPath" Grid.Column="2" Margin="34.6,60,0.4,-1040">
+                                <TextBlock x:ConnectionId='40'                                                    VerticalAlignment="Center" Margin="5,0,0,0" Height="1040" HorizontalAlignment="Stretch"/>
                             </Grid>
 
                         </Grid>
                         <Grid Grid.Column="1">
-                            <AutoSuggestBox x:ConnectionId='37' Name="SearchAutoSuggetsBox" 
+                            <AutoSuggestBox x:ConnectionId='36' Name="SearchAutoSuggetsBox" 
                                         PlaceholderText="在当前文件夹中搜索" QueryIcon="Find"
-                                        MinWidth="100" MaxWidth="200" Opacity="0.7"
+                                        MinWidth="180" MaxWidth="200" Opacity="0.7"
                                         HorizontalAlignment="Right" 
                                                                                                                                                                     UpdateTextOnSelect="False">
                                 <AutoSuggestBox.ItemTemplate>
                                     <DataTemplate                            >
-                                        <TextBlock x:ConnectionId='38'                                               ></TextBlock>
+                                        <TextBlock x:ConnectionId='37'                                               ></TextBlock>
                                     </DataTemplate>
                                 </AutoSuggestBox.ItemTemplate>
                             </AutoSuggestBox>
@@ -339,8 +191,12 @@
                     </Grid>
 
                     <!--第二行：图片行-->
-                    <Grid x:ConnectionId='15' Name="DisplayGrid" Grid.Row="1"
+                    <Grid x:ConnectionId='17' Name="DisplayGrid" Grid.Row="1"
                                                                                                                                >
+                        <Grid.Background>
+                            <AcrylicBrush BackgroundSource="HostBackdrop" TintColor="WhiteSmoke" TintOpacity="0.85"/>
+                        </Grid.Background>
+
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="21*"/>
                             <ColumnDefinition Width="151*"/>
@@ -348,24 +204,24 @@
 
 
 
-                        <GridView x:ConnectionId='32' x:Name="ImageGridView"
-                          IsItemClickEnabled="True" 
-                                                                        
-                          SelectionMode="Extended"
-                          Opacity="1"  Margin="9,9,9,9"
-                          Visibility="Visible" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <GridView x:ConnectionId='31' x:Name="ImageGridView"
+                                    IsItemClickEnabled="True" 
+                                                                                  
+                                    SelectionMode="Extended"
+                                    Opacity="1"  Margin="9,9,9,9"
+                                    Visibility="Visible" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                             <GridView.ItemTemplate>
                                 <DataTemplate                            >
-                                    <StackPanel x:ConnectionId='33'>
-                                        <Image x:ConnectionId='34' x:Name="ItemImage"                                              
-                                       Stretch="Uniform" Opacity="1"
-                                       Height="90" Width="120" Margin="2">
+                                    <StackPanel x:ConnectionId='32'>
+                                        <Image x:ConnectionId='33' x:Name="ItemImage"                                              
+                                                 Stretch="Uniform" Opacity="1"
+                                                 Height="90" Width="120" Margin="2">
                                             <ToolTipService.ToolTip>
-                                                <ToolTip x:ConnectionId='36'                                          />
+                                                <ToolTip x:ConnectionId='35'                                          />
                                             </ToolTipService.ToolTip>
                                         </Image>
-                                        <TextBlock x:ConnectionId='35'                                               
-                                           MaxWidth="110" TextWrapping="Wrap" TextAlignment="Center" />
+                                        <TextBlock x:ConnectionId='34'                                               
+                                                    MaxWidth="110" TextWrapping="Wrap" TextAlignment="Center" />
                                     </StackPanel>
                                 </DataTemplate>
                             </GridView.ItemTemplate>
@@ -384,55 +240,41 @@
                     </Grid>
                     <!--第三行：具体功能行-->
                     <Grid Grid.Row="2">
+                        <Grid.Background>
+                            <AcrylicBrush BackgroundSource="HostBackdrop" TintColor="White" TintOpacity="0.9"/>
+                        </Grid.Background>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <StackPanel x:ConnectionId='16' Name="Deleteme_StackPanel" Orientation="Horizontal">
-                            <Button x:ConnectionId='18' Name="ThePreviousPicture"                                        
+                        <StackPanel x:ConnectionId='18' Name="Deleteme_StackPanel" Orientation="Horizontal">
+                            <Button x:ConnectionId='22' Name="ThePreviousPicture"                                        
                                 FontFamily="Segoe MDL2 Assets" Content="&#xE016;"
                                 ToolTipService.ToolTip="上一张" Background="Transparent"
                                 />
-                            <Button x:ConnectionId='19' Name="TheLatterPicture"                                      
+                            <Button x:ConnectionId='23' Name="TheLatterPicture"                                      
                                 FontFamily="Segoe MDL2 Assets" Content="&#xE017;"
                                 ToolTipService.ToolTip="下一张" Background="Transparent"
                                 />
-                            <Button x:ConnectionId='20' Name="Copy"                          
+                            <Button x:ConnectionId='24' Name="Copy"                          
                                 FontFamily="Segoe MDL2 Assets" Content="&#xE16F;"
                                 ToolTipService.ToolTip="复制" Background="Transparent"
                                 />
-                            <Button x:ConnectionId='21' Name="Shear"                           
+                            <Button x:ConnectionId='25' Name="Shear"                           
                                 FontFamily="Segoe MDL2 Assets" Content="&#xE295;"
                                 ToolTipService.ToolTip="剪切" Background="Transparent"
                                 />
-                            <Button x:ConnectionId='22' Name="Paste"                           
+                            <Button x:ConnectionId='26' Name="Paste"                           
                                 FontFamily="Segoe MDL2 Assets" Content="&#xE16D;"
                                 ToolTipService.ToolTip="粘贴" Background="Transparent"
                                 />
-                            <Button x:ConnectionId='23' Name="DeleteButton"                            
+                            <Button x:ConnectionId='27' Name="DeleteButton"                            
                                 FontFamily="Segoe MDL2 Assets" Content="&#xE107;"
                                 ToolTipService.ToolTip="删除" Background="Transparent"
                                 />
-                            <Button x:ConnectionId='24' Name="Cancel"                            
+                            <Button x:ConnectionId='28' Name="Cancel"                            
                                 FontFamily="Segoe MDL2 Assets" Content="&#xE248;"
                                 ToolTipService.ToolTip="撤销操作" Background="Transparent"
-                                />
-
-                            <Button x:ConnectionId='25' Name="Enlarge"                             
-                                FontFamily="Segoe MDL2 Assets" Content="&#xE12E;"
-                                ToolTipService.ToolTip="放大" Background="Transparent"
-                                />
-                            <Button x:ConnectionId='26' Name="Reduce"                            
-                                FontFamily="Segoe MDL2 Assets" Content="&#xE1A4;"
-                                ToolTipService.ToolTip="缩小" Background="Transparent"
-                                />
-                            <Button x:ConnectionId='27' Name="Counterclockwise"                                      
-                                FontFamily="Segoe MDL2 Assets" Content="&#xE7A7;"
-                                ToolTipService.ToolTip="逆时针旋转90°" Background="Transparent"
-                                />
-                            <Button x:ConnectionId='28' Name="Clockwise"                               
-                                FontFamily="Segoe MDL2 Assets" Content="&#xE7A6;"
-                                ToolTipService.ToolTip="顺时针旋转90°" Background="Transparent"
                                 />
 
                             <Button x:ConnectionId='29' Name="Rename"                            
@@ -443,16 +285,12 @@
                                 FontFamily="Segoe MDL2 Assets" Content="&#xE838;"
                                 ToolTipService.ToolTip="打开文件" Background="Transparent"
                                 />
-                            <Button x:ConnectionId='31' Name="ToneConversion"                                    
-                                FontFamily="Segoe MDL2 Assets" Content="&#xE708;"
-                                ToolTipService.ToolTip="色调转置" Background="Transparent"
-                                />
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
-                            <TextBlock Text="已选中0个图片" VerticalAlignment="Center" Margin="0,0,20,0"/>
-                            <TextBlock Text="6个图片" VerticalAlignment="Center" Margin="0,0,20,0"/>
-                            <Button x:ConnectionId='17' Name="SlidePlay"                               
+                            <TextBlock x:ConnectionId='19'                                                               VerticalAlignment="Center" Margin="0,0,20,0"/>
+                            <TextBlock x:ConnectionId='20'                                                       VerticalAlignment="Center" Margin="0,0,20,0"/>
+                            <Button x:ConnectionId='21' Name="SlidePlay"                               
                                 FontFamily="Segoe MDL2 Assets" Content="&#xE786;"
                                 ToolTipService.ToolTip="幻灯片播放" Background="Transparent" HorizontalAlignment="Right"
                                 />
@@ -460,6 +298,16 @@
                     </Grid>
                 </Grid>
 
+
+                <Canvas x:ConnectionId='14' x:Name="dragSelectionCanvas" Visibility="Visible" >
+                    <Border x:ConnectionId='15' x:Name="dragSelectionBorder"
+                                Visibility="Visible"
+                                BorderBrush="Blue"
+                                BorderThickness="1"
+                                Background="LightBlue"
+                                CornerRadius="1"
+                                Opacity="0.5" Height="15" Width="10" Canvas.Left="50" Canvas.Top="365" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                </Canvas>
 
             </RelativePanel>
         </SplitView.Content>
