@@ -28,58 +28,121 @@ namespace winrt::SimplePhotoViewer::implementation
         void UnloadObject(::winrt::Windows::UI::Xaml::DependencyObject const& dependencyObject);
         void DisconnectUnloadedObject(int32_t connectionId);
 
-        ::winrt::Windows::UI::Xaml::Controls::Button Bigger()
+        ::winrt::Windows::UI::Xaml::Controls::Grid Display()
         {
-            return _Bigger;
+            return _Display;
         }
-        void Bigger(::winrt::Windows::UI::Xaml::Controls::Button value)
+        void Display(::winrt::Windows::UI::Xaml::Controls::Grid value)
         {
-            _Bigger = value;
-        }
-
-        ::winrt::Windows::UI::Xaml::Controls::Button Smaller()
-        {
-            return _Smaller;
-        }
-        void Smaller(::winrt::Windows::UI::Xaml::Controls::Button value)
-        {
-            _Smaller = value;
+            _Display = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::Button Left_2()
+        ::winrt::Windows::UI::Xaml::Controls::Button SlidePlay()
         {
-            return _Left_2;
+            return _SlidePlay;
         }
-        void Left_2(::winrt::Windows::UI::Xaml::Controls::Button value)
+        void SlidePlay(::winrt::Windows::UI::Xaml::Controls::Button value)
         {
-            _Left_2 = value;
-        }
-
-        ::winrt::Windows::UI::Xaml::Controls::Button Right_2()
-        {
-            return _Right_2;
-        }
-        void Right_2(::winrt::Windows::UI::Xaml::Controls::Button value)
-        {
-            _Right_2 = value;
+            _SlidePlay = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::Button LeftTurn()
+        ::winrt::Windows::UI::Xaml::Controls::Button ThePreviousPicture()
         {
-            return _LeftTurn;
+            return _ThePreviousPicture;
         }
-        void LeftTurn(::winrt::Windows::UI::Xaml::Controls::Button value)
+        void ThePreviousPicture(::winrt::Windows::UI::Xaml::Controls::Button value)
         {
-            _LeftTurn = value;
+            _ThePreviousPicture = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::Button RightTurn()
+        ::winrt::Windows::UI::Xaml::Controls::Button TheLatterPicture()
         {
-            return _RightTurn;
+            return _TheLatterPicture;
         }
-        void RightTurn(::winrt::Windows::UI::Xaml::Controls::Button value)
+        void TheLatterPicture(::winrt::Windows::UI::Xaml::Controls::Button value)
         {
-            _RightTurn = value;
+            _TheLatterPicture = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button Enlarge()
+        {
+            return _Enlarge;
+        }
+        void Enlarge(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _Enlarge = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button Reduce()
+        {
+            return _Reduce;
+        }
+        void Reduce(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _Reduce = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button Counterclockwise()
+        {
+            return _Counterclockwise;
+        }
+        void Counterclockwise(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _Counterclockwise = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button Clockwise()
+        {
+            return _Clockwise;
+        }
+        void Clockwise(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _Clockwise = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button Edit()
+        {
+            return _Edit;
+        }
+        void Edit(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _Edit = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button Information()
+        {
+            return _Information;
+        }
+        void Information(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _Information = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button OpenFile()
+        {
+            return _OpenFile;
+        }
+        void OpenFile(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _OpenFile = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button Maker()
+        {
+            return _Maker;
+        }
+        void Maker(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _Maker = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::FlipView DetailPageFlipView()
+        {
+            return _DetailPageFlipView;
+        }
+        void DetailPageFlipView(::winrt::Windows::UI::Xaml::Controls::FlipView value)
+        {
+            _DetailPageFlipView = value;
         }
 
         ::winrt::Windows::UI::Xaml::Controls::ScrollViewer ThumbnailScrollViewer()
@@ -100,13 +163,22 @@ namespace winrt::SimplePhotoViewer::implementation
             _ThumbnailListView = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::FlipView DetailPageFlipView()
+        ::winrt::Windows::UI::Xaml::Controls::Grid FolderPath()
         {
-            return _DetailPageFlipView;
+            return _FolderPath;
         }
-        void DetailPageFlipView(::winrt::Windows::UI::Xaml::Controls::FlipView value)
+        void FolderPath(::winrt::Windows::UI::Xaml::Controls::Grid value)
         {
-            _DetailPageFlipView = value;
+            _FolderPath = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton Thumbnail()
+        {
+            return _Thumbnail;
+        }
+        void Thumbnail(::winrt::Windows::UI::Xaml::Controls::AppBarButton value)
+        {
+            _Thumbnail = value;
         }
         
          ::winrt::com_ptr<::winrt::SimplePhotoViewer::implementation::XamlBindings> Bindings;
@@ -115,19 +187,27 @@ namespace winrt::SimplePhotoViewer::implementation
         bool _contentLoaded{false};
 
     private:
-        struct DetailPage_obj12_Bindings;
-        struct DetailPage_obj14_Bindings;
+        struct DetailPage_obj15_Bindings;
+        struct DetailPage_obj19_Bindings;
         struct DetailPage_obj1_Bindings;
 
-        ::winrt::Windows::UI::Xaml::Controls::Button _Bigger{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _Smaller{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _Left_2{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _Right_2{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _LeftTurn{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _RightTurn{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Grid _Display{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _SlidePlay{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _ThePreviousPicture{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _TheLatterPicture{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _Enlarge{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _Reduce{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _Counterclockwise{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _Clockwise{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _Edit{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _Information{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _OpenFile{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _Maker{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::FlipView _DetailPageFlipView{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::ScrollViewer _ThumbnailScrollViewer{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::ListView _ThumbnailListView{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::FlipView _DetailPageFlipView{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Grid _FolderPath{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton _Thumbnail{nullptr};
     };
 }
 
