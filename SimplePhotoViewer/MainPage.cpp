@@ -35,6 +35,7 @@ namespace winrt::SimplePhotoViewer::implementation
 
 		this->m_imageSkus = single_threaded_observable_vector<Windows::Foundation::IInspectable>();
 		this->m_treeViewFolders = single_threaded_observable_vector<Windows::Foundation::IInspectable>();
+		this->m_bufferImageSkus = single_threaded_observable_vector<Windows::Foundation::IInspectable>(); //-
 		this->currentSelectedFolderPathName = L"D:\\Project\\TestResource";
 		//this->currentSelectedFolderPathName = L"D:\\";
 		this->m_currentSelectedFolderName = L"TestResource";
@@ -54,6 +55,16 @@ namespace winrt::SimplePhotoViewer::implementation
 	Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> MainPage::TreeViewFolders() const
 	{
 		return this->m_treeViewFolders;
+	}
+
+	Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> MainPage::BufferImageSkus() const //-
+	{
+		return this->m_bufferImageSkus;
+	}
+	void MainPage::BufferImageSkus(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& value) //-
+	{
+		this->m_bufferImageSkus = value;
+		this->m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"BufferImageSkus" });
 	}
 
 	Windows::Foundation::IAsyncAction MainPage::ClickHandler(Windows::Foundation::IInspectable const, Windows::UI::Xaml::RoutedEventArgs const)
@@ -347,86 +358,93 @@ namespace winrt::SimplePhotoViewer::implementation
 		
 		if (expandingItem)
 		{
-			expandingItem.SubItems().Clear();
-			
-			//expandingItem.SubItems(single_threaded_observable_vector<Windows::Foundation::IInspectable>());
-			auto itemFolder = expandingItem.ItemFolder();
-			try
+			//expandingItem.SubItems().Clear();
+			if (!expandingItem.SubItems().Size())
 			{
-				auto subfolders_feedOp = itemFolder.GetFoldersAsync();
-				/*auto subfolders = co_await subfolders_feedOp;*/
-				/*create_task([] {
-					return DoWork().get();
-				}).get();*/
-				auto subfolders = concurrency::create_task([&subfolders_feedOp] {return subfolders_feedOp.get(); }).get();
-				//auto subfolders = subfolders_feedOp.get();
-
-				if (!subfolders.Size())
+				//expandingItem.SubItems(single_threaded_observable_vector<Windows::Foundation::IInspectable>());
+				auto itemFolder = expandingItem.ItemFolder();
+				try
 				{
-					args.Node().HasUnrealizedChildren(false);
-				}
-				else
-				{
-					args.Node().HasUnrealizedChildren(true);
+					auto subfolders_feedOp = itemFolder.GetFoldersAsync();
+					/*auto subfolders = co_await subfolders_feedOp;*/
+					/*create_task([] {
+						return DoWork().get();
+					}).get();*/
+					auto subfolders = concurrency::create_task([&subfolders_feedOp] {return subfolders_feedOp.get(); }).get();
+					//auto subfolders = subfolders_feedOp.get();
 
-					auto itemContainer = this->DirectoryTreeView().ContainerFromItem(expandingItem);
-					
-					
-					for (auto j = 0; j < subfolders.Size(); ++j)
+					if (!subfolders.Size())
 					{
-						const auto& singlefolder = subfolders.GetAt(j);
-						//todo:perhaps getFoldersAsync again to set its hasunrealizedchildren property.
-						auto subDirectoryItem = winrt::make<DirectoryItem>(singlefolder.Name(), singlefolder);
-						
-						expandingItem.SubItems().Append(subDirectoryItem);
-						
-						//expandingItem.SubItems(expandingItem.SubItems());
-						/*co_await 1ms;
+						args.Node().HasUnrealizedChildren(false);
+					}
+					else
+					{
+						args.Node().HasUnrealizedChildren(true);
 
-						co_await winrt::resume_foreground(this->DirectoryTreeView().Dispatcher());*/
+						auto itemContainer = this->DirectoryTreeView().ContainerFromItem(expandingItem);
 
-						//auto nodeFromContainer = this->DirectoryTreeView().NodeFromContainer(itemContainer);
-						//if (nodeFromContainer)
-						//{
-						//	auto childrenNodes = nodeFromContainer.Children();
 
-						//	for (auto i = 0; i < childrenNodes.Size(); ++i)
-						//	{
-						//		auto subTreeViewNode = childrenNodes.GetAt(i);
-						//		
-						//		auto subDirectoryItem = subTreeViewNode.Content().try_as<SimplePhotoViewer::DirectoryItem>();
-						//		auto subDirectoryItemFolder = subDirectoryItem.ItemFolder();
-						//		if (subDirectoryItem)
-						//		{
-						//			/*auto secondaryFolders = concurrency::create_task(
-						//				[&subDirectoryItemFolder]
-						//				{
-						//					return subDirectoryItemFolder.GetFoldersAsync().get();
-						//				}).get();*/
-						//			auto secondaryFolders = co_await subTreeViewNode.Content().try_as<SimplePhotoViewer::DirectoryItem>().ItemFolder().GetFoldersAsync();
-						//			if (secondaryFolders.Size() != 0)
-						//				subTreeViewNode.HasUnrealizedChildren(true);
-						//		}
-						//		
-						//	}
-						//}
+						for (auto j = 0; j < subfolders.Size(); ++j)
+						{
+							const auto& singlefolder = subfolders.GetAt(j);
+							//todo:perhaps getFoldersAsync again to set its hasunrealizedchildren property.
+							auto subDirectoryItem = winrt::make<DirectoryItem>(singlefolder.Name(), singlefolder);
+
+							expandingItem.SubItems().Append(subDirectoryItem);
+							//if (j >= 5)
+
+							//expandingItem.SubItems(expandingItem.SubItems());
+							/*if (j == 5 || j == 6 || j == 7)
+							{*/
+							co_await 10ms;
+
+							co_await winrt::resume_foreground(this->DirectoryTreeView().Dispatcher());
+							//}
+
+
+							//auto nodeFromContainer = this->DirectoryTreeView().NodeFromContainer(itemContainer);
+							//if (nodeFromContainer)
+							//{
+							//	auto childrenNodes = nodeFromContainer.Children();
+
+							//	for (auto i = 0; i < childrenNodes.Size(); ++i)
+							//	{
+							//		auto subTreeViewNode = childrenNodes.GetAt(i);
+							//		
+							//		auto subDirectoryItem = subTreeViewNode.Content().try_as<SimplePhotoViewer::DirectoryItem>();
+							//		auto subDirectoryItemFolder = subDirectoryItem.ItemFolder();
+							//		if (subDirectoryItem)
+							//		{
+							//			/*auto secondaryFolders = concurrency::create_task(
+							//				[&subDirectoryItemFolder]
+							//				{
+							//					return subDirectoryItemFolder.GetFoldersAsync().get();
+							//				}).get();*/
+							//			auto secondaryFolders = co_await subTreeViewNode.Content().try_as<SimplePhotoViewer::DirectoryItem>().ItemFolder().GetFoldersAsync();
+							//			if (secondaryFolders.Size() != 0)
+							//				subTreeViewNode.HasUnrealizedChildren(true);
+							//		}
+							//		
+							//	}
+							//}
+						}
 					}
 				}
+				catch (hresult_error const& ex)
+				{
+					HRESULT hr = ex.to_abi();
+					hstring message = ex.message();
+				}
 			}
-			catch(hresult_error const& ex)
-			{
-				HRESULT hr = ex.to_abi();
-				hstring message = ex.message();
-			}
+			
 
 		}
-		co_return;
 	}
 	void MainPage::DirectoryItem_Collapsed(Windows::UI::Xaml::Controls::TreeView const sender, Windows::UI::Xaml::Controls::TreeViewCollapsedEventArgs const args)
 	{
 		using StorageFolder = Windows::Storage::StorageFolder;
-		args.Node().Children().Clear();
-		args.Node().HasUnrealizedChildren(true);
+		//args.Node().Children().Clear();
+		//args.Node().HasUnrealizedChildren(true);
 		//SimplePhotoViewer::DirectoryItem collapsedItem = args.Item().try_as<SimplePhotoViewer::DirectoryItem>();
 		//if (collapsedItem)
 		//{
@@ -436,10 +454,11 @@ namespace winrt::SimplePhotoViewer::implementation
 	}
 	Windows::Foundation::IAsyncAction MainPage::DirectoryItem_Invoked(Windows::UI::Xaml::Controls::TreeView const sender, Windows::UI::Xaml::Controls::TreeViewItemInvokedEventArgs const args)
 	{
-		auto itemContainer = this->DirectoryTreeView().ContainerFromItem(args.InvokedItem());
+		auto strong_this{ get_strong() };
+		auto itemContainer = strong_this->DirectoryTreeView().ContainerFromItem(args.InvokedItem());
 		if (itemContainer)
 		{
-			auto node = this->DirectoryTreeView().NodeFromContainer(itemContainer);
+			auto node = strong_this->DirectoryTreeView().NodeFromContainer(itemContainer);
 			node.IsExpanded(!node.IsExpanded());
 		}
 		else
@@ -449,10 +468,10 @@ namespace winrt::SimplePhotoViewer::implementation
 		}
 
 		auto itemFolder = args.InvokedItem().try_as<SimplePhotoViewer::DirectoryItem>().ItemFolder();
-		this->currentSelectedFolderPathName = itemFolder.Path();
-		this->CurrentSelectedFolder(itemFolder.Name());
+		strong_this->currentSelectedFolderPathName = itemFolder.Path();
+		strong_this->CurrentSelectedFolder(itemFolder.Name());
 
-		co_await this->RefreshCurrentFolder(nullptr);
+		co_await strong_this->RefreshCurrentFolder(nullptr);
 
 	}
 	
@@ -461,6 +480,8 @@ namespace winrt::SimplePhotoViewer::implementation
 		auto selectedNum = this->ImageGridView().SelectedItems().Size();
 		this->CurrentFolderSelectedImageNumber(selectedNum);
 		this->DeleteButton().IsEnabled(selectedNum ? true : false);
+		this->RenameButton().IsEnabled(selectedNum ? true : false); //-
+		this->nameInput().IsEnabled(selectedNum ? true : false); //-
 	}
 
 	/*Load current folder selected by TreeViewItem*/

@@ -89,9 +89,9 @@ template <> struct name<SimplePhotoViewer::XamlMetaDataProvider>{ static constex
 template <> struct guid_storage<SimplePhotoViewer::IDetailPage>{ static constexpr guid value{ 0x9A6327D8,0xB530,0x5D48,{ 0x97,0xCD,0x81,0x86,0x99,0x1B,0x0E,0x2F } }; };
 template <> struct guid_storage<SimplePhotoViewer::IDirectoryItem>{ static constexpr guid value{ 0xFB20579E,0x6787,0x5760,{ 0x99,0xDD,0xF0,0xC9,0x1A,0x5F,0x3E,0x67 } }; };
 template <> struct guid_storage<SimplePhotoViewer::IDirectoryItemFactory>{ static constexpr guid value{ 0x7BEFC8C0,0x6F19,0x5386,{ 0xA3,0xE2,0xDF,0x87,0x35,0x72,0xB2,0xE9 } }; };
-template <> struct guid_storage<SimplePhotoViewer::IImageSku>{ static constexpr guid value{ 0xAB9C27AE,0x9A5F,0x52EE,{ 0xBC,0xA9,0x94,0xD6,0x67,0xA3,0xC4,0x5F } }; };
+template <> struct guid_storage<SimplePhotoViewer::IImageSku>{ static constexpr guid value{ 0x0117A976,0xEB1C,0x564B,{ 0xB5,0xE5,0x34,0x9D,0x7A,0x4A,0x19,0xF7 } }; };
 template <> struct guid_storage<SimplePhotoViewer::IImageSkuFactory>{ static constexpr guid value{ 0xF1A64EF4,0x88BD,0x501C,{ 0xB1,0x71,0xE3,0xAE,0x99,0x87,0x08,0x67 } }; };
-template <> struct guid_storage<SimplePhotoViewer::IMainPage>{ static constexpr guid value{ 0x65ABA497,0x58DC,0x58AB,{ 0x8C,0xB6,0x08,0x0D,0x8B,0x10,0x9E,0x4F } }; };
+template <> struct guid_storage<SimplePhotoViewer::IMainPage>{ static constexpr guid value{ 0x481C1B80,0xA1CE,0x5786,{ 0x95,0x86,0x5C,0x40,0xE8,0x7A,0x02,0x79 } }; };
 template <> struct default_interface<SimplePhotoViewer::DetailPage>{ using type = SimplePhotoViewer::IDetailPage; };
 template <> struct default_interface<SimplePhotoViewer::DirectoryItem>{ using type = SimplePhotoViewer::IDirectoryItem; };
 template <> struct default_interface<SimplePhotoViewer::ImageSku>{ using type = SimplePhotoViewer::IImageSku; };
@@ -124,10 +124,14 @@ template <> struct abi<SimplePhotoViewer::IDirectoryItemFactory>{ struct type : 
 template <> struct abi<SimplePhotoViewer::IImageSku>{ struct type : IInspectable
 {
     virtual int32_t WINRT_CALL get_ImageFile(void** value) noexcept = 0;
+    virtual int32_t WINRT_CALL put_ImageFile(void* value) noexcept = 0;
     virtual int32_t WINRT_CALL get_ImageProperties(void** value) noexcept = 0;
     virtual int32_t WINRT_CALL get_ImageName(void** value) noexcept = 0;
+    virtual int32_t WINRT_CALL put_ImageName(void* value) noexcept = 0;
     virtual int32_t WINRT_CALL get_ImageFileType(void** value) noexcept = 0;
+    virtual int32_t WINRT_CALL put_ImageFileType(void* value) noexcept = 0;
     virtual int32_t WINRT_CALL get_ImageNameWithType(void** value) noexcept = 0;
+    virtual int32_t WINRT_CALL put_ImageNameWithType(void* value) noexcept = 0;
     virtual int32_t WINRT_CALL get_ImageThumbnail(void** value) noexcept = 0;
     virtual int32_t WINRT_CALL get_ImageContent(void** value) noexcept = 0;
     virtual int32_t WINRT_CALL put_ImageContent(void* value) noexcept = 0;
@@ -143,6 +147,8 @@ template <> struct abi<SimplePhotoViewer::IMainPage>{ struct type : IInspectable
 {
     virtual int32_t WINRT_CALL get_ImageSkus(void** value) noexcept = 0;
     virtual int32_t WINRT_CALL put_ImageSkus(void* value) noexcept = 0;
+    virtual int32_t WINRT_CALL get_BufferImageSkus(void** value) noexcept = 0;
+    virtual int32_t WINRT_CALL put_BufferImageSkus(void* value) noexcept = 0;
     virtual int32_t WINRT_CALL get_TreeViewFolders(void** value) noexcept = 0;
     virtual int32_t WINRT_CALL get_SearchResults(void** value) noexcept = 0;
     virtual int32_t WINRT_CALL get_CurrentSelectedFolder(void** value) noexcept = 0;
@@ -184,10 +190,14 @@ template <typename D>
 struct consume_SimplePhotoViewer_IImageSku
 {
     Windows::Storage::StorageFile ImageFile() const;
+    void ImageFile(Windows::Storage::StorageFile const& value) const;
     Windows::Storage::FileProperties::ImageProperties ImageProperties() const;
     hstring ImageName() const;
+    void ImageName(param::hstring const& value) const;
     hstring ImageFileType() const;
+    void ImageFileType(param::hstring const& value) const;
     hstring ImageNameWithType() const;
+    void ImageNameWithType(param::hstring const& value) const;
     Windows::UI::Xaml::Media::Imaging::BitmapImage ImageThumbnail() const;
     Windows::UI::Xaml::Media::Imaging::BitmapImage ImageContent() const;
     void ImageContent(Windows::UI::Xaml::Media::Imaging::BitmapImage const& value) const;
@@ -207,6 +217,8 @@ struct consume_SimplePhotoViewer_IMainPage
 {
     Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> ImageSkus() const;
     void ImageSkus(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& value) const;
+    Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> BufferImageSkus() const;
+    void BufferImageSkus(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& value) const;
     Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> TreeViewFolders() const;
     Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> SearchResults() const;
     hstring CurrentSelectedFolder() const;

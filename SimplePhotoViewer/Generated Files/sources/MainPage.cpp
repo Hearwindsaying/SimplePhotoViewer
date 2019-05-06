@@ -13,6 +13,16 @@ namespace winrt::SimplePhotoViewer::implementation
         throw hresult_not_implemented();
     }
 
+    Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> MainPage::BufferImageSkus()
+    {
+        throw hresult_not_implemented();
+    }
+
+    void MainPage::BufferImageSkus(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& value)
+    {
+        throw hresult_not_implemented();
+    }
+
     Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> MainPage::TreeViewFolders()
     {
         throw hresult_not_implemented();

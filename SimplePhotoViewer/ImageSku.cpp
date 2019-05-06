@@ -18,6 +18,11 @@ namespace winrt::SimplePhotoViewer::implementation
     {
 		return this->m_imageFile;
     }
+	void ImageSku::ImageFile(Windows::Storage::StorageFile const& imageFile) //-
+	{
+		this->m_imageFile = imageFile;
+		this->m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"ImageFile" });
+	}
 
     Windows::Storage::FileProperties::ImageProperties ImageSku::ImageProperties() const
     {
@@ -28,16 +33,32 @@ namespace winrt::SimplePhotoViewer::implementation
     {
 		return this->m_imageName;
     }
+	void ImageSku::ImageName(hstring const& imageName) //-
+	{
+		this->m_imageName = imageName;
+		this->m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"ImageName" });
+	}
 
     hstring ImageSku::ImageFileType() const
     {
 		return this->m_imageFileType;
     }
+	void ImageSku::ImageFileType(hstring const& imageFileType) //-
+	{
+		this->m_imageFileType = imageFileType;
+		this->m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"ImageFileType" });
+	}
 
 	hstring ImageSku::ImageNameWithType() const
 	{
 		return this->m_imageNameWithType;
 	}
+	void ImageSku::ImageNameWithType(hstring const& imageNameWithType) //-
+	{
+		this->m_imageNameWithType = imageNameWithType;
+		this->m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"ImageNameWithType" });
+	}
+
 
 	Windows::UI::Xaml::Media::Imaging::BitmapImage ImageSku::ImageThumbnail()const
 	{

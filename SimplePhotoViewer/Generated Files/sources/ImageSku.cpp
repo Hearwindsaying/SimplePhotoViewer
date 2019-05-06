@@ -18,6 +18,11 @@ namespace winrt::SimplePhotoViewer::implementation
         throw hresult_not_implemented();
     }
 
+    void ImageSku::ImageFile(Windows::Storage::StorageFile const& value)
+    {
+        throw hresult_not_implemented();
+    }
+
     Windows::Storage::FileProperties::ImageProperties ImageSku::ImageProperties()
     {
         throw hresult_not_implemented();
@@ -28,12 +33,27 @@ namespace winrt::SimplePhotoViewer::implementation
         throw hresult_not_implemented();
     }
 
+    void ImageSku::ImageName(hstring const& value)
+    {
+        throw hresult_not_implemented();
+    }
+
     hstring ImageSku::ImageFileType()
     {
         throw hresult_not_implemented();
     }
 
+    void ImageSku::ImageFileType(hstring const& value)
+    {
+        throw hresult_not_implemented();
+    }
+
     hstring ImageSku::ImageNameWithType()
+    {
+        throw hresult_not_implemented();
+    }
+
+    void ImageSku::ImageNameWithType(hstring const& value)
     {
         throw hresult_not_implemented();
     }

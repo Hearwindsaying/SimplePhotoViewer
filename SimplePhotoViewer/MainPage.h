@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "MainPage.g.h"
+#include "Utility.h"
 
 namespace winrt::SimplePhotoViewer::implementation
 {
@@ -11,6 +12,10 @@ namespace winrt::SimplePhotoViewer::implementation
         Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> ImageSkus() const;
 		void ImageSkus(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& value);
 		Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> TreeViewFolders() const;
+
+		Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> MainPage::BufferImageSkus() const; //-
+		void MainPage::BufferImageSkus(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& value);
+
 		Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> SearchResults() const
 		{
 			return this->m_searchResults;
@@ -45,16 +50,98 @@ namespace winrt::SimplePhotoViewer::implementation
 
 		void ThePreviousPicture_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&){}
 		void TheLatterPicture_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) {}
-		void Copy_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) {}
+		Windows::Foundation::IAsyncAction Copy_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) 
+		{
+			Windows::UI::Xaml::Controls::ContentDialog contentDialog{};
+			contentDialog.PrimaryButtonText(L"复制");
+			contentDialog.CloseButtonText(L"取消");
+			contentDialog.DefaultButton(Windows::UI::Xaml::Controls::ContentDialogButton::Primary);
+
+			Windows::UI::Xaml::Controls::ContentDialogResult contentDialogResult = co_await contentDialog.ShowAsync();
+			if (contentDialogResult == Windows::UI::Xaml::Controls::ContentDialogResult::None)
+				return;
+			WINRT_ASSERT(contentDialogResult == Windows::UI::Xaml::Controls::ContentDialogResult::Primary);
+			this->m_bufferImageSkus.Clear();
+			auto currentSelectedItems = this->ImageGridView().SelectedItems();
+			//auto deleteCounter = 0;
+
+			auto totalDelteTimes = currentSelectedItems.Size();
+			auto imageSku = currentSelectedItems.GetAt(0).try_as<SimplePhotoViewer::ImageSku>();
+			this->m_bufferImageSkus.Append(imageSku);
+		}
 		void Shear_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) {}
-		void Paste_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) {}
+		Windows::Foundation::IAsyncAction Paste_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&)
+		{
+			Windows::UI::Xaml::Controls::ContentDialog contentDialog{};
+			contentDialog.PrimaryButtonText(L"粘贴");
+			contentDialog.CloseButtonText(L"取消");
+			contentDialog.DefaultButton(Windows::UI::Xaml::Controls::ContentDialogButton::Primary);
+
+			Windows::UI::Xaml::Controls::ContentDialogResult contentDialogResult = co_await contentDialog.ShowAsync();
+			if (contentDialogResult == Windows::UI::Xaml::Controls::ContentDialogResult::None)
+				return;
+			WINRT_ASSERT(contentDialogResult == Windows::UI::Xaml::Controls::ContentDialogResult::Primary);
+
+			auto currentSelectedItems = this->ImageGridView().SelectedItems();
+
+			auto imageSku = this->m_bufferImageSkus.GetAt(0).try_as<SimplePhotoViewer::ImageSku>();
+			winrt::Windows::Storage::IStorageFolder filefold;
+			hstring copyFileName = imageSku.ImageNameWithType();
+
+			Windows::Storage::StorageFolder targetFolder = co_await this->LoadDefaultFolder();
+			imageSku.ImageFile().CopyAsync(targetFolder, copyFileName, Windows::Storage::NameCollisionOption::GenerateUniqueName);
+			//winrt::Microsoft::UI::Xaml::Controls::TreeViewItem args;
+			//args.TreeViewItemInvokedEventArgs args;
+			this->m_imageSkus.Append(imageSku);
+			this->m_imageSkus = single_threaded_observable_vector<Windows::Foundation::IInspectable>();
+
+
+			currentSelectedItems.Clear();
+		}
 		void Delete_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) {}
 		void Cancel_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) {}
 		void Enlarge_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) {}
 		void Reduce_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) {}
 		void Counterclockwise_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) {}
 		void Clockwise_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) {}
-		void Rename_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) {}
+		Windows::Foundation::IAsyncAction Rename_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) 
+		{
+			Windows::UI::Xaml::Controls::ContentDialog contentDialog{};
+			contentDialog.Title(box_value(L"确认修改为" + this->nameInput().Text()));
+			contentDialog.CloseButtonText(L"取消");
+			contentDialog.PrimaryButtonText(L"确认");
+			contentDialog.DefaultButton(Windows::UI::Xaml::Controls::ContentDialogButton::Primary);
+
+			Windows::UI::Xaml::Controls::ContentDialogResult contentDialogResult = co_await contentDialog.ShowAsync();
+			if (contentDialogResult == Windows::UI::Xaml::Controls::ContentDialogResult::None)
+				return;
+			WINRT_ASSERT(contentDialogResult == Windows::UI::Xaml::Controls::ContentDialogResult::Primary);
+
+			auto currentSelectedItems = this->ImageGridView().SelectedItems();
+			//auto deleteCounter = 0;
+
+			auto TotalTimes = currentSelectedItems.Size();
+			auto imageSku = currentSelectedItems.GetAt(0).try_as<SimplePhotoViewer::ImageSku>();
+			auto index = currentSelectedItems.GetAt(0);
+
+			//enum class winrt::Windows::Storage::NameCollisionOption::GenerateUniqueName;
+			imageSku.ImageFile().RenameAsync(this->nameInput().Text() + L".jpg", Windows::Storage::NameCollisionOption::GenerateUniqueName);
+			imageSku.ImageName(this->nameInput().Text());
+			imageSku.ImageFileType(L"jpg");
+			imageSku.ImageNameWithType(this->nameInput().Text() + L".jpg");
+			for (auto renameCounter = 1; renameCounter <= TotalTimes; ++renameCounter)
+			{
+				auto imageSku = currentSelectedItems.GetAt(0).try_as<SimplePhotoViewer::ImageSku>();
+				auto curItem = currentSelectedItems.GetAt(0);
+				auto curItemIndex = SimplePhotoViewer::find_index(this->m_imageSkus.First(), [curItem](auto const& item)->bool
+				{
+					return item == curItem;
+				});
+				this->m_imageSkus.SetAt(curItemIndex, imageSku);
+				//currentSelectedItems.RemoveAt(deleteCounter++);
+			}
+			currentSelectedItems.Clear();
+		}
 		void OpenFile_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) {}
 		void ToneConversion_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) 
 		{
@@ -124,6 +211,8 @@ namespace winrt::SimplePhotoViewer::implementation
 	private:
 		Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> m_imageSkus{ nullptr };
 		Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> m_treeViewFolders{ nullptr };
+
+		Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> m_bufferImageSkus{ nullptr };
 
 		Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> m_searchResults{ nullptr };
 

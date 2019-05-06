@@ -11,10 +11,14 @@ namespace winrt::SimplePhotoViewer::implementation
         ImageSku(hstring const& defaultTipString);
 
         Windows::Storage::StorageFile ImageFile();
+        void ImageFile(Windows::Storage::StorageFile const& value);
         Windows::Storage::FileProperties::ImageProperties ImageProperties();
         hstring ImageName();
+        void ImageName(hstring const& value);
         hstring ImageFileType();
+        void ImageFileType(hstring const& value);
         hstring ImageNameWithType();
+        void ImageNameWithType(hstring const& value);
         Windows::UI::Xaml::Media::Imaging::BitmapImage ImageThumbnail();
         Windows::UI::Xaml::Media::Imaging::BitmapImage ImageContent();
         void ImageContent(Windows::UI::Xaml::Media::Imaging::BitmapImage const& value);

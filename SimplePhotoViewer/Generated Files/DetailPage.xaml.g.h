@@ -37,6 +37,15 @@ namespace winrt::SimplePhotoViewer::implementation
             _Display = value;
         }
 
+        ::winrt::Windows::UI::Xaml::Controls::Grid Tooler()
+        {
+            return _Tooler;
+        }
+        void Tooler(::winrt::Windows::UI::Xaml::Controls::Grid value)
+        {
+            _Tooler = value;
+        }
+
         ::winrt::Windows::UI::Xaml::Controls::Button SlidePlay()
         {
             return _SlidePlay;
@@ -187,11 +196,12 @@ namespace winrt::SimplePhotoViewer::implementation
         bool _contentLoaded{false};
 
     private:
-        struct DetailPage_obj15_Bindings;
-        struct DetailPage_obj19_Bindings;
+        struct DetailPage_obj16_Bindings;
+        struct DetailPage_obj20_Bindings;
         struct DetailPage_obj1_Bindings;
 
         ::winrt::Windows::UI::Xaml::Controls::Grid _Display{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Grid _Tooler{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Button _SlidePlay{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Button _ThePreviousPicture{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Button _TheLatterPicture{nullptr};

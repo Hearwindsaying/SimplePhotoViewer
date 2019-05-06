@@ -235,13 +235,13 @@ namespace winrt::SimplePhotoViewer::implementation
             _Cancel = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::Button Rename()
+        ::winrt::Windows::UI::Xaml::Controls::Button RenameButton()
         {
-            return _Rename;
+            return _RenameButton;
         }
-        void Rename(::winrt::Windows::UI::Xaml::Controls::Button value)
+        void RenameButton(::winrt::Windows::UI::Xaml::Controls::Button value)
         {
-            _Rename = value;
+            _RenameButton = value;
         }
 
         ::winrt::Windows::UI::Xaml::Controls::Button OpenFile()
@@ -251,6 +251,24 @@ namespace winrt::SimplePhotoViewer::implementation
         void OpenFile(::winrt::Windows::UI::Xaml::Controls::Button value)
         {
             _OpenFile = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::TextBox nameInput()
+        {
+            return _nameInput;
+        }
+        void nameInput(::winrt::Windows::UI::Xaml::Controls::TextBox value)
+        {
+            _nameInput = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Button Rename()
+        {
+            return _Rename;
+        }
+        void Rename(::winrt::Windows::UI::Xaml::Controls::Button value)
+        {
+            _Rename = value;
         }
 
         ::winrt::Windows::UI::Xaml::Controls::GridView ImageGridView()
@@ -314,8 +332,8 @@ namespace winrt::SimplePhotoViewer::implementation
 
     private:
         struct MainPage_obj7_Bindings;
-        struct MainPage_obj32_Bindings;
-        struct MainPage_obj37_Bindings;
+        struct MainPage_obj34_Bindings;
+        struct MainPage_obj39_Bindings;
         struct MainPage_obj1_Bindings;
 
         ::winrt::Windows::UI::Xaml::Controls::SplitView _splitView{nullptr};
@@ -341,8 +359,10 @@ namespace winrt::SimplePhotoViewer::implementation
         ::winrt::Windows::UI::Xaml::Controls::Button _Paste{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Button _DeleteButton{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Button _Cancel{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _Rename{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _RenameButton{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Button _OpenFile{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::TextBox _nameInput{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _Rename{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::GridView _ImageGridView{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::AutoSuggestBox _SearchAutoSuggetsBox{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Grid _RealFolderPath_Grid{nullptr};
