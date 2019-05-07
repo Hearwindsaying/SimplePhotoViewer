@@ -6,8 +6,8 @@ namespace SimplePhotoViewer
     {
 		MainPage();
         
-		Windows.Foundation.Collections.IObservableVector<IInspectable> ImageSkus{get;set;};
-		Windows.Foundation.Collections.IObservableVector<IInspectable> BufferImageSkus{ get; set; }; //-
+		Windows.Foundation.Collections.IObservableVector<IInspectable> ImageSkus{get;};
+		Windows.Foundation.Collections.IObservableVector<IInspectable> BufferImageSkus{ get; }; //-
 		Windows.Foundation.Collections.IObservableVector<IInspectable> TreeViewFolders{ get; };
 		Windows.Foundation.Collections.IObservableVector<IInspectable> SearchResults{ get; };
 

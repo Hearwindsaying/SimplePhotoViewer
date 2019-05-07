@@ -54,7 +54,7 @@
                     <Grid Margin="200,0,0,5">
                         <CommandBar DefaultLabelPosition="Right" Background="Transparent" HorizontalAlignment="Left" >
                             <!--Click事件-->
-                            <AppBarButton  Name="Thumbnail" Icon="Home" Label="缩略图"
+                            <AppBarButton  Name="Thumbnail" Icon="Home" Label="缩略图" Click="GoBack_ClickHandler"
                                            Height="32" RenderTransformOrigin="0.5,0.5" >
                                 <AppBarButton.RenderTransform>
                                     <CompositeTransform TranslateY="-5"/>
@@ -116,7 +116,7 @@
                 <Grid.Background>
                     <AcrylicBrush BackgroundSource="HostBackdrop" TintColor="WhiteSmoke" TintOpacity="0.85"/>
                 </Grid.Background>
-                <!--
+                
                 <ScrollViewer Margin="0,0,0,0"
                         Grid.RowSpan="2"
                         HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto"
@@ -138,14 +138,14 @@
                         </ItemsPanelTemplate>
                     </FlipView>
                 </ScrollViewer>
--->
-                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+
+                <!--<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
                     <RelativePanel>
                         <ScrollViewer 
                                 HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto"
                                 VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Auto"
                                 ZoomMode="Enabled" Margin="0,-32,-1920,-964">
-                            <FlipView x:Name="DetailPageFlipView" ItemsSource="{x:Bind Mode=OneWay, Path=ImageSkus}" Opacity="1" Visibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True" Foreground="{x:Null}" FocusVisualPrimaryBrush="{x:Null}" Background="{x:Null}" FocusVisualSecondaryBrush="{x:Null}" HorizontalAlignment="Stretch" Height="996" VerticalAlignment="Stretch">
+                            <FlipView x:Name="DetailPageFlipView" ItemsSource="{x:Bind Mode=OneWay, Path=ImageSkus}" Opacity="1" Visibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True" Foreground="{x:Null}" FocusVisualPrimaryBrush="{x:Null}" Background="{x:Null}" FocusVisualSecondaryBrush="{x:Null}" Height="973" Margin="0,0,0,0">
                                 <FlipView.ItemTemplate>
                                     <DataTemplate x:DataType="local:ImageSku" >
                                         <StackPanel FocusVisualPrimaryBrush="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -159,7 +159,7 @@
                             </FlipView>
                         </ScrollViewer>
                     </RelativePanel>
-                </Grid>
+                </Grid>-->
 
             </Grid>
 

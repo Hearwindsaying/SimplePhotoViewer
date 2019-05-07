@@ -64,11 +64,11 @@ namespace winrt::SimplePhotoViewer::implementation
             _ListView2 = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::TreeView DirectoryTreeView()
+        ::winrt::Microsoft::UI::Xaml::Controls::TreeView DirectoryTreeView()
         {
             return _DirectoryTreeView;
         }
-        void DirectoryTreeView(::winrt::Windows::UI::Xaml::Controls::TreeView value)
+        void DirectoryTreeView(::winrt::Microsoft::UI::Xaml::Controls::TreeView value)
         {
             _DirectoryTreeView = value;
         }
@@ -340,7 +340,7 @@ namespace winrt::SimplePhotoViewer::implementation
         ::winrt::Windows::UI::Xaml::Controls::Grid _TopLeftGrid{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Grid _TreeView_Grid{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::ListView _ListView2{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::TreeView _DirectoryTreeView{nullptr};
+        ::winrt::Microsoft::UI::Xaml::Controls::TreeView _DirectoryTreeView{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::ListView _ListView1{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Button _SplitView_Button{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::TextBlock _SimplePhotoViewer_TextBlock{nullptr};

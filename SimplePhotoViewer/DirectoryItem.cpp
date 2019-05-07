@@ -19,11 +19,6 @@ namespace winrt::SimplePhotoViewer::implementation
 		return this->m_subItems;
 	}
 
-	void DirectoryItem::SubItems(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& value)
-	{
-		this->m_subItems = value;
-		this->m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"SubItems" });
-	}
 
 	Windows::Storage::StorageFolder DirectoryItem::ItemFolder() const
 	{

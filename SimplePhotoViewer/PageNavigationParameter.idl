@@ -1,0 +1,10 @@
+namespace SimplePhotoViewer
+{
+	runtimeclass PageNavigationParameter
+	{
+		PageNavigationParameter(Windows.Foundation.Collections.IObservableVector<IInspectable> imageSkus, UInt32 mainPageCurrentSelectedIndex);
+		
+		Windows.Foundation.Collections.IObservableVector<IInspectable> ImageSkus{get;};
+		UInt32 MainPageCurrentSelectedIndex{ get; };
+	}
+}

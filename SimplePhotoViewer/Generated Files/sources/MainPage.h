@@ -9,9 +9,7 @@ namespace winrt::SimplePhotoViewer::implementation
         MainPage() = default;
 
         Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> ImageSkus();
-        void ImageSkus(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& value);
         Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> BufferImageSkus();
-        void BufferImageSkus(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& value);
         Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> TreeViewFolders();
         Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> SearchResults();
         hstring CurrentSelectedFolder();

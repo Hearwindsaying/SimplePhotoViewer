@@ -58,6 +58,13 @@ struct WINRT_EBO MainPage :
     MainPage();
 };
 
+struct WINRT_EBO PageNavigationParameter :
+    SimplePhotoViewer::IPageNavigationParameter
+{
+    PageNavigationParameter(std::nullptr_t) noexcept {}
+    PageNavigationParameter(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& imageSkus, uint32_t mainPageCurrentSelectedIndex);
+};
+
 struct WINRT_EBO XamlMetaDataProvider :
     Windows::UI::Xaml::Markup::IXamlMetadataProvider
 {

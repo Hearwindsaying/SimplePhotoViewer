@@ -11,7 +11,6 @@ namespace winrt::SimplePhotoViewer::implementation
         DirectoryItem(hstring const& itemName, Windows::Storage::StorageFolder const& itemFolder);
 
         Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> SubItems();
-        void SubItems(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& value);
         hstring Item();
         void Item(hstring const& value);
         Windows::Storage::StorageFolder ItemFolder();

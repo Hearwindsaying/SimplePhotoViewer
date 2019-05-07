@@ -13,6 +13,7 @@
     <Midl Include="ImageSku.idl" />
     <Midl Include="DirectoryItem.idl" />
     <Midl Include="DetailPage.idl" />
+    <Midl Include="PageNavigationParameter.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -22,6 +23,7 @@
     <ClCompile Include="Generated Files\module.g.cpp" />
     <ClCompile Include="DirectoryItem.cpp" />
     <ClCompile Include="DetailPage.cpp" />
+    <ClCompile Include="PageNavigationParameter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -31,6 +33,7 @@
     <ClInclude Include="DirectoryItem.h" />
     <ClInclude Include="DetailPage.h" />
     <ClInclude Include="Utility.h" />
+    <ClInclude Include="PageNavigationParameter.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Wide310x150Logo.scale-200.png">

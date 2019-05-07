@@ -97,6 +97,7 @@
     </ClInclude>
     <ClInclude Include="DirectoryItem.h" />
     <ClInclude Include="ImageSku.h" />
+    <ClInclude Include="PageNavigationParameter.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.h">
       <DependentUpon>App.xaml</DependentUpon>
@@ -142,6 +143,7 @@
     <ClCompile Include="DirectoryItem.cpp" />
     <ClCompile Include="Generated Files\module.g.cpp" />
     <ClCompile Include="ImageSku.cpp" />
+    <ClCompile Include="PageNavigationParameter.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -165,6 +167,7 @@
     <Midl Include="MainPage.idl">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Midl>
+    <Midl Include="PageNavigationParameter.idl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt">

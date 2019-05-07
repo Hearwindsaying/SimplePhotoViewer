@@ -54,10 +54,13 @@ struct IDirectoryItemFactory;
 struct IImageSku;
 struct IImageSkuFactory;
 struct IMainPage;
+struct IPageNavigationParameter;
+struct IPageNavigationParameterFactory;
 struct DetailPage;
 struct DirectoryItem;
 struct ImageSku;
 struct MainPage;
+struct PageNavigationParameter;
 struct XamlMetaDataProvider;
 
 }
@@ -70,10 +73,13 @@ template <> struct category<SimplePhotoViewer::IDirectoryItemFactory>{ using typ
 template <> struct category<SimplePhotoViewer::IImageSku>{ using type = interface_category; };
 template <> struct category<SimplePhotoViewer::IImageSkuFactory>{ using type = interface_category; };
 template <> struct category<SimplePhotoViewer::IMainPage>{ using type = interface_category; };
+template <> struct category<SimplePhotoViewer::IPageNavigationParameter>{ using type = interface_category; };
+template <> struct category<SimplePhotoViewer::IPageNavigationParameterFactory>{ using type = interface_category; };
 template <> struct category<SimplePhotoViewer::DetailPage>{ using type = class_category; };
 template <> struct category<SimplePhotoViewer::DirectoryItem>{ using type = class_category; };
 template <> struct category<SimplePhotoViewer::ImageSku>{ using type = class_category; };
 template <> struct category<SimplePhotoViewer::MainPage>{ using type = class_category; };
+template <> struct category<SimplePhotoViewer::PageNavigationParameter>{ using type = class_category; };
 template <> struct category<SimplePhotoViewer::XamlMetaDataProvider>{ using type = class_category; };
 template <> struct name<SimplePhotoViewer::IDetailPage>{ static constexpr auto & value{ L"SimplePhotoViewer.IDetailPage" }; };
 template <> struct name<SimplePhotoViewer::IDirectoryItem>{ static constexpr auto & value{ L"SimplePhotoViewer.IDirectoryItem" }; };
@@ -81,21 +87,27 @@ template <> struct name<SimplePhotoViewer::IDirectoryItemFactory>{ static conste
 template <> struct name<SimplePhotoViewer::IImageSku>{ static constexpr auto & value{ L"SimplePhotoViewer.IImageSku" }; };
 template <> struct name<SimplePhotoViewer::IImageSkuFactory>{ static constexpr auto & value{ L"SimplePhotoViewer.IImageSkuFactory" }; };
 template <> struct name<SimplePhotoViewer::IMainPage>{ static constexpr auto & value{ L"SimplePhotoViewer.IMainPage" }; };
+template <> struct name<SimplePhotoViewer::IPageNavigationParameter>{ static constexpr auto & value{ L"SimplePhotoViewer.IPageNavigationParameter" }; };
+template <> struct name<SimplePhotoViewer::IPageNavigationParameterFactory>{ static constexpr auto & value{ L"SimplePhotoViewer.IPageNavigationParameterFactory" }; };
 template <> struct name<SimplePhotoViewer::DetailPage>{ static constexpr auto & value{ L"SimplePhotoViewer.DetailPage" }; };
 template <> struct name<SimplePhotoViewer::DirectoryItem>{ static constexpr auto & value{ L"SimplePhotoViewer.DirectoryItem" }; };
 template <> struct name<SimplePhotoViewer::ImageSku>{ static constexpr auto & value{ L"SimplePhotoViewer.ImageSku" }; };
 template <> struct name<SimplePhotoViewer::MainPage>{ static constexpr auto & value{ L"SimplePhotoViewer.MainPage" }; };
+template <> struct name<SimplePhotoViewer::PageNavigationParameter>{ static constexpr auto & value{ L"SimplePhotoViewer.PageNavigationParameter" }; };
 template <> struct name<SimplePhotoViewer::XamlMetaDataProvider>{ static constexpr auto & value{ L"SimplePhotoViewer.XamlMetaDataProvider" }; };
 template <> struct guid_storage<SimplePhotoViewer::IDetailPage>{ static constexpr guid value{ 0x9A6327D8,0xB530,0x5D48,{ 0x97,0xCD,0x81,0x86,0x99,0x1B,0x0E,0x2F } }; };
-template <> struct guid_storage<SimplePhotoViewer::IDirectoryItem>{ static constexpr guid value{ 0xFB20579E,0x6787,0x5760,{ 0x99,0xDD,0xF0,0xC9,0x1A,0x5F,0x3E,0x67 } }; };
+template <> struct guid_storage<SimplePhotoViewer::IDirectoryItem>{ static constexpr guid value{ 0xCF6E57A2,0xF99D,0x5538,{ 0xBE,0xF2,0x7A,0x55,0x82,0xC3,0x6E,0x51 } }; };
 template <> struct guid_storage<SimplePhotoViewer::IDirectoryItemFactory>{ static constexpr guid value{ 0x7BEFC8C0,0x6F19,0x5386,{ 0xA3,0xE2,0xDF,0x87,0x35,0x72,0xB2,0xE9 } }; };
 template <> struct guid_storage<SimplePhotoViewer::IImageSku>{ static constexpr guid value{ 0x0117A976,0xEB1C,0x564B,{ 0xB5,0xE5,0x34,0x9D,0x7A,0x4A,0x19,0xF7 } }; };
 template <> struct guid_storage<SimplePhotoViewer::IImageSkuFactory>{ static constexpr guid value{ 0xF1A64EF4,0x88BD,0x501C,{ 0xB1,0x71,0xE3,0xAE,0x99,0x87,0x08,0x67 } }; };
-template <> struct guid_storage<SimplePhotoViewer::IMainPage>{ static constexpr guid value{ 0x481C1B80,0xA1CE,0x5786,{ 0x95,0x86,0x5C,0x40,0xE8,0x7A,0x02,0x79 } }; };
+template <> struct guid_storage<SimplePhotoViewer::IMainPage>{ static constexpr guid value{ 0xB50FFCC1,0x6D4B,0x5557,{ 0xA8,0xE0,0x13,0xE7,0xDF,0x45,0x87,0x2D } }; };
+template <> struct guid_storage<SimplePhotoViewer::IPageNavigationParameter>{ static constexpr guid value{ 0xB6E2879B,0x0373,0x5A16,{ 0x89,0x47,0x62,0x18,0x6B,0x7B,0xE7,0x24 } }; };
+template <> struct guid_storage<SimplePhotoViewer::IPageNavigationParameterFactory>{ static constexpr guid value{ 0xEE6DB67D,0xBAAB,0x5E10,{ 0xA5,0x93,0x42,0x2A,0x57,0xC9,0x4C,0xBF } }; };
 template <> struct default_interface<SimplePhotoViewer::DetailPage>{ using type = SimplePhotoViewer::IDetailPage; };
 template <> struct default_interface<SimplePhotoViewer::DirectoryItem>{ using type = SimplePhotoViewer::IDirectoryItem; };
 template <> struct default_interface<SimplePhotoViewer::ImageSku>{ using type = SimplePhotoViewer::IImageSku; };
 template <> struct default_interface<SimplePhotoViewer::MainPage>{ using type = SimplePhotoViewer::IMainPage; };
+template <> struct default_interface<SimplePhotoViewer::PageNavigationParameter>{ using type = SimplePhotoViewer::IPageNavigationParameter; };
 template <> struct default_interface<SimplePhotoViewer::XamlMetaDataProvider>{ using type = Windows::UI::Xaml::Markup::IXamlMetadataProvider; };
 
 template <> struct abi<SimplePhotoViewer::IDetailPage>{ struct type : IInspectable
@@ -108,7 +120,6 @@ template <> struct abi<SimplePhotoViewer::IDetailPage>{ struct type : IInspectab
 template <> struct abi<SimplePhotoViewer::IDirectoryItem>{ struct type : IInspectable
 {
     virtual int32_t WINRT_CALL get_SubItems(void** value) noexcept = 0;
-    virtual int32_t WINRT_CALL put_SubItems(void* value) noexcept = 0;
     virtual int32_t WINRT_CALL get_Item(void** value) noexcept = 0;
     virtual int32_t WINRT_CALL put_Item(void* value) noexcept = 0;
     virtual int32_t WINRT_CALL get_ItemFolder(void** value) noexcept = 0;
@@ -146,15 +157,24 @@ template <> struct abi<SimplePhotoViewer::IImageSkuFactory>{ struct type : IInsp
 template <> struct abi<SimplePhotoViewer::IMainPage>{ struct type : IInspectable
 {
     virtual int32_t WINRT_CALL get_ImageSkus(void** value) noexcept = 0;
-    virtual int32_t WINRT_CALL put_ImageSkus(void* value) noexcept = 0;
     virtual int32_t WINRT_CALL get_BufferImageSkus(void** value) noexcept = 0;
-    virtual int32_t WINRT_CALL put_BufferImageSkus(void* value) noexcept = 0;
     virtual int32_t WINRT_CALL get_TreeViewFolders(void** value) noexcept = 0;
     virtual int32_t WINRT_CALL get_SearchResults(void** value) noexcept = 0;
     virtual int32_t WINRT_CALL get_CurrentSelectedFolder(void** value) noexcept = 0;
     virtual int32_t WINRT_CALL put_CurrentSelectedFolder(void* value) noexcept = 0;
     virtual int32_t WINRT_CALL get_CurrentFolderImageNumber(uint32_t* value) noexcept = 0;
     virtual int32_t WINRT_CALL get_CurrentFolderSelectedImageNumber(uint32_t* value) noexcept = 0;
+};};
+
+template <> struct abi<SimplePhotoViewer::IPageNavigationParameter>{ struct type : IInspectable
+{
+    virtual int32_t WINRT_CALL get_ImageSkus(void** value) noexcept = 0;
+    virtual int32_t WINRT_CALL get_MainPageCurrentSelectedIndex(uint32_t* value) noexcept = 0;
+};};
+
+template <> struct abi<SimplePhotoViewer::IPageNavigationParameterFactory>{ struct type : IInspectable
+{
+    virtual int32_t WINRT_CALL CreateInstance(void* imageSkus, uint32_t mainPageCurrentSelectedIndex, void** value) noexcept = 0;
 };};
 
 template <typename D>
@@ -170,7 +190,6 @@ template <typename D>
 struct consume_SimplePhotoViewer_IDirectoryItem
 {
     Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> SubItems() const;
-    void SubItems(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& value) const;
     hstring Item() const;
     void Item(param::hstring const& value) const;
     Windows::Storage::StorageFolder ItemFolder() const;
@@ -216,9 +235,7 @@ template <typename D>
 struct consume_SimplePhotoViewer_IMainPage
 {
     Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> ImageSkus() const;
-    void ImageSkus(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& value) const;
     Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> BufferImageSkus() const;
-    void BufferImageSkus(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& value) const;
     Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> TreeViewFolders() const;
     Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> SearchResults() const;
     hstring CurrentSelectedFolder() const;
@@ -227,5 +244,20 @@ struct consume_SimplePhotoViewer_IMainPage
     uint32_t CurrentFolderSelectedImageNumber() const;
 };
 template <> struct consume<SimplePhotoViewer::IMainPage> { template <typename D> using type = consume_SimplePhotoViewer_IMainPage<D>; };
+
+template <typename D>
+struct consume_SimplePhotoViewer_IPageNavigationParameter
+{
+    Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> ImageSkus() const;
+    uint32_t MainPageCurrentSelectedIndex() const;
+};
+template <> struct consume<SimplePhotoViewer::IPageNavigationParameter> { template <typename D> using type = consume_SimplePhotoViewer_IPageNavigationParameter<D>; };
+
+template <typename D>
+struct consume_SimplePhotoViewer_IPageNavigationParameterFactory
+{
+    SimplePhotoViewer::PageNavigationParameter CreateInstance(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& imageSkus, uint32_t mainPageCurrentSelectedIndex) const;
+};
+template <> struct consume<SimplePhotoViewer::IPageNavigationParameterFactory> { template <typename D> using type = consume_SimplePhotoViewer_IPageNavigationParameterFactory<D>; };
 
 }

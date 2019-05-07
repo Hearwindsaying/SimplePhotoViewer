@@ -47,11 +47,6 @@ template <typename D> Windows::Foundation::Collections::IObservableVector<Window
     return value;
 }
 
-template <typename D> void consume_SimplePhotoViewer_IDirectoryItem<D>::SubItems(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& value) const
-{
-    check_hresult(WINRT_SHIM(SimplePhotoViewer::IDirectoryItem)->put_SubItems(get_abi(value)));
-}
-
 template <typename D> hstring consume_SimplePhotoViewer_IDirectoryItem<D>::Item() const
 {
     hstring value{};
@@ -185,21 +180,11 @@ template <typename D> Windows::Foundation::Collections::IObservableVector<Window
     return value;
 }
 
-template <typename D> void consume_SimplePhotoViewer_IMainPage<D>::ImageSkus(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& value) const
-{
-    check_hresult(WINRT_SHIM(SimplePhotoViewer::IMainPage)->put_ImageSkus(get_abi(value)));
-}
-
 template <typename D> Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> consume_SimplePhotoViewer_IMainPage<D>::BufferImageSkus() const
 {
     Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> value{ nullptr };
     check_hresult(WINRT_SHIM(SimplePhotoViewer::IMainPage)->get_BufferImageSkus(put_abi(value)));
     return value;
-}
-
-template <typename D> void consume_SimplePhotoViewer_IMainPage<D>::BufferImageSkus(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& value) const
-{
-    check_hresult(WINRT_SHIM(SimplePhotoViewer::IMainPage)->put_BufferImageSkus(get_abi(value)));
 }
 
 template <typename D> Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> consume_SimplePhotoViewer_IMainPage<D>::TreeViewFolders() const
@@ -239,6 +224,27 @@ template <typename D> uint32_t consume_SimplePhotoViewer_IMainPage<D>::CurrentFo
 {
     uint32_t value{};
     check_hresult(WINRT_SHIM(SimplePhotoViewer::IMainPage)->get_CurrentFolderSelectedImageNumber(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> consume_SimplePhotoViewer_IPageNavigationParameter<D>::ImageSkus() const
+{
+    Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> value{ nullptr };
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IPageNavigationParameter)->get_ImageSkus(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_SimplePhotoViewer_IPageNavigationParameter<D>::MainPageCurrentSelectedIndex() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IPageNavigationParameter)->get_MainPageCurrentSelectedIndex(&value));
+    return value;
+}
+
+template <typename D> SimplePhotoViewer::PageNavigationParameter consume_SimplePhotoViewer_IPageNavigationParameterFactory<D>::CreateInstance(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& imageSkus, uint32_t mainPageCurrentSelectedIndex) const
+{
+    SimplePhotoViewer::PageNavigationParameter value{ nullptr };
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IPageNavigationParameterFactory)->CreateInstance(get_abi(imageSkus), mainPageCurrentSelectedIndex, put_abi(value)));
     return value;
 }
 
@@ -295,18 +301,6 @@ struct produce<D, SimplePhotoViewer::IDirectoryItem> : produce_base<D, SimplePho
             typename D::abi_guard guard(this->shim());
             WINRT_ASSERT_DECLARATION(SubItems, WINRT_WRAP(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable>));
             *value = detach_from<Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable>>(this->shim().SubItems());
-            return 0;
-        }
-        catch (...) { return to_hresult(); }
-    }
-
-    int32_t WINRT_CALL put_SubItems(void* value) noexcept final
-    {
-        try
-        {
-            typename D::abi_guard guard(this->shim());
-            WINRT_ASSERT_DECLARATION(SubItems, WINRT_WRAP(void), Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const&);
-            this->shim().SubItems(*reinterpret_cast<Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const*>(&value));
             return 0;
         }
         catch (...) { return to_hresult(); }
@@ -594,18 +588,6 @@ struct produce<D, SimplePhotoViewer::IMainPage> : produce_base<D, SimplePhotoVie
         catch (...) { return to_hresult(); }
     }
 
-    int32_t WINRT_CALL put_ImageSkus(void* value) noexcept final
-    {
-        try
-        {
-            typename D::abi_guard guard(this->shim());
-            WINRT_ASSERT_DECLARATION(ImageSkus, WINRT_WRAP(void), Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const&);
-            this->shim().ImageSkus(*reinterpret_cast<Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const*>(&value));
-            return 0;
-        }
-        catch (...) { return to_hresult(); }
-    }
-
     int32_t WINRT_CALL get_BufferImageSkus(void** value) noexcept final
     {
         try
@@ -614,18 +596,6 @@ struct produce<D, SimplePhotoViewer::IMainPage> : produce_base<D, SimplePhotoVie
             typename D::abi_guard guard(this->shim());
             WINRT_ASSERT_DECLARATION(BufferImageSkus, WINRT_WRAP(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable>));
             *value = detach_from<Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable>>(this->shim().BufferImageSkus());
-            return 0;
-        }
-        catch (...) { return to_hresult(); }
-    }
-
-    int32_t WINRT_CALL put_BufferImageSkus(void* value) noexcept final
-    {
-        try
-        {
-            typename D::abi_guard guard(this->shim());
-            WINRT_ASSERT_DECLARATION(BufferImageSkus, WINRT_WRAP(void), Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const&);
-            this->shim().BufferImageSkus(*reinterpret_cast<Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const*>(&value));
             return 0;
         }
         catch (...) { return to_hresult(); }
@@ -707,6 +677,52 @@ struct produce<D, SimplePhotoViewer::IMainPage> : produce_base<D, SimplePhotoVie
     }
 };
 
+template <typename D>
+struct produce<D, SimplePhotoViewer::IPageNavigationParameter> : produce_base<D, SimplePhotoViewer::IPageNavigationParameter>
+{
+    int32_t WINRT_CALL get_ImageSkus(void** value) noexcept final
+    {
+        try
+        {
+            *value = nullptr;
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(ImageSkus, WINRT_WRAP(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable>));
+            *value = detach_from<Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable>>(this->shim().ImageSkus());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL get_MainPageCurrentSelectedIndex(uint32_t* value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(MainPageCurrentSelectedIndex, WINRT_WRAP(uint32_t));
+            *value = detach_from<uint32_t>(this->shim().MainPageCurrentSelectedIndex());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+};
+
+template <typename D>
+struct produce<D, SimplePhotoViewer::IPageNavigationParameterFactory> : produce_base<D, SimplePhotoViewer::IPageNavigationParameterFactory>
+{
+    int32_t WINRT_CALL CreateInstance(void* imageSkus, uint32_t mainPageCurrentSelectedIndex, void** value) noexcept final
+    {
+        try
+        {
+            *value = nullptr;
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(CreateInstance, WINRT_WRAP(SimplePhotoViewer::PageNavigationParameter), Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const&, uint32_t);
+            *value = detach_from<SimplePhotoViewer::PageNavigationParameter>(this->shim().CreateInstance(*reinterpret_cast<Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const*>(&imageSkus), mainPageCurrentSelectedIndex));
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+};
+
 }
 
 WINRT_EXPORT namespace winrt::SimplePhotoViewer {
@@ -733,6 +749,10 @@ inline ImageSku::ImageSku(param::hstring const& defaultTipString) :
 
 inline MainPage::MainPage() :
     MainPage(impl::call_factory<MainPage>([](auto&& f) { return f.template ActivateInstance<MainPage>(); }))
+{}
+
+inline PageNavigationParameter::PageNavigationParameter(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& imageSkus, uint32_t mainPageCurrentSelectedIndex) :
+    PageNavigationParameter(impl::call_factory<PageNavigationParameter, SimplePhotoViewer::IPageNavigationParameterFactory>([&](auto&& f) { return f.CreateInstance(imageSkus, mainPageCurrentSelectedIndex); }))
 {}
 
 inline XamlMetaDataProvider::XamlMetaDataProvider() :
@@ -849,21 +869,13 @@ struct property_SimplePhotoViewer_IDirectoryItem
         using target_type = winrt::SimplePhotoViewer::IDirectoryItem;
 
         using is_readable = std::true_type;
-        using is_writable = std::true_type;
+        using is_writable = std::false_type;
         using is_static = std::false_type;
         struct getter
         {
             auto operator()(target_type const& target) const
             {
                 return target.SubItems();
-            }
-        };
-        struct setter
-        {
-            template <typename Value>
-            void operator()(target_type const& target, Value&& value) const
-            {
-                target.SubItems(std::forward<Value>(value));
             }
         };
     };};
@@ -1043,21 +1055,13 @@ struct property_SimplePhotoViewer_IMainPage
         using target_type = winrt::SimplePhotoViewer::IMainPage;
 
         using is_readable = std::true_type;
-        using is_writable = std::true_type;
+        using is_writable = std::false_type;
         using is_static = std::false_type;
         struct getter
         {
             auto operator()(target_type const& target) const
             {
                 return target.BufferImageSkus();
-            }
-        };
-        struct setter
-        {
-            template <typename Value>
-            void operator()(target_type const& target, Value&& value) const
-            {
-                target.BufferImageSkus(std::forward<Value>(value));
             }
         };
     };
@@ -1127,21 +1131,13 @@ struct property_SimplePhotoViewer_IMainPage
         using target_type = winrt::SimplePhotoViewer::IMainPage;
 
         using is_readable = std::true_type;
-        using is_writable = std::true_type;
+        using is_writable = std::false_type;
         using is_static = std::false_type;
         struct getter
         {
             auto operator()(target_type const& target) const
             {
                 return target.ImageSkus();
-            }
-        };
-        struct setter
-        {
-            template <typename Value>
-            void operator()(target_type const& target, Value&& value) const
-            {
-                target.ImageSkus(std::forward<Value>(value));
             }
         };
     };
@@ -1180,6 +1176,45 @@ struct property_SimplePhotoViewer_IMainPage
         };
     };};
     struct list { using type = impl::typelist<named::BufferImageSkus, named::CurrentFolderImageNumber, named::CurrentFolderSelectedImageNumber, named::CurrentSelectedFolder, named::ImageSkus, named::SearchResults, named::TreeViewFolders>; };
+};
+
+struct property_SimplePhotoViewer_IPageNavigationParameter
+{ struct named {
+    struct ImageSkus
+    {
+        struct name { static constexpr std::wstring_view value{ L"ImageSkus"sv }; };
+        using property_type = winrt::Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable>;
+        using target_type = winrt::SimplePhotoViewer::IPageNavigationParameter;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.ImageSkus();
+            }
+        };
+    };
+    struct MainPageCurrentSelectedIndex
+    {
+        struct name { static constexpr std::wstring_view value{ L"MainPageCurrentSelectedIndex"sv }; };
+        using property_type = uint32_t;
+        using target_type = winrt::SimplePhotoViewer::IPageNavigationParameter;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.MainPageCurrentSelectedIndex();
+            }
+        };
+    };};
+    struct list { using type = impl::typelist<named::ImageSkus, named::MainPageCurrentSelectedIndex>; };
 };
 
 struct property_SimplePhotoViewer_DetailPage
@@ -1231,31 +1266,6 @@ struct property_SimplePhotoViewer_DetailPage
 
 struct property_SimplePhotoViewer_DirectoryItem
 { struct named {
-    struct SubItems
-    {
-        struct name { static constexpr std::wstring_view value{ L"SubItems"sv }; };
-        using property_type = winrt::Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable>;
-        using target_type = winrt::SimplePhotoViewer::DirectoryItem;
-
-        using is_readable = std::true_type;
-        using is_writable = std::true_type;
-        using is_static = std::false_type;
-        struct getter
-        {
-            auto operator()(target_type const& target) const
-            {
-                return target.SubItems();
-            }
-        };
-        struct setter
-        {
-            template <typename Value>
-            void operator()(target_type const& target, Value&& value) const
-            {
-                target.SubItems(std::forward<Value>(value));
-            }
-        };
-    };
     struct ItemFolder
     {
         struct name { static constexpr std::wstring_view value{ L"ItemFolder"sv }; };
@@ -1305,8 +1315,25 @@ struct property_SimplePhotoViewer_DirectoryItem
                 target.Item(std::forward<Value>(value));
             }
         };
+    };
+    struct SubItems
+    {
+        struct name { static constexpr std::wstring_view value{ L"SubItems"sv }; };
+        using property_type = winrt::Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable>;
+        using target_type = winrt::SimplePhotoViewer::DirectoryItem;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.SubItems();
+            }
+        };
     };};
-    struct list { using type = impl::typelist<named::SubItems, named::ItemFolder, named::Item>; };
+    struct list { using type = impl::typelist<named::ItemFolder, named::Item, named::SubItems>; };
 };
 
 struct property_SimplePhotoViewer_ImageSku
@@ -1475,31 +1502,6 @@ struct property_SimplePhotoViewer_ImageSku
 
 struct property_SimplePhotoViewer_MainPage
 { struct named {
-    struct ImageSkus
-    {
-        struct name { static constexpr std::wstring_view value{ L"ImageSkus"sv }; };
-        using property_type = winrt::Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable>;
-        using target_type = winrt::SimplePhotoViewer::MainPage;
-
-        using is_readable = std::true_type;
-        using is_writable = std::true_type;
-        using is_static = std::false_type;
-        struct getter
-        {
-            auto operator()(target_type const& target) const
-            {
-                return target.ImageSkus();
-            }
-        };
-        struct setter
-        {
-            template <typename Value>
-            void operator()(target_type const& target, Value&& value) const
-            {
-                target.ImageSkus(std::forward<Value>(value));
-            }
-        };
-    };
     struct CurrentSelectedFolder
     {
         struct name { static constexpr std::wstring_view value{ L"CurrentSelectedFolder"sv }; };
@@ -1532,21 +1534,13 @@ struct property_SimplePhotoViewer_MainPage
         using target_type = winrt::SimplePhotoViewer::MainPage;
 
         using is_readable = std::true_type;
-        using is_writable = std::true_type;
+        using is_writable = std::false_type;
         using is_static = std::false_type;
         struct getter
         {
             auto operator()(target_type const& target) const
             {
                 return target.BufferImageSkus();
-            }
-        };
-        struct setter
-        {
-            template <typename Value>
-            void operator()(target_type const& target, Value&& value) const
-            {
-                target.BufferImageSkus(std::forward<Value>(value));
             }
         };
     };
@@ -1584,6 +1578,23 @@ struct property_SimplePhotoViewer_MainPage
             }
         };
     };
+    struct ImageSkus
+    {
+        struct name { static constexpr std::wstring_view value{ L"ImageSkus"sv }; };
+        using property_type = winrt::Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable>;
+        using target_type = winrt::SimplePhotoViewer::MainPage;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.ImageSkus();
+            }
+        };
+    };
     struct SearchResults
     {
         struct name { static constexpr std::wstring_view value{ L"SearchResults"sv }; };
@@ -1618,7 +1629,46 @@ struct property_SimplePhotoViewer_MainPage
             }
         };
     };};
-    struct list { using type = impl::typelist<named::ImageSkus, named::CurrentSelectedFolder, named::BufferImageSkus, named::CurrentFolderImageNumber, named::CurrentFolderSelectedImageNumber, named::SearchResults, named::TreeViewFolders>; };
+    struct list { using type = impl::typelist<named::CurrentSelectedFolder, named::BufferImageSkus, named::CurrentFolderImageNumber, named::CurrentFolderSelectedImageNumber, named::ImageSkus, named::SearchResults, named::TreeViewFolders>; };
+};
+
+struct property_SimplePhotoViewer_PageNavigationParameter
+{ struct named {
+    struct ImageSkus
+    {
+        struct name { static constexpr std::wstring_view value{ L"ImageSkus"sv }; };
+        using property_type = winrt::Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable>;
+        using target_type = winrt::SimplePhotoViewer::PageNavigationParameter;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.ImageSkus();
+            }
+        };
+    };
+    struct MainPageCurrentSelectedIndex
+    {
+        struct name { static constexpr std::wstring_view value{ L"MainPageCurrentSelectedIndex"sv }; };
+        using property_type = uint32_t;
+        using target_type = winrt::SimplePhotoViewer::PageNavigationParameter;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.MainPageCurrentSelectedIndex();
+            }
+        };
+    };};
+    struct list { using type = impl::typelist<named::ImageSkus, named::MainPageCurrentSelectedIndex>; };
 };
 
 }
@@ -1632,6 +1682,8 @@ template <> struct named_property<SimplePhotoViewer::IImageSku> : impl::property
 template <> struct properties<SimplePhotoViewer::IImageSku> : impl::property_SimplePhotoViewer_IImageSku::list {};
 template <> struct named_property<SimplePhotoViewer::IMainPage> : impl::property_SimplePhotoViewer_IMainPage::named {};
 template <> struct properties<SimplePhotoViewer::IMainPage> : impl::property_SimplePhotoViewer_IMainPage::list {};
+template <> struct named_property<SimplePhotoViewer::IPageNavigationParameter> : impl::property_SimplePhotoViewer_IPageNavigationParameter::named {};
+template <> struct properties<SimplePhotoViewer::IPageNavigationParameter> : impl::property_SimplePhotoViewer_IPageNavigationParameter::list {};
 template <> struct named_property<SimplePhotoViewer::DetailPage> : impl::property_SimplePhotoViewer_DetailPage::named {};
 template <> struct properties<SimplePhotoViewer::DetailPage> : impl::property_SimplePhotoViewer_DetailPage::list {};
 template <> struct named_property<SimplePhotoViewer::DirectoryItem> : impl::property_SimplePhotoViewer_DirectoryItem::named {};
@@ -1640,6 +1692,8 @@ template <> struct named_property<SimplePhotoViewer::ImageSku> : impl::property_
 template <> struct properties<SimplePhotoViewer::ImageSku> : impl::property_SimplePhotoViewer_ImageSku::list {};
 template <> struct named_property<SimplePhotoViewer::MainPage> : impl::property_SimplePhotoViewer_MainPage::named {};
 template <> struct properties<SimplePhotoViewer::MainPage> : impl::property_SimplePhotoViewer_MainPage::list {};
+template <> struct named_property<SimplePhotoViewer::PageNavigationParameter> : impl::property_SimplePhotoViewer_PageNavigationParameter::named {};
+template <> struct properties<SimplePhotoViewer::PageNavigationParameter> : impl::property_SimplePhotoViewer_PageNavigationParameter::list {};
 
 template <>
 struct base_type<SimplePhotoViewer::DetailPage> { using type = Windows::UI::Xaml::Controls::Page; };
@@ -1655,10 +1709,13 @@ template<> struct hash<winrt::SimplePhotoViewer::IDirectoryItemFactory> : winrt:
 template<> struct hash<winrt::SimplePhotoViewer::IImageSku> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IImageSku> {};
 template<> struct hash<winrt::SimplePhotoViewer::IImageSkuFactory> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IImageSkuFactory> {};
 template<> struct hash<winrt::SimplePhotoViewer::IMainPage> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IMainPage> {};
+template<> struct hash<winrt::SimplePhotoViewer::IPageNavigationParameter> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IPageNavigationParameter> {};
+template<> struct hash<winrt::SimplePhotoViewer::IPageNavigationParameterFactory> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IPageNavigationParameterFactory> {};
 template<> struct hash<winrt::SimplePhotoViewer::DetailPage> : winrt::impl::hash_base<winrt::SimplePhotoViewer::DetailPage> {};
 template<> struct hash<winrt::SimplePhotoViewer::DirectoryItem> : winrt::impl::hash_base<winrt::SimplePhotoViewer::DirectoryItem> {};
 template<> struct hash<winrt::SimplePhotoViewer::ImageSku> : winrt::impl::hash_base<winrt::SimplePhotoViewer::ImageSku> {};
 template<> struct hash<winrt::SimplePhotoViewer::MainPage> : winrt::impl::hash_base<winrt::SimplePhotoViewer::MainPage> {};
+template<> struct hash<winrt::SimplePhotoViewer::PageNavigationParameter> : winrt::impl::hash_base<winrt::SimplePhotoViewer::PageNavigationParameter> {};
 template<> struct hash<winrt::SimplePhotoViewer::XamlMetaDataProvider> : winrt::impl::hash_base<winrt::SimplePhotoViewer::XamlMetaDataProvider> {};
 
 }

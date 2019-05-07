@@ -56,4 +56,18 @@ struct WINRT_EBO IMainPage :
     IMainPage(std::nullptr_t = nullptr) noexcept {}
 };
 
+struct WINRT_EBO IPageNavigationParameter :
+    Windows::Foundation::IInspectable,
+    impl::consume_t<IPageNavigationParameter>
+{
+    IPageNavigationParameter(std::nullptr_t = nullptr) noexcept {}
+};
+
+struct WINRT_EBO IPageNavigationParameterFactory :
+    Windows::Foundation::IInspectable,
+    impl::consume_t<IPageNavigationParameterFactory>
+{
+    IPageNavigationParameterFactory(std::nullptr_t = nullptr) noexcept {}
+};
+
 }

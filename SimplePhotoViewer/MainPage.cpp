@@ -16,6 +16,7 @@
 
 #include "ImageSku.h"
 #include "DirectoryItem.h"
+#include "PageNavigationParameter.h"
 #include <winrt/Windows.UI.h>
 #include <winrt/Windows.UI.Xaml.h>
 #include <winrt/Windows.UI.Input.h>
@@ -46,11 +47,6 @@ namespace winrt::SimplePhotoViewer::implementation
     {
 		return this->m_imageSkus;
     }
-	void MainPage::ImageSkus(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& value)
-	{
-		this->m_imageSkus = value;
-		this->m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"ImageSkus" });
-	}
 
 	Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> MainPage::TreeViewFolders() const
 	{
@@ -60,11 +56,6 @@ namespace winrt::SimplePhotoViewer::implementation
 	Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> MainPage::BufferImageSkus() const //-
 	{
 		return this->m_bufferImageSkus;
-	}
-	void MainPage::BufferImageSkus(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& value) //-
-	{
-		this->m_bufferImageSkus = value;
-		this->m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"BufferImageSkus" });
 	}
 
 	Windows::Foundation::IAsyncAction MainPage::ClickHandler(Windows::Foundation::IInspectable const, Windows::UI::Xaml::RoutedEventArgs const)
@@ -102,10 +93,7 @@ namespace winrt::SimplePhotoViewer::implementation
 		//wchar_t testchar[20] = { '6','6','e' };
 		//OutputDebugString(testchar);
 	}
-	void MainPage::PlayButton_ClickHandler(Windows::Foundation::IInspectable const& param, Windows::UI::Xaml::RoutedEventArgs const&)
-	{
-		Frame().Navigate(winrt::xaml_typename<SimplePhotoViewer::DetailPage>(), this->m_imageSkus);
-	}
+
 	Windows::Foundation::IAsyncAction MainPage::DeleteButton_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&)
 	{
 		Windows::UI::Xaml::Controls::ContentDialog contentDialog{};
@@ -228,7 +216,7 @@ namespace winrt::SimplePhotoViewer::implementation
 
 	void MainPage::Node_ClickHandler(Microsoft::UI::Xaml::Controls::TreeView const&, Microsoft::UI::Xaml::Controls::TreeViewItemInvokedEventArgs const& args)
 	{
-		auto myContent = args.try_as<winrt::Microsoft::UI::Xaml::Controls::TreeViewNode>();
+		//auto myContent = args.try_as<winrt::Microsoft::UI::Xaml::Controls::TreeViewNode>();
 	}
 
 	Windows::Foundation::IAsyncAction MainPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs e)
@@ -250,56 +238,9 @@ namespace winrt::SimplePhotoViewer::implementation
 
 			for (const auto& rootNode : this->DirectoryTreeView().RootNodes())
 			{
-				//rootNode.IsExpanded(true);
 				rootNode.HasUnrealizedChildren(true);
-				/*co_await this->FillTreeNodes(rootNode);*/
 			}
 		}
-
-		//if (this->m_imageSkus.Size() == 0)
-		//{
-		//	auto defaultFolder = co_await this->LoadDefaultFolder();
-
-		//	Windows::Storage::Search::QueryOptions options{};
-		//	options.FolderDepth(Windows::Storage::Search::FolderDepth::Deep);
-		//	options.FileTypeFilter().Append(L".jpg");
-		//	options.FileTypeFilter().Append(L".png");
-		//	options.FileTypeFilter().Append(L".bmp");
-		//	options.FileTypeFilter().Append(L".tif");
-		//	options.FileTypeFilter().Append(L".gif");
-
-
-		//	auto result = defaultFolder.CreateFileQueryWithOptions(options);
-		//	auto imageFiles = co_await result.GetFilesAsync();
-		//	this->CurrentFolderImageNumber(imageFiles.Size());
-
-		//	//// Populate Photos collection.
-		//	for (auto&& file : imageFiles)
-		//	{
-		//		auto imageProperties = co_await file.Properties().GetImagePropertiesAsync();
-
-
-		//		auto thumbnail = co_await file.GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::SingleItem);
-		//		//or:auto thumbnail = co_await file.GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::PicturesView);
-		//		Windows::UI::Xaml::Media::Imaging::BitmapImage bitmapImage{};
-		//		bitmapImage.SetSource(thumbnail);
-		//		thumbnail.Close();
-		//		auto imageSku = winrt::make<ImageSku>(imageProperties, file, file.DisplayName(), file.DisplayType(), bitmapImage, file.Name());
-
-		//		/*Windows::Storage::Streams::IRandomAccessStream stream{ co_await file.OpenAsync(Windows::Storage::FileAccessMode::Read) };
-		//		Windows::UI::Xaml::Media::Imaging::BitmapImage bitmap{};
-		//		bitmap.SetSource(stream);
-		//		imageSku.ImageContent(bitmap);*/
-
-
-
-		//		this->ImageSkus().Append(imageSku);
-
-
-		//	}
-		//	wchar_t testchar[20] = { '6','6','e' };
-		//	OutputDebugString(testchar);
-		//}
 	}
 	
 	/*Refresh current displaying folder using specified storageFolder*/
@@ -346,32 +287,20 @@ namespace winrt::SimplePhotoViewer::implementation
 		}
 	}
 
-	Windows::Foundation::IAsyncAction MainPage::DirectoryItem_Expanding(Windows::UI::Xaml::Controls::TreeView const sender, Windows::UI::Xaml::Controls::TreeViewExpandingEventArgs const args)
+	Windows::Foundation::IAsyncAction MainPage::DirectoryItem_Expanding(Microsoft::UI::Xaml::Controls::TreeView const sender, Microsoft::UI::Xaml::Controls::TreeViewExpandingEventArgs const args)
 	{
 		using StorageFolder = Windows::Storage::StorageFolder;
 		SimplePhotoViewer::DirectoryItem expandingItem = args.Item().try_as<SimplePhotoViewer::DirectoryItem>();
-		
-		/*if (args.Node().HasUnrealizedChildren())
-		{
-			co_await this->FillTreeNodes(args.Node());
-		}*/
-		
+
 		if (expandingItem)
 		{
-			//expandingItem.SubItems().Clear();
 			if (!expandingItem.SubItems().Size())
 			{
-				//expandingItem.SubItems(single_threaded_observable_vector<Windows::Foundation::IInspectable>());
 				auto itemFolder = expandingItem.ItemFolder();
 				try
 				{
 					auto subfolders_feedOp = itemFolder.GetFoldersAsync();
-					/*auto subfolders = co_await subfolders_feedOp;*/
-					/*create_task([] {
-						return DoWork().get();
-					}).get();*/
 					auto subfolders = concurrency::create_task([&subfolders_feedOp] {return subfolders_feedOp.get(); }).get();
-					//auto subfolders = subfolders_feedOp.get();
 
 					if (!subfolders.Size())
 					{
@@ -391,42 +320,11 @@ namespace winrt::SimplePhotoViewer::implementation
 							auto subDirectoryItem = winrt::make<DirectoryItem>(singlefolder.Name(), singlefolder);
 
 							expandingItem.SubItems().Append(subDirectoryItem);
-							//if (j >= 5)
+							if (j >= 10)
+								break;
 
-							//expandingItem.SubItems(expandingItem.SubItems());
-							/*if (j == 5 || j == 6 || j == 7)
-							{*/
-							co_await 10ms;
-
-							co_await winrt::resume_foreground(this->DirectoryTreeView().Dispatcher());
-							//}
-
-
-							//auto nodeFromContainer = this->DirectoryTreeView().NodeFromContainer(itemContainer);
-							//if (nodeFromContainer)
-							//{
-							//	auto childrenNodes = nodeFromContainer.Children();
-
-							//	for (auto i = 0; i < childrenNodes.Size(); ++i)
-							//	{
-							//		auto subTreeViewNode = childrenNodes.GetAt(i);
-							//		
-							//		auto subDirectoryItem = subTreeViewNode.Content().try_as<SimplePhotoViewer::DirectoryItem>();
-							//		auto subDirectoryItemFolder = subDirectoryItem.ItemFolder();
-							//		if (subDirectoryItem)
-							//		{
-							//			/*auto secondaryFolders = concurrency::create_task(
-							//				[&subDirectoryItemFolder]
-							//				{
-							//					return subDirectoryItemFolder.GetFoldersAsync().get();
-							//				}).get();*/
-							//			auto secondaryFolders = co_await subTreeViewNode.Content().try_as<SimplePhotoViewer::DirectoryItem>().ItemFolder().GetFoldersAsync();
-							//			if (secondaryFolders.Size() != 0)
-							//				subTreeViewNode.HasUnrealizedChildren(true);
-							//		}
-							//		
-							//	}
-							//}
+							/*co_await 10ms;
+							co_await winrt::resume_foreground(this->DirectoryTreeView().Dispatcher());*/
 						}
 					}
 				}
@@ -436,23 +334,22 @@ namespace winrt::SimplePhotoViewer::implementation
 					hstring message = ex.message();
 				}
 			}
-			
-
 		}
+		co_return;
 	}
-	void MainPage::DirectoryItem_Collapsed(Windows::UI::Xaml::Controls::TreeView const sender, Windows::UI::Xaml::Controls::TreeViewCollapsedEventArgs const args)
+	void MainPage::DirectoryItem_Collapsed(Microsoft::UI::Xaml::Controls::TreeView const sender, Microsoft::UI::Xaml::Controls::TreeViewCollapsedEventArgs const args)
 	{
 		using StorageFolder = Windows::Storage::StorageFolder;
 		//args.Node().Children().Clear();
 		//args.Node().HasUnrealizedChildren(true);
-		//SimplePhotoViewer::DirectoryItem collapsedItem = args.Item().try_as<SimplePhotoViewer::DirectoryItem>();
-		//if (collapsedItem)
-		//{
-		//	//collapsedItem.SubItems().Clear();
+		SimplePhotoViewer::DirectoryItem collapsedItem = args.Item().try_as<SimplePhotoViewer::DirectoryItem>();
+		if (collapsedItem)
+		{
+			collapsedItem.SubItems().Clear();
 		//	/*args.Node().HasUnrealizedChildren(true);*/
-		//}
+		}
 	}
-	Windows::Foundation::IAsyncAction MainPage::DirectoryItem_Invoked(Windows::UI::Xaml::Controls::TreeView const sender, Windows::UI::Xaml::Controls::TreeViewItemInvokedEventArgs const args)
+	Windows::Foundation::IAsyncAction MainPage::DirectoryItem_Invoked(Microsoft::UI::Xaml::Controls::TreeView const sender, Microsoft::UI::Xaml::Controls::TreeViewItemInvokedEventArgs const args)
 	{
 		auto strong_this{ get_strong() };
 		auto itemContainer = strong_this->DirectoryTreeView().ContainerFromItem(args.InvokedItem());
@@ -495,7 +392,7 @@ namespace winrt::SimplePhotoViewer::implementation
 		return folder;
 	}
 
-	Windows::Foundation::IAsyncAction MainPage::FillTreeNodes(Windows::UI::Xaml::Controls::TreeViewNode const node/*, Windows::UI::Xaml::Controls::TreeViewItem const item*/)
+	Windows::Foundation::IAsyncAction MainPage::FillTreeNodes(Microsoft::UI::Xaml::Controls::TreeViewNode const node/*, Windows::UI::Xaml::Controls::TreeViewItem const item*/)
 	{
 		using StorageFolder = Windows::Storage::StorageFolder;
 		if (node.HasUnrealizedChildren())

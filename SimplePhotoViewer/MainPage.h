@@ -2,6 +2,7 @@
 
 #include "MainPage.g.h"
 #include "Utility.h"
+#include "PageNavigationParameter.h"
 
 namespace winrt::SimplePhotoViewer::implementation
 {
@@ -10,12 +11,11 @@ namespace winrt::SimplePhotoViewer::implementation
         MainPage();
 
         Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> ImageSkus() const;
-		void ImageSkus(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& value);
+
 		Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> TreeViewFolders() const;
 
 		Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> MainPage::BufferImageSkus() const; //-
-		void MainPage::BufferImageSkus(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& value);
-
+	
 		Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> SearchResults() const
 		{
 			return this->m_searchResults;
@@ -44,7 +44,7 @@ namespace winrt::SimplePhotoViewer::implementation
 		//delete this
 		Windows::Foundation::IAsyncAction ClickHandler(Windows::Foundation::IInspectable const, Windows::UI::Xaml::RoutedEventArgs const);
 		
-		void PlayButton_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&);
+		//void PlayButton_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&);
 
 		void SplitViewButton_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) {}
 
@@ -145,16 +145,13 @@ namespace winrt::SimplePhotoViewer::implementation
 		void OpenFile_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) {}
 		void ToneConversion_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) 
 		{
-			/*deleteme:only for debug*/
-			//auto ttv = this->DeleteButton().CenterPoint();
-			//auto ttv = this->ReverseSelect_ListViewItem().TransformToVisual(/*this->SimplePhotoViewer_TextBlock()*/Windows::UI::Xaml::Window::Current().Content());
-			//auto Height = this->TreeView_Grid().Height(); auto aHeight = this->TreeView_Grid().ActualHeight();
-			//Windows::Foundation::Point screenCoords = ttv.TransformPoint(Windows::Foundation::Point(0,0));
+			
 		}
 
 		void SlidePlay_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) 
 		{
-			Frame().Navigate(winrt::xaml_typename<SimplePhotoViewer::DetailPage>(), this->m_imageSkus);
+			auto pageParameter = make<PageNavigationParameter>(this->m_imageSkus, 1);
+			Frame().Navigate(winrt::xaml_typename<SimplePhotoViewer::DetailPage>(), pageParameter);
 		}
 
 		Windows::Foundation::IAsyncAction DeleteButton_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&);
@@ -166,9 +163,9 @@ namespace winrt::SimplePhotoViewer::implementation
 		void SearchBox_QuerySubmitted(Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, Windows::UI::Xaml::Controls::AutoSuggestBoxQuerySubmittedEventArgs const& args);
 
 		Windows::Foundation::IAsyncAction MainPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs e);
-		Windows::Foundation::IAsyncAction DirectoryItem_Expanding(Windows::UI::Xaml::Controls::TreeView const sender, Windows::UI::Xaml::Controls::TreeViewExpandingEventArgs const args);
-		void DirectoryItem_Collapsed(Windows::UI::Xaml::Controls::TreeView const sender, Windows::UI::Xaml::Controls::TreeViewCollapsedEventArgs const args);
-		Windows::Foundation::IAsyncAction DirectoryItem_Invoked(Windows::UI::Xaml::Controls::TreeView const sender, Windows::UI::Xaml::Controls::TreeViewItemInvokedEventArgs const args);
+		Windows::Foundation::IAsyncAction DirectoryItem_Expanding(Microsoft::UI::Xaml::Controls::TreeView const sender, Microsoft::UI::Xaml::Controls::TreeViewExpandingEventArgs const args);
+		void DirectoryItem_Collapsed(Microsoft::UI::Xaml::Controls::TreeView const sender, Microsoft::UI::Xaml::Controls::TreeViewCollapsedEventArgs const args);
+		Windows::Foundation::IAsyncAction DirectoryItem_Invoked(Microsoft::UI::Xaml::Controls::TreeView const sender, Microsoft::UI::Xaml::Controls::TreeViewItemInvokedEventArgs const args);
 
 		void GridViewItem_SelectionChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const& e);
 
@@ -189,7 +186,7 @@ namespace winrt::SimplePhotoViewer::implementation
 		void ApplyDragSelectionRect();
 	private:
 		Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> LoadDefaultFolder();
-		Windows::Foundation::IAsyncAction FillTreeNodes(Windows::UI::Xaml::Controls::TreeViewNode const node);
+		Windows::Foundation::IAsyncAction FillTreeNodes(Microsoft::UI::Xaml::Controls::TreeViewNode const node);
 
 		Windows::Foundation::IAsyncAction RefreshCurrentFolder(Windows::Storage::StorageFolder const storageFolder);
 

@@ -18,11 +18,6 @@ namespace winrt::SimplePhotoViewer::implementation
         throw hresult_not_implemented();
     }
 
-    void DirectoryItem::SubItems(Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& value)
-    {
-        throw hresult_not_implemented();
-    }
-
     hstring DirectoryItem::Item()
     {
         throw hresult_not_implemented();

@@ -5,6 +5,7 @@
 #include "DirectoryItem.h"
 #include "ImageSku.h"
 #include "MainPage.h"
+#include "PageNavigationParameter.h"
 #include "XamlMetaDataProvider.h"
 
 int32_t WINRT_CALL WINRT_CanUnloadNow() noexcept
@@ -60,6 +61,12 @@ int32_t WINRT_CALL WINRT_GetActivationFactory(void* classId, void** factory) noe
         if (requal(name, L"SimplePhotoViewer.MainPage"))
         {
             *factory = winrt::detach_abi(winrt::make<winrt::SimplePhotoViewer::factory_implementation::MainPage>());
+            return 0;
+        }
+
+        if (requal(name, L"SimplePhotoViewer.PageNavigationParameter"))
+        {
+            *factory = winrt::detach_abi(winrt::make<winrt::SimplePhotoViewer::factory_implementation::PageNavigationParameter>());
             return 0;
         }
 

@@ -1,6 +1,8 @@
 ﻿#include "pch.h"
 #include "DetailPage.h"
 #include "ImageSku.h"
+#include "Utility.h"
+#include "PageNavigationParameter.h"
 
 #include <winrt/Windows.UI.Core.h>
 
@@ -35,25 +37,39 @@ namespace winrt::SimplePhotoViewer::implementation
 
 	Windows::Foundation::IAsyncAction DetailPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs e)
 	{
-		this->m_imageSkus = e.Parameter().try_as< Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable>>();
+		auto pageParameter = /*unbox_value<PageNavigationParameter>(e.Parameter());*/
+			e.Parameter().try_as<SimplePhotoViewer::PageNavigationParameter>();
+		
+		this->m_imageSkus = pageParameter.ImageSkus();
+		auto mainPageSelectedIndex = pageParameter.MainPageCurrentSelectedIndex();
+		//this->m_imageSkus = e.Parameter().try_as< Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable>>();
 
-		for (auto&& singleItem : this->m_imageSkus)
+		//this->m_imageSkus = pageParameter.GetAt(0).try_as< Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable>>();
+		//auto selectedIndex = unbox_value<int>( pageParameter.GetAt(1));
+
+		for (auto i = 0; i < 5; ++i)
 		{
+			/*Load next 5 images*/
+			if ((i + mainPageSelectedIndex) >= this->m_imageSkus.Size())
+				break;
+
+			auto singleItem = this->m_imageSkus.GetAt(i + mainPageSelectedIndex);
 			auto singleImageSku = singleItem.try_as<SimplePhotoViewer::ImageSku>();
 			Windows::Storage::Streams::IRandomAccessStream stream{ co_await singleImageSku.ImageFile().OpenAsync(Windows::Storage::FileAccessMode::Read) };
 			Windows::UI::Xaml::Media::Imaging::BitmapImage bitmap{};
 			bitmap.SetSource(stream);
 			singleImageSku.ImageContent(bitmap);
-
+			//stream.Close();
 		}
+
 		/*this->DetailPageFlipView().SelectedIndex(1);*/
 		/*auto myContent = this->m_imageSkus.GetAt(0).try_as<SimplePhotoViewer::ImageSku>().ImageContent();*/
-		this->ThumbnailListView().SelectedIndex(0);
+		//this->ThumbnailListView().SelectedIndex(0);
 
 		/*Issue fixed:corruption due to the non-initalization of ThumbnailListView*/
 		/*Note that we'd better register the SelectionChanged event manually after loading all items.
 		/*If binding in xaml, be careful that ThumbnailListView may not get initialized yet.*/
-		this->DetailPageFlipView().SelectionChanged([this](winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const& e)
+		this->DetailPageFlipView().SelectionChanged([this](winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const& e)->Windows::Foundation::IAsyncAction
 		{
 			auto flipView = sender.try_as<Windows::UI::Xaml::Controls::FlipView>();
 			if (flipView.SelectedItem())
@@ -72,14 +88,59 @@ namespace winrt::SimplePhotoViewer::implementation
 					thumbnailScrollViewer.UpdateLayout();
 					
 					auto selectorItem = this->ThumbnailListView().ContainerFromItem(selectedItemInListView).try_as<Windows::UI::Xaml::Controls::Primitives::SelectorItem>();
+					
+					if (!selectorItem)
+						return;
 
 					/*weak reference,might not exist any more*/
-					auto transform = selectorItem.TransformToVisual(this->ThumbnailScrollViewer().Content().try_as<Windows::UI::Xaml::UIElement>());
-					auto position = transform.TransformPoint(Windows::Foundation::Point(0, 0));
-					this->ThumbnailScrollViewer().ChangeView(position.X, position.Y, nullptr);
+					auto thumbnailScrollViewerContent = this->ThumbnailScrollViewer().Content();
+					if (thumbnailScrollViewerContent)
+					{
+						auto thumbnailScrollViewerUIElement = thumbnailScrollViewerContent.try_as<Windows::UI::Xaml::UIElement>();
+						if (thumbnailScrollViewerUIElement)
+						{
+							auto transform = selectorItem.TransformToVisual(thumbnailScrollViewerUIElement);
+
+							auto position = transform.TransformPoint(Windows::Foundation::Point(0, 0));
+							this->ThumbnailScrollViewer().ChangeView(position.X, position.Y, nullptr);
+
+							/*Load the next 5 images*/
+							for (auto i = 0; i < 5; ++i)
+							{
+								auto flipViewSelectedItem = flipView.SelectedItem();
+								auto selectedImageSkuItemIndex = SimplePhotoViewer::find_index(this->m_imageSkus.First(), [flipViewSelectedItem](auto const& item)->bool
+								{
+									return item == flipViewSelectedItem;
+								});
+
+								if ((i + selectedImageSkuItemIndex) >= this->m_imageSkus.Size())
+									break;
+								auto singleItem = this->m_imageSkus.GetAt(i + selectedImageSkuItemIndex);
+
+								auto singleImageSku = singleItem.try_as<SimplePhotoViewer::ImageSku>();
+								if (singleImageSku.ImageContent())
+									continue;
+
+								Windows::Storage::Streams::IRandomAccessStream stream{ co_await singleImageSku.ImageFile().OpenAsync(Windows::Storage::FileAccessMode::Read) };
+								Windows::UI::Xaml::Media::Imaging::BitmapImage bitmap{};
+								bitmap.SetSource(stream);
+								singleImageSku.ImageContent(bitmap);
+								//stream.Close();
+							}
+						}
+						else
+						{
+							wchar_t testchar[20] = { 'e','r','4' };
+							OutputDebugString(testchar);
+						}
+					}
+					
 				}
 			}
 		});
+
+		//this->DetailPageFlipView().SelectedIndex(mainPageSelectedIndex);
+		this->ThumbnailListView().SelectedIndex(0);
 	}
 
 	void DetailPage::ImageGridView_ItemClick(Windows::Foundation::IInspectable const sender, Windows::UI::Xaml::Controls::ItemClickEventArgs const e)
@@ -92,10 +153,10 @@ namespace winrt::SimplePhotoViewer::implementation
 		/*this->ThumbnailListView().ScrollIntoView(m_imageSkus.GetAt(10));*/
 	}
 
-	void DetailPage::ImageFlipView_SelectionChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const& e)
+	/*void DetailPage::ImageFlipView_SelectionChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const& e)
 	{
 		
-	}
+	}*/
 
 	void DetailPage::GoBack_ClickHandler(Windows::Foundation::IInspectable const& param, Windows::UI::Xaml::RoutedEventArgs const&)
 	{
