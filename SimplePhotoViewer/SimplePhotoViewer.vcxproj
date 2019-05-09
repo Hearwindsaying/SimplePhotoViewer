@@ -96,6 +96,7 @@
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="DirectoryItem.h" />
+    <ClInclude Include="ExplorerItemTemplateSelector.h" />
     <ClInclude Include="ImageSku.h" />
     <ClInclude Include="PageNavigationParameter.h" />
     <ClInclude Include="pch.h" />
@@ -126,6 +127,7 @@
     <None Include="SimplePhotoViewer_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Assets\file.png" />
     <Image Include="Assets\folder.png" />
     <Image Include="Assets\LockScreenLogo.scale-200.png" />
     <Image Include="Assets\SplashScreen.scale-200.png" />
@@ -141,6 +143,7 @@
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="DirectoryItem.cpp" />
+    <ClCompile Include="ExplorerItemTemplateSelector.cpp" />
     <ClCompile Include="Generated Files\module.g.cpp" />
     <ClCompile Include="ImageSku.cpp" />
     <ClCompile Include="PageNavigationParameter.cpp" />
@@ -163,6 +166,7 @@
       <SubType>Code</SubType>
     </Midl>
     <Midl Include="DirectoryItem.idl" />
+    <Midl Include="ExplorerItemTemplateSelector.idl" />
     <Midl Include="ImageSku.idl" />
     <Midl Include="MainPage.idl">
       <DependentUpon>MainPage.xaml</DependentUpon>

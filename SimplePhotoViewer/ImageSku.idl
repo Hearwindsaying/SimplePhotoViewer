@@ -11,5 +11,6 @@ namespace SimplePhotoViewer
 		String ImageNameWithType{ get; set; }; 
 		Windows.UI.Xaml.Media.Imaging.BitmapImage ImageThumbnail{ get; };
 		Windows.UI.Xaml.Media.Imaging.BitmapImage ImageContent{ get; set; };
+		Double RenderRotation{ get; set; };
 	}
 }

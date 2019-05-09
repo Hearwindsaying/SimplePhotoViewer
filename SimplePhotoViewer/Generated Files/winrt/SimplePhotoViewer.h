@@ -10,12 +10,12 @@ static_assert(winrt::check_version(CPPWINRT_VERSION, "1.0.180821.2"), "Mismatche
 #include "winrt/Windows.Foundation.Collections.h"
 #include "winrt/impl/Windows.Storage.2.h"
 #include "winrt/impl/Windows.Storage.FileProperties.2.h"
+#include "winrt/impl/Windows.UI.Xaml.2.h"
 #include "winrt/impl/Windows.UI.Xaml.Data.2.h"
 #include "winrt/impl/Windows.UI.Xaml.Interop.2.h"
 #include "winrt/impl/Windows.UI.Xaml.Markup.2.h"
 #include "winrt/impl/Windows.UI.Xaml.Media.Imaging.2.h"
 #include "winrt/impl/Windows.UI.Composition.2.h"
-#include "winrt/impl/Windows.UI.Xaml.2.h"
 #include "winrt/impl/Windows.UI.Xaml.Controls.2.h"
 #include "winrt/impl/SimplePhotoViewer.2.h"
 
@@ -71,6 +71,18 @@ template <typename D> void consume_SimplePhotoViewer_IDirectoryItem<D>::ItemFold
     check_hresult(WINRT_SHIM(SimplePhotoViewer::IDirectoryItem)->put_ItemFolder(get_abi(value)));
 }
 
+template <typename D> bool consume_SimplePhotoViewer_IDirectoryItem<D>::IsFolder() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IDirectoryItem)->get_IsFolder(&value));
+    return value;
+}
+
+template <typename D> void consume_SimplePhotoViewer_IDirectoryItem<D>::IsFolder(bool value) const
+{
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IDirectoryItem)->put_IsFolder(value));
+}
+
 template <typename D> SimplePhotoViewer::DirectoryItem consume_SimplePhotoViewer_IDirectoryItemFactory<D>::CreateInstance(param::hstring const& itemName, Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& subItems, Windows::Storage::StorageFolder const& itemFolder) const
 {
     SimplePhotoViewer::DirectoryItem value{ nullptr };
@@ -83,6 +95,37 @@ template <typename D> SimplePhotoViewer::DirectoryItem consume_SimplePhotoViewer
     SimplePhotoViewer::DirectoryItem value{ nullptr };
     check_hresult(WINRT_SHIM(SimplePhotoViewer::IDirectoryItemFactory)->CreateInstance2(get_abi(itemName), get_abi(itemFolder), put_abi(value)));
     return value;
+}
+
+template <typename D> Windows::UI::Xaml::DataTemplate consume_SimplePhotoViewer_IExplorerItemTemplateSelector<D>::SelectTemplateCore(Windows::Foundation::IInspectable const& item) const
+{
+    Windows::UI::Xaml::DataTemplate result{ nullptr };
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IExplorerItemTemplateSelector)->SelectTemplateCore(get_abi(item), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::UI::Xaml::DataTemplate consume_SimplePhotoViewer_IExplorerItemTemplateSelector<D>::FolderTemplate() const
+{
+    Windows::UI::Xaml::DataTemplate value{ nullptr };
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IExplorerItemTemplateSelector)->get_FolderTemplate(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_SimplePhotoViewer_IExplorerItemTemplateSelector<D>::FolderTemplate(Windows::UI::Xaml::DataTemplate const& value) const
+{
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IExplorerItemTemplateSelector)->put_FolderTemplate(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::DataTemplate consume_SimplePhotoViewer_IExplorerItemTemplateSelector<D>::FileTemplate() const
+{
+    Windows::UI::Xaml::DataTemplate value{ nullptr };
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IExplorerItemTemplateSelector)->get_FileTemplate(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_SimplePhotoViewer_IExplorerItemTemplateSelector<D>::FileTemplate(Windows::UI::Xaml::DataTemplate const& value) const
+{
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IExplorerItemTemplateSelector)->put_FileTemplate(get_abi(value)));
 }
 
 template <typename D> Windows::Storage::StorageFile consume_SimplePhotoViewer_IImageSku<D>::ImageFile() const
@@ -157,6 +200,18 @@ template <typename D> Windows::UI::Xaml::Media::Imaging::BitmapImage consume_Sim
 template <typename D> void consume_SimplePhotoViewer_IImageSku<D>::ImageContent(Windows::UI::Xaml::Media::Imaging::BitmapImage const& value) const
 {
     check_hresult(WINRT_SHIM(SimplePhotoViewer::IImageSku)->put_ImageContent(get_abi(value)));
+}
+
+template <typename D> double consume_SimplePhotoViewer_IImageSku<D>::RenderRotation() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IImageSku)->get_RenderRotation(&value));
+    return value;
+}
+
+template <typename D> void consume_SimplePhotoViewer_IImageSku<D>::RenderRotation(double value) const
+{
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IImageSku)->put_RenderRotation(value));
 }
 
 template <typename D> SimplePhotoViewer::ImageSku consume_SimplePhotoViewer_IImageSkuFactory<D>::CreateInstance(Windows::Storage::FileProperties::ImageProperties const& imageProps, Windows::Storage::StorageFile const& imageFile, param::hstring const& name, param::hstring const& type, Windows::UI::Xaml::Media::Imaging::BitmapImage const& imageThumbnail, param::hstring const& nameWithType) const
@@ -355,6 +410,30 @@ struct produce<D, SimplePhotoViewer::IDirectoryItem> : produce_base<D, SimplePho
         }
         catch (...) { return to_hresult(); }
     }
+
+    int32_t WINRT_CALL get_IsFolder(bool* value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(IsFolder, WINRT_WRAP(bool));
+            *value = detach_from<bool>(this->shim().IsFolder());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL put_IsFolder(bool value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(IsFolder, WINRT_WRAP(void), bool);
+            this->shim().IsFolder(value);
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
 };
 
 template <typename D>
@@ -381,6 +460,73 @@ struct produce<D, SimplePhotoViewer::IDirectoryItemFactory> : produce_base<D, Si
             typename D::abi_guard guard(this->shim());
             WINRT_ASSERT_DECLARATION(CreateInstance2, WINRT_WRAP(SimplePhotoViewer::DirectoryItem), hstring const&, Windows::Storage::StorageFolder const&);
             *value = detach_from<SimplePhotoViewer::DirectoryItem>(this->shim().CreateInstance2(*reinterpret_cast<hstring const*>(&itemName), *reinterpret_cast<Windows::Storage::StorageFolder const*>(&itemFolder)));
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+};
+
+template <typename D>
+struct produce<D, SimplePhotoViewer::IExplorerItemTemplateSelector> : produce_base<D, SimplePhotoViewer::IExplorerItemTemplateSelector>
+{
+    int32_t WINRT_CALL SelectTemplateCore(void* item, void** result) noexcept final
+    {
+        try
+        {
+            *result = nullptr;
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(SelectTemplateCore, WINRT_WRAP(Windows::UI::Xaml::DataTemplate), Windows::Foundation::IInspectable const&);
+            *result = detach_from<Windows::UI::Xaml::DataTemplate>(this->shim().SelectTemplateCore(*reinterpret_cast<Windows::Foundation::IInspectable const*>(&item)));
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL get_FolderTemplate(void** value) noexcept final
+    {
+        try
+        {
+            *value = nullptr;
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(FolderTemplate, WINRT_WRAP(Windows::UI::Xaml::DataTemplate));
+            *value = detach_from<Windows::UI::Xaml::DataTemplate>(this->shim().FolderTemplate());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL put_FolderTemplate(void* value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(FolderTemplate, WINRT_WRAP(void), Windows::UI::Xaml::DataTemplate const&);
+            this->shim().FolderTemplate(*reinterpret_cast<Windows::UI::Xaml::DataTemplate const*>(&value));
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL get_FileTemplate(void** value) noexcept final
+    {
+        try
+        {
+            *value = nullptr;
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(FileTemplate, WINRT_WRAP(Windows::UI::Xaml::DataTemplate));
+            *value = detach_from<Windows::UI::Xaml::DataTemplate>(this->shim().FileTemplate());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL put_FileTemplate(void* value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(FileTemplate, WINRT_WRAP(void), Windows::UI::Xaml::DataTemplate const&);
+            this->shim().FileTemplate(*reinterpret_cast<Windows::UI::Xaml::DataTemplate const*>(&value));
             return 0;
         }
         catch (...) { return to_hresult(); }
@@ -536,6 +682,30 @@ struct produce<D, SimplePhotoViewer::IImageSku> : produce_base<D, SimplePhotoVie
             typename D::abi_guard guard(this->shim());
             WINRT_ASSERT_DECLARATION(ImageContent, WINRT_WRAP(void), Windows::UI::Xaml::Media::Imaging::BitmapImage const&);
             this->shim().ImageContent(*reinterpret_cast<Windows::UI::Xaml::Media::Imaging::BitmapImage const*>(&value));
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL get_RenderRotation(double* value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(RenderRotation, WINRT_WRAP(double));
+            *value = detach_from<double>(this->shim().RenderRotation());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL put_RenderRotation(double value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(RenderRotation, WINRT_WRAP(void), double);
+            this->shim().RenderRotation(value);
             return 0;
         }
         catch (...) { return to_hresult(); }
@@ -739,6 +909,10 @@ inline DirectoryItem::DirectoryItem(param::hstring const& itemName, Windows::Sto
     DirectoryItem(impl::call_factory<DirectoryItem, SimplePhotoViewer::IDirectoryItemFactory>([&](auto&& f) { return f.CreateInstance2(itemName, itemFolder); }))
 {}
 
+inline ExplorerItemTemplateSelector::ExplorerItemTemplateSelector() :
+    ExplorerItemTemplateSelector(impl::call_factory<ExplorerItemTemplateSelector>([](auto&& f) { return f.template ActivateInstance<ExplorerItemTemplateSelector>(); }))
+{}
+
 inline ImageSku::ImageSku(Windows::Storage::FileProperties::ImageProperties const& imageProps, Windows::Storage::StorageFile const& imageFile, param::hstring const& name, param::hstring const& type, Windows::UI::Xaml::Media::Imaging::BitmapImage const& imageThumbnail, param::hstring const& nameWithType) :
     ImageSku(impl::call_factory<ImageSku, SimplePhotoViewer::IImageSkuFactory>([&](auto&& f) { return f.CreateInstance(imageProps, imageFile, name, type, imageThumbnail, nameWithType); }))
 {}
@@ -812,6 +986,31 @@ struct property_SimplePhotoViewer_IDetailPage
 
 struct property_SimplePhotoViewer_IDirectoryItem
 { struct named {
+    struct IsFolder
+    {
+        struct name { static constexpr std::wstring_view value{ L"IsFolder"sv }; };
+        using property_type = bool;
+        using target_type = winrt::SimplePhotoViewer::IDirectoryItem;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.IsFolder();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.IsFolder(std::forward<Value>(value));
+            }
+        };
+    };
     struct Item
     {
         struct name { static constexpr std::wstring_view value{ L"Item"sv }; };
@@ -879,7 +1078,62 @@ struct property_SimplePhotoViewer_IDirectoryItem
             }
         };
     };};
-    struct list { using type = impl::typelist<named::Item, named::ItemFolder, named::SubItems>; };
+    struct list { using type = impl::typelist<named::IsFolder, named::Item, named::ItemFolder, named::SubItems>; };
+};
+
+struct property_SimplePhotoViewer_IExplorerItemTemplateSelector
+{ struct named {
+    struct FileTemplate
+    {
+        struct name { static constexpr std::wstring_view value{ L"FileTemplate"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::DataTemplate;
+        using target_type = winrt::SimplePhotoViewer::IExplorerItemTemplateSelector;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.FileTemplate();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.FileTemplate(std::forward<Value>(value));
+            }
+        };
+    };
+    struct FolderTemplate
+    {
+        struct name { static constexpr std::wstring_view value{ L"FolderTemplate"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::DataTemplate;
+        using target_type = winrt::SimplePhotoViewer::IExplorerItemTemplateSelector;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.FolderTemplate();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.FolderTemplate(std::forward<Value>(value));
+            }
+        };
+    };};
+    struct list { using type = impl::typelist<named::FileTemplate, named::FolderTemplate>; };
 };
 
 struct property_SimplePhotoViewer_IImageSku
@@ -1042,8 +1296,33 @@ struct property_SimplePhotoViewer_IImageSku
                 return target.ImageThumbnail();
             }
         };
+    };
+    struct RenderRotation
+    {
+        struct name { static constexpr std::wstring_view value{ L"RenderRotation"sv }; };
+        using property_type = double;
+        using target_type = winrt::SimplePhotoViewer::IImageSku;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.RenderRotation();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.RenderRotation(std::forward<Value>(value));
+            }
+        };
     };};
-    struct list { using type = impl::typelist<named::ImageContent, named::ImageFile, named::ImageFileType, named::ImageName, named::ImageNameWithType, named::ImageProperties, named::ImageThumbnail>; };
+    struct list { using type = impl::typelist<named::ImageContent, named::ImageFile, named::ImageFileType, named::ImageName, named::ImageNameWithType, named::ImageProperties, named::ImageThumbnail, named::RenderRotation>; };
 };
 
 struct property_SimplePhotoViewer_IMainPage
@@ -1316,6 +1595,31 @@ struct property_SimplePhotoViewer_DirectoryItem
             }
         };
     };
+    struct IsFolder
+    {
+        struct name { static constexpr std::wstring_view value{ L"IsFolder"sv }; };
+        using property_type = bool;
+        using target_type = winrt::SimplePhotoViewer::DirectoryItem;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.IsFolder();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.IsFolder(std::forward<Value>(value));
+            }
+        };
+    };
     struct SubItems
     {
         struct name { static constexpr std::wstring_view value{ L"SubItems"sv }; };
@@ -1333,11 +1637,91 @@ struct property_SimplePhotoViewer_DirectoryItem
             }
         };
     };};
-    struct list { using type = impl::typelist<named::ItemFolder, named::Item, named::SubItems>; };
+    struct list { using type = impl::typelist<named::ItemFolder, named::Item, named::IsFolder, named::SubItems>; };
+};
+
+struct property_SimplePhotoViewer_ExplorerItemTemplateSelector
+{ struct named {
+    struct FolderTemplate
+    {
+        struct name { static constexpr std::wstring_view value{ L"FolderTemplate"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::DataTemplate;
+        using target_type = winrt::SimplePhotoViewer::ExplorerItemTemplateSelector;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.FolderTemplate();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.FolderTemplate(std::forward<Value>(value));
+            }
+        };
+    };
+    struct FileTemplate
+    {
+        struct name { static constexpr std::wstring_view value{ L"FileTemplate"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::DataTemplate;
+        using target_type = winrt::SimplePhotoViewer::ExplorerItemTemplateSelector;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.FileTemplate();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.FileTemplate(std::forward<Value>(value));
+            }
+        };
+    };};
+    struct list { using type = impl::typelist<named::FolderTemplate, named::FileTemplate>; };
 };
 
 struct property_SimplePhotoViewer_ImageSku
 { struct named {
+    struct RenderRotation
+    {
+        struct name { static constexpr std::wstring_view value{ L"RenderRotation"sv }; };
+        using property_type = double;
+        using target_type = winrt::SimplePhotoViewer::ImageSku;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.RenderRotation();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.RenderRotation(std::forward<Value>(value));
+            }
+        };
+    };
     struct ImageNameWithType
     {
         struct name { static constexpr std::wstring_view value{ L"ImageNameWithType"sv }; };
@@ -1497,7 +1881,7 @@ struct property_SimplePhotoViewer_ImageSku
             }
         };
     };};
-    struct list { using type = impl::typelist<named::ImageNameWithType, named::ImageName, named::ImageFileType, named::ImageFile, named::ImageContent, named::ImageProperties, named::ImageThumbnail>; };
+    struct list { using type = impl::typelist<named::RenderRotation, named::ImageNameWithType, named::ImageName, named::ImageFileType, named::ImageFile, named::ImageContent, named::ImageProperties, named::ImageThumbnail>; };
 };
 
 struct property_SimplePhotoViewer_MainPage
@@ -1678,6 +2062,8 @@ template <> struct named_property<SimplePhotoViewer::IDetailPage> : impl::proper
 template <> struct properties<SimplePhotoViewer::IDetailPage> : impl::property_SimplePhotoViewer_IDetailPage::list {};
 template <> struct named_property<SimplePhotoViewer::IDirectoryItem> : impl::property_SimplePhotoViewer_IDirectoryItem::named {};
 template <> struct properties<SimplePhotoViewer::IDirectoryItem> : impl::property_SimplePhotoViewer_IDirectoryItem::list {};
+template <> struct named_property<SimplePhotoViewer::IExplorerItemTemplateSelector> : impl::property_SimplePhotoViewer_IExplorerItemTemplateSelector::named {};
+template <> struct properties<SimplePhotoViewer::IExplorerItemTemplateSelector> : impl::property_SimplePhotoViewer_IExplorerItemTemplateSelector::list {};
 template <> struct named_property<SimplePhotoViewer::IImageSku> : impl::property_SimplePhotoViewer_IImageSku::named {};
 template <> struct properties<SimplePhotoViewer::IImageSku> : impl::property_SimplePhotoViewer_IImageSku::list {};
 template <> struct named_property<SimplePhotoViewer::IMainPage> : impl::property_SimplePhotoViewer_IMainPage::named {};
@@ -1688,6 +2074,8 @@ template <> struct named_property<SimplePhotoViewer::DetailPage> : impl::propert
 template <> struct properties<SimplePhotoViewer::DetailPage> : impl::property_SimplePhotoViewer_DetailPage::list {};
 template <> struct named_property<SimplePhotoViewer::DirectoryItem> : impl::property_SimplePhotoViewer_DirectoryItem::named {};
 template <> struct properties<SimplePhotoViewer::DirectoryItem> : impl::property_SimplePhotoViewer_DirectoryItem::list {};
+template <> struct named_property<SimplePhotoViewer::ExplorerItemTemplateSelector> : impl::property_SimplePhotoViewer_ExplorerItemTemplateSelector::named {};
+template <> struct properties<SimplePhotoViewer::ExplorerItemTemplateSelector> : impl::property_SimplePhotoViewer_ExplorerItemTemplateSelector::list {};
 template <> struct named_property<SimplePhotoViewer::ImageSku> : impl::property_SimplePhotoViewer_ImageSku::named {};
 template <> struct properties<SimplePhotoViewer::ImageSku> : impl::property_SimplePhotoViewer_ImageSku::list {};
 template <> struct named_property<SimplePhotoViewer::MainPage> : impl::property_SimplePhotoViewer_MainPage::named {};
@@ -1698,6 +2086,8 @@ template <> struct properties<SimplePhotoViewer::PageNavigationParameter> : impl
 template <>
 struct base_type<SimplePhotoViewer::DetailPage> { using type = Windows::UI::Xaml::Controls::Page; };
 template <>
+struct base_type<SimplePhotoViewer::ExplorerItemTemplateSelector> { using type = Windows::UI::Xaml::Controls::DataTemplateSelector; };
+template <>
 struct base_type<SimplePhotoViewer::MainPage> { using type = Windows::UI::Xaml::Controls::Page; };
 }
 
@@ -1706,6 +2096,7 @@ WINRT_EXPORT namespace std {
 template<> struct hash<winrt::SimplePhotoViewer::IDetailPage> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IDetailPage> {};
 template<> struct hash<winrt::SimplePhotoViewer::IDirectoryItem> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IDirectoryItem> {};
 template<> struct hash<winrt::SimplePhotoViewer::IDirectoryItemFactory> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IDirectoryItemFactory> {};
+template<> struct hash<winrt::SimplePhotoViewer::IExplorerItemTemplateSelector> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IExplorerItemTemplateSelector> {};
 template<> struct hash<winrt::SimplePhotoViewer::IImageSku> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IImageSku> {};
 template<> struct hash<winrt::SimplePhotoViewer::IImageSkuFactory> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IImageSkuFactory> {};
 template<> struct hash<winrt::SimplePhotoViewer::IMainPage> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IMainPage> {};
@@ -1713,6 +2104,7 @@ template<> struct hash<winrt::SimplePhotoViewer::IPageNavigationParameter> : win
 template<> struct hash<winrt::SimplePhotoViewer::IPageNavigationParameterFactory> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IPageNavigationParameterFactory> {};
 template<> struct hash<winrt::SimplePhotoViewer::DetailPage> : winrt::impl::hash_base<winrt::SimplePhotoViewer::DetailPage> {};
 template<> struct hash<winrt::SimplePhotoViewer::DirectoryItem> : winrt::impl::hash_base<winrt::SimplePhotoViewer::DirectoryItem> {};
+template<> struct hash<winrt::SimplePhotoViewer::ExplorerItemTemplateSelector> : winrt::impl::hash_base<winrt::SimplePhotoViewer::ExplorerItemTemplateSelector> {};
 template<> struct hash<winrt::SimplePhotoViewer::ImageSku> : winrt::impl::hash_base<winrt::SimplePhotoViewer::ImageSku> {};
 template<> struct hash<winrt::SimplePhotoViewer::MainPage> : winrt::impl::hash_base<winrt::SimplePhotoViewer::MainPage> {};
 template<> struct hash<winrt::SimplePhotoViewer::PageNavigationParameter> : winrt::impl::hash_base<winrt::SimplePhotoViewer::PageNavigationParameter> {};

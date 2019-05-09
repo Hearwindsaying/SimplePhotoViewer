@@ -10,6 +10,39 @@
     
     NavigationCacheMode="Enabled">
 
+    <Page.Resources>
+        <DataTemplate x:Key="FolderTemplate" x:DataType="local:DirectoryItem">
+            <muxcontrols:TreeViewItem ItemsSource="{x:Bind SubItems, Mode=OneWay}" >
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="20">
+                        <Image.Source>
+                            <BitmapImage UriSource="/Assets/folder.png" DecodePixelHeight="100" />
+                        </Image.Source>
+                    </Image>
+                    <TextBlock Text="{x:Bind Item}" />
+                </StackPanel>
+            </muxcontrols:TreeViewItem>
+        </DataTemplate>
+        <DataTemplate x:Key="FileTemplate" x:DataType="local:DirectoryItem">
+            <muxcontrols:TreeViewItem ItemsSource="{x:Bind SubItems, Mode=OneWay}" >
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="20">
+                        <Image.Source>
+                            <BitmapImage UriSource="/Assets/file.png" DecodePixelHeight="100" />
+                        </Image.Source>
+                    </Image>
+                    <TextBlock Text="{x:Bind Item}" />
+                </StackPanel>
+            </muxcontrols:TreeViewItem>
+        </DataTemplate>
+
+        <local:ExplorerItemTemplateSelector 
+            x:Key="ExplorerItemTemplateSelector"
+            FolderTemplate="{StaticResource FolderTemplate}"
+            FileTemplate="{StaticResource FileTemplate}">
+        </local:ExplorerItemTemplateSelector>
+    </Page.Resources>
+    
     <SplitView x:Name="splitView" PaneBackground="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
            IsPaneOpen="True"  OpenPaneLength="200" CompactPaneLength="38" DisplayMode="CompactInline">
         <!--左边栏-->
@@ -71,8 +104,9 @@
                            CanReorderItems="False"
                            Expanding="DirectoryItem_Expanding"
                            Collapsed="DirectoryItem_Collapsed"
-                           ItemInvoked="DirectoryItem_Invoked" Width="200" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch">
-                            <muxcontrols:TreeView.ItemTemplate>
+                           ItemInvoked="DirectoryItem_Invoked" Width="200" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch"
+                           ItemTemplateSelector="{StaticResource ExplorerItemTemplateSelector}">
+                            <!--<muxcontrols:TreeView.ItemTemplate>
                                 <DataTemplate x:DataType="local:DirectoryItem">
                                     <muxcontrols:TreeViewItem ItemsSource="{x:Bind SubItems, Mode=OneWay}" >
                                         <StackPanel Orientation="Horizontal">
@@ -85,14 +119,15 @@
                                         </StackPanel>
                                     </muxcontrols:TreeViewItem>
                                 </DataTemplate>
-                            </muxcontrols:TreeView.ItemTemplate>
+                            </muxcontrols:TreeView.ItemTemplate>-->
                         </muxcontrols:TreeView>
                     </ScrollViewer>
                 </Grid>
 
                 <!--第四行：导入、全选、清除选择、逆选-->
                 <Grid Grid.Row ="3">
-                    <ListView Name="ListView2" VerticalAlignment="Stretch" IsItemClickEnabled="True" SelectionMode="None">
+                    <ListView Name="ListView2" VerticalAlignment="Stretch" IsItemClickEnabled="True" SelectionMode="None"
+                              SelectionChanged="SelectionListView_SelectionChanged">
                         <ListView.Items>
                             <ListViewItem>
                                 <StackPanel Orientation="Horizontal" >
@@ -153,15 +188,9 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
-                                <Button Name="Back"
+                                <Button Name="ParentFolderButton" Click="ParentFolderButton_ClickHandler"
                                     FontFamily="Segoe MDL2 Assets" Content="&#xE112;"
-                                    ToolTipService.ToolTip="前一页" Background="Transparent"
-                                    />
-                            </Grid>
-                            <Grid Grid.Column="1">
-                                <Button Name="Forward" 
-                                    FontFamily="Segoe MDL2 Assets" Content="&#xE111;"
-                                    ToolTipService.ToolTip="后一页" Background="Transparent"
+                                    ToolTipService.ToolTip="上一级" Background="Transparent"
                                     />
                             </Grid>
 
@@ -207,13 +236,14 @@
                                     IsItemClickEnabled="True" 
                                     ItemsSource="{x:Bind ImageSkus, Mode=OneWay}" 
                                     SelectionMode="Extended"
+                                    SelectionChanged="GridViewItem_SelectionChanged"
                                     Opacity="1"  Margin="9,9,9,9"
                                     Visibility="Visible" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                             <GridView.ItemTemplate>
                                 <DataTemplate x:DataType="local:ImageSku">
                                     <StackPanel>
                                         <Image x:Name="ItemImage" Source="{x:Bind ImageThumbnail, Mode=OneWay}"
-                                                 Stretch="Uniform" Opacity="1"
+                                                 Stretch="Uniform" Opacity="1" IsDoubleTapEnabled="True" DoubleTapped="GridViewItem_DoubleTapped"
                                                  Height="90" Width="120" Margin="2">
                                             <ToolTipService.ToolTip>
                                                 <ToolTip Content="{x:Bind ImageName, Mode=OneWay}"/>
@@ -247,38 +277,16 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <StackPanel Name="Deleteme_StackPanel" Orientation="Horizontal">
-                            <Button Name="ThePreviousPicture" Click="ThePreviousPicture_ClickHandler"
-                                FontFamily="Segoe MDL2 Assets" Content="&#xE016;"
-                                ToolTipService.ToolTip="上一张" Background="Transparent"
-                                />
-                            <Button Name="TheLatterPicture" Click="TheLatterPicture_ClickHandler"
-                                FontFamily="Segoe MDL2 Assets" Content="&#xE017;"
-                                ToolTipService.ToolTip="下一张" Background="Transparent"
-                                />
-                            <Button Name="Copy" Click="Copy_ClickHandler"
-                                FontFamily="Segoe MDL2 Assets" Content="&#xE16F;"
-                                ToolTipService.ToolTip="复制" Background="Transparent"
-                                />
-                            <Button Name="Shear" Click="Shear_ClickHandler"
-                                FontFamily="Segoe MDL2 Assets" Content="&#xE295;"
-                                ToolTipService.ToolTip="剪切" Background="Transparent"
-                                />
-                            <Button Name="Paste" Click="Paste_ClickHandler"
-                                FontFamily="Segoe MDL2 Assets" Content="&#xE16D;"
-                                ToolTipService.ToolTip="粘贴" Background="Transparent"
-                                />
-                            <Button Name="DeleteButton" Click="Delete_ClickHandler"
-                                FontFamily="Segoe MDL2 Assets" Content="&#xE107;"
-                                ToolTipService.ToolTip="删除" Background="Transparent"
-                                />
-                            <Button Name="Cancel" Click="Cancel_ClickHandler"
-                                FontFamily="Segoe MDL2 Assets" Content="&#xE248;"
-                                ToolTipService.ToolTip="撤销操作" Background="Transparent"
-                                />
-
-                            <Button Name="RenameButton" Click="Rename_ClickHandler"
-                                FontFamily="Segoe MDL2 Assets" Content="&#xE8AC;"
-                                ToolTipService.ToolTip="重命名" Background="Transparent"
+                            <AppBarButton x:Name="CopyAppBarButton" Click="Copy_ClickHandler" 
+                                      Icon="Copy" Label="复制" Background="Transparent"/>
+                            <AppBarButton x:Name="ShearAppBarButton" Click="Shear_ClickHandler" 
+                                      Icon="Cut" Label="剪切" Background="Transparent"/>
+                            <AppBarButton x:Name="PasteAppBarButton" Click="Paste_ClickHandler" 
+                                      Icon="Paste" Label="粘贴" Background="Transparent"/>
+                            <AppBarButton x:Name="DeleteAppBarButton" Click="Delete_ClickHandler" 
+                                      Icon="Delete" Label="删除" Background="Transparent"/>
+                            <AppBarButton x:Name="RenameButton" Click="Rename_ClickHandler"
+                                Icon="Rename" Label="重命名" Background="Transparent"
                                 >
                                 <Button.Flyout>
                                     <Flyout>
@@ -290,11 +298,9 @@
                                         </StackPanel>
                                     </Flyout>
                                 </Button.Flyout>
-                            </Button>
-                            <Button Name="OpenFile" Click="OpenFile_ClickHandler"
-                                FontFamily="Segoe MDL2 Assets" Content="&#xE838;"
-                                ToolTipService.ToolTip="打开文件" Background="Transparent"
-                                />
+                            </AppBarButton>
+                            <AppBarButton x:Name="OpenAppBarButton" Click="OpenFile_ClickHandler" 
+                                      Icon="OpenFile" Label="导入" ToolTipService.ToolTip="导入文件夹" Background="Transparent"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">

@@ -172,85 +172,58 @@ namespace winrt::SimplePhotoViewer::implementation
             _SlidePlay = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::Button ThePreviousPicture()
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton CopyAppBarButton()
         {
-            return _ThePreviousPicture;
+            return _CopyAppBarButton;
         }
-        void ThePreviousPicture(::winrt::Windows::UI::Xaml::Controls::Button value)
+        void CopyAppBarButton(::winrt::Windows::UI::Xaml::Controls::AppBarButton value)
         {
-            _ThePreviousPicture = value;
-        }
-
-        ::winrt::Windows::UI::Xaml::Controls::Button TheLatterPicture()
-        {
-            return _TheLatterPicture;
-        }
-        void TheLatterPicture(::winrt::Windows::UI::Xaml::Controls::Button value)
-        {
-            _TheLatterPicture = value;
+            _CopyAppBarButton = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::Button Copy()
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton ShearAppBarButton()
         {
-            return _Copy;
+            return _ShearAppBarButton;
         }
-        void Copy(::winrt::Windows::UI::Xaml::Controls::Button value)
+        void ShearAppBarButton(::winrt::Windows::UI::Xaml::Controls::AppBarButton value)
         {
-            _Copy = value;
-        }
-
-        ::winrt::Windows::UI::Xaml::Controls::Button Shear()
-        {
-            return _Shear;
-        }
-        void Shear(::winrt::Windows::UI::Xaml::Controls::Button value)
-        {
-            _Shear = value;
+            _ShearAppBarButton = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::Button Paste()
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton PasteAppBarButton()
         {
-            return _Paste;
+            return _PasteAppBarButton;
         }
-        void Paste(::winrt::Windows::UI::Xaml::Controls::Button value)
+        void PasteAppBarButton(::winrt::Windows::UI::Xaml::Controls::AppBarButton value)
         {
-            _Paste = value;
-        }
-
-        ::winrt::Windows::UI::Xaml::Controls::Button DeleteButton()
-        {
-            return _DeleteButton;
-        }
-        void DeleteButton(::winrt::Windows::UI::Xaml::Controls::Button value)
-        {
-            _DeleteButton = value;
+            _PasteAppBarButton = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::Button Cancel()
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton DeleteAppBarButton()
         {
-            return _Cancel;
+            return _DeleteAppBarButton;
         }
-        void Cancel(::winrt::Windows::UI::Xaml::Controls::Button value)
+        void DeleteAppBarButton(::winrt::Windows::UI::Xaml::Controls::AppBarButton value)
         {
-            _Cancel = value;
+            _DeleteAppBarButton = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::Button RenameButton()
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton RenameButton()
         {
             return _RenameButton;
         }
-        void RenameButton(::winrt::Windows::UI::Xaml::Controls::Button value)
+        void RenameButton(::winrt::Windows::UI::Xaml::Controls::AppBarButton value)
         {
             _RenameButton = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::Button OpenFile()
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton OpenAppBarButton()
         {
-            return _OpenFile;
+            return _OpenAppBarButton;
         }
-        void OpenFile(::winrt::Windows::UI::Xaml::Controls::Button value)
+        void OpenAppBarButton(::winrt::Windows::UI::Xaml::Controls::AppBarButton value)
         {
-            _OpenFile = value;
+            _OpenAppBarButton = value;
         }
 
         ::winrt::Windows::UI::Xaml::Controls::TextBox nameInput()
@@ -307,22 +280,13 @@ namespace winrt::SimplePhotoViewer::implementation
             _FolderPath = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::Button Forward()
+        ::winrt::Windows::UI::Xaml::Controls::Button ParentFolderButton()
         {
-            return _Forward;
+            return _ParentFolderButton;
         }
-        void Forward(::winrt::Windows::UI::Xaml::Controls::Button value)
+        void ParentFolderButton(::winrt::Windows::UI::Xaml::Controls::Button value)
         {
-            _Forward = value;
-        }
-
-        ::winrt::Windows::UI::Xaml::Controls::Button Back()
-        {
-            return _Back;
-        }
-        void Back(::winrt::Windows::UI::Xaml::Controls::Button value)
-        {
-            _Back = value;
+            _ParentFolderButton = value;
         }
         
          ::winrt::com_ptr<::winrt::SimplePhotoViewer::implementation::XamlBindings> Bindings;
@@ -331,9 +295,10 @@ namespace winrt::SimplePhotoViewer::implementation
         bool _contentLoaded{false};
 
     private:
-        struct MainPage_obj7_Bindings;
-        struct MainPage_obj34_Bindings;
-        struct MainPage_obj39_Bindings;
+        struct MainPage_obj2_Bindings;
+        struct MainPage_obj4_Bindings;
+        struct MainPage_obj33_Bindings;
+        struct MainPage_obj38_Bindings;
         struct MainPage_obj1_Bindings;
 
         ::winrt::Windows::UI::Xaml::Controls::SplitView _splitView{nullptr};
@@ -352,23 +317,19 @@ namespace winrt::SimplePhotoViewer::implementation
         ::winrt::Windows::UI::Xaml::Controls::Grid _DisplayGrid{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::StackPanel _Deleteme_StackPanel{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Button _SlidePlay{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _ThePreviousPicture{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _TheLatterPicture{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _Copy{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _Shear{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _Paste{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _DeleteButton{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _Cancel{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _RenameButton{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _OpenFile{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton _CopyAppBarButton{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton _ShearAppBarButton{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton _PasteAppBarButton{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton _DeleteAppBarButton{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton _RenameButton{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton _OpenAppBarButton{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::TextBox _nameInput{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Button _Rename{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::GridView _ImageGridView{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::AutoSuggestBox _SearchAutoSuggetsBox{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Grid _RealFolderPath_Grid{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Grid _FolderPath{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _Forward{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _Back{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _ParentFolderButton{nullptr};
     };
 }
 

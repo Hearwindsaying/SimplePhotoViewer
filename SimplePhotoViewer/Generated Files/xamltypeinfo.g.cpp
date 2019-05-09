@@ -63,6 +63,30 @@ template<typename T>
 }
 
 template<typename TDeclaringType, typename TValue>
+::winrt::Windows::Foundation::IInspectable GetValueTypeMember_IsExpanded(::winrt::Windows::Foundation::IInspectable const& instance)
+{
+    return ::winrt::box_value<TValue>(instance.as<TDeclaringType>().IsExpanded());
+}
+
+template<typename TDeclaringType, typename TValue>
+::winrt::Windows::Foundation::IInspectable GetValueTypeMember_HasUnrealizedChildren(::winrt::Windows::Foundation::IInspectable const& instance)
+{
+    return ::winrt::box_value<TValue>(instance.as<TDeclaringType>().HasUnrealizedChildren());
+}
+
+template<typename TDeclaringType, typename TValue>
+::winrt::Windows::Foundation::IInspectable GetValueTypeMember_GlyphSize(::winrt::Windows::Foundation::IInspectable const& instance)
+{
+    return ::winrt::box_value<TValue>(instance.as<TDeclaringType>().GlyphSize());
+}
+
+template<typename TDeclaringType, typename TValue>
+::winrt::Windows::Foundation::IInspectable GetValueTypeMember_GlyphOpacity(::winrt::Windows::Foundation::IInspectable const& instance)
+{
+    return ::winrt::box_value<TValue>(instance.as<TDeclaringType>().GlyphOpacity());
+}
+
+template<typename TDeclaringType, typename TValue>
 ::winrt::Windows::Foundation::IInspectable GetValueTypeMember_CanDragItems(::winrt::Windows::Foundation::IInspectable const& instance)
 {
     return ::winrt::box_value<TValue>(instance.as<TDeclaringType>().CanDragItems());
@@ -81,18 +105,6 @@ template<typename TDeclaringType, typename TValue>
 }
 
 template<typename TDeclaringType, typename TValue>
-::winrt::Windows::Foundation::IInspectable GetValueTypeMember_IsExpanded(::winrt::Windows::Foundation::IInspectable const& instance)
-{
-    return ::winrt::box_value<TValue>(instance.as<TDeclaringType>().IsExpanded());
-}
-
-template<typename TDeclaringType, typename TValue>
-::winrt::Windows::Foundation::IInspectable GetValueTypeMember_HasUnrealizedChildren(::winrt::Windows::Foundation::IInspectable const& instance)
-{
-    return ::winrt::box_value<TValue>(instance.as<TDeclaringType>().HasUnrealizedChildren());
-}
-
-template<typename TDeclaringType, typename TValue>
 ::winrt::Windows::Foundation::IInspectable GetValueTypeMember_Depth(::winrt::Windows::Foundation::IInspectable const& instance)
 {
     return ::winrt::box_value<TValue>(instance.as<TDeclaringType>().Depth());
@@ -102,18 +114,6 @@ template<typename TDeclaringType, typename TValue>
 ::winrt::Windows::Foundation::IInspectable GetValueTypeMember_HasChildren(::winrt::Windows::Foundation::IInspectable const& instance)
 {
     return ::winrt::box_value<TValue>(instance.as<TDeclaringType>().HasChildren());
-}
-
-template<typename TDeclaringType, typename TValue>
-::winrt::Windows::Foundation::IInspectable GetValueTypeMember_GlyphSize(::winrt::Windows::Foundation::IInspectable const& instance)
-{
-    return ::winrt::box_value<TValue>(instance.as<TDeclaringType>().GlyphSize());
-}
-
-template<typename TDeclaringType, typename TValue>
-::winrt::Windows::Foundation::IInspectable GetValueTypeMember_GlyphOpacity(::winrt::Windows::Foundation::IInspectable const& instance)
-{
-    return ::winrt::box_value<TValue>(instance.as<TDeclaringType>().GlyphOpacity());
 }
 
 template<typename TDeclaringType, typename TValue>
@@ -159,21 +159,45 @@ template <typename T>
 }
 
 template <typename T>
+::winrt::Windows::Foundation::IInspectable GetReferenceTypeMember_FolderTemplate(::winrt::Windows::Foundation::IInspectable const& instance)
+{
+    return ::winrt::box_value(instance.as<T>().FolderTemplate());
+}
+
+template <typename T>
+::winrt::Windows::Foundation::IInspectable GetReferenceTypeMember_FileTemplate(::winrt::Windows::Foundation::IInspectable const& instance)
+{
+    return ::winrt::box_value(instance.as<T>().FileTemplate());
+}
+
+template <typename T>
 ::winrt::Windows::Foundation::IInspectable GetReferenceTypeMember_ItemsSource(::winrt::Windows::Foundation::IInspectable const& instance)
 {
     return ::winrt::box_value(instance.as<T>().ItemsSource());
 }
 
 template <typename T>
-::winrt::Windows::Foundation::IInspectable GetReferenceTypeMember_ItemTemplate(::winrt::Windows::Foundation::IInspectable const& instance)
+::winrt::Windows::Foundation::IInspectable GetReferenceTypeMember_GlyphBrush(::winrt::Windows::Foundation::IInspectable const& instance)
 {
-    return ::winrt::box_value(instance.as<T>().ItemTemplate());
+    return ::winrt::box_value(instance.as<T>().GlyphBrush());
+}
+
+template <typename T>
+::winrt::Windows::Foundation::IInspectable GetReferenceTypeMember_TreeViewItemTemplateSettings(::winrt::Windows::Foundation::IInspectable const& instance)
+{
+    return ::winrt::box_value(instance.as<T>().TreeViewItemTemplateSettings());
 }
 
 template <typename T>
 ::winrt::Windows::Foundation::IInspectable GetReferenceTypeMember_ItemTemplateSelector(::winrt::Windows::Foundation::IInspectable const& instance)
 {
     return ::winrt::box_value(instance.as<T>().ItemTemplateSelector());
+}
+
+template <typename T>
+::winrt::Windows::Foundation::IInspectable GetReferenceTypeMember_ItemTemplate(::winrt::Windows::Foundation::IInspectable const& instance)
+{
+    return ::winrt::box_value(instance.as<T>().ItemTemplate());
 }
 
 template <typename T>
@@ -225,18 +249,6 @@ template <typename T>
 }
 
 template <typename T>
-::winrt::Windows::Foundation::IInspectable GetReferenceTypeMember_GlyphBrush(::winrt::Windows::Foundation::IInspectable const& instance)
-{
-    return ::winrt::box_value(instance.as<T>().GlyphBrush());
-}
-
-template <typename T>
-::winrt::Windows::Foundation::IInspectable GetReferenceTypeMember_TreeViewItemTemplateSettings(::winrt::Windows::Foundation::IInspectable const& instance)
-{
-    return ::winrt::box_value(instance.as<T>().TreeViewItemTemplateSettings());
-}
-
-template <typename T>
 ::winrt::Windows::Foundation::IInspectable GetReferenceTypeMember_BufferImageSkus(::winrt::Windows::Foundation::IInspectable const& instance)
 {
     return ::winrt::box_value(instance.as<T>().BufferImageSkus());
@@ -260,22 +272,6 @@ void SetEnumMember_SelectionMode(
     ::winrt::Windows::Foundation::IInspectable const& value)
 {
     instance.as<TDeclaringType>().SelectionMode(::winrt::unbox_value<TValue>(value));
-}
-
-template<typename TDeclaringType, typename TValue>
-void SetValueTypeMember_CanDragItems(
-    ::winrt::Windows::Foundation::IInspectable const& instance, 
-    ::winrt::Windows::Foundation::IInspectable const& value)
-{
-    instance.as<TDeclaringType>().CanDragItems(::winrt::unbox_value<TValue>(value));
-}
-
-template<typename TDeclaringType, typename TValue>
-void SetValueTypeMember_CanReorderItems(
-    ::winrt::Windows::Foundation::IInspectable const& instance, 
-    ::winrt::Windows::Foundation::IInspectable const& value)
-{
-    instance.as<TDeclaringType>().CanReorderItems(::winrt::unbox_value<TValue>(value));
 }
 
 template<typename TDeclaringType, typename TValue>
@@ -311,6 +307,22 @@ void SetValueTypeMember_GlyphOpacity(
 }
 
 template<typename TDeclaringType, typename TValue>
+void SetValueTypeMember_CanDragItems(
+    ::winrt::Windows::Foundation::IInspectable const& instance, 
+    ::winrt::Windows::Foundation::IInspectable const& value)
+{
+    instance.as<TDeclaringType>().CanDragItems(::winrt::unbox_value<TValue>(value));
+}
+
+template<typename TDeclaringType, typename TValue>
+void SetValueTypeMember_CanReorderItems(
+    ::winrt::Windows::Foundation::IInspectable const& instance, 
+    ::winrt::Windows::Foundation::IInspectable const& value)
+{
+    instance.as<TDeclaringType>().CanReorderItems(::winrt::unbox_value<TValue>(value));
+}
+
+template<typename TDeclaringType, typename TValue>
 void SetReferenceTypeMember_ExpandedGlyph(
     ::winrt::Windows::Foundation::IInspectable const& instance, 
     ::winrt::Windows::Foundation::IInspectable const& value)
@@ -343,6 +355,22 @@ void SetReferenceTypeMember_SelectedItem(
 }
 
 template<typename TDeclaringType, typename TValue>
+void SetReferenceTypeMember_FolderTemplate(
+    ::winrt::Windows::Foundation::IInspectable const& instance, 
+    ::winrt::Windows::Foundation::IInspectable const& value)
+{
+    instance.as<TDeclaringType>().FolderTemplate(value.as<TValue>());
+}
+
+template<typename TDeclaringType, typename TValue>
+void SetReferenceTypeMember_FileTemplate(
+    ::winrt::Windows::Foundation::IInspectable const& instance, 
+    ::winrt::Windows::Foundation::IInspectable const& value)
+{
+    instance.as<TDeclaringType>().FileTemplate(value.as<TValue>());
+}
+
+template<typename TDeclaringType, typename TValue>
 void SetReferenceTypeMember_ItemsSource(
     ::winrt::Windows::Foundation::IInspectable const& instance, 
     ::winrt::Windows::Foundation::IInspectable const& value)
@@ -351,11 +379,11 @@ void SetReferenceTypeMember_ItemsSource(
 }
 
 template<typename TDeclaringType, typename TValue>
-void SetReferenceTypeMember_ItemTemplate(
+void SetReferenceTypeMember_GlyphBrush(
     ::winrt::Windows::Foundation::IInspectable const& instance, 
     ::winrt::Windows::Foundation::IInspectable const& value)
 {
-    instance.as<TDeclaringType>().ItemTemplate(value.as<TValue>());
+    instance.as<TDeclaringType>().GlyphBrush(value.as<TValue>());
 }
 
 template<typename TDeclaringType, typename TValue>
@@ -364,6 +392,14 @@ void SetReferenceTypeMember_ItemTemplateSelector(
     ::winrt::Windows::Foundation::IInspectable const& value)
 {
     instance.as<TDeclaringType>().ItemTemplateSelector(value.as<TValue>());
+}
+
+template<typename TDeclaringType, typename TValue>
+void SetReferenceTypeMember_ItemTemplate(
+    ::winrt::Windows::Foundation::IInspectable const& instance, 
+    ::winrt::Windows::Foundation::IInspectable const& value)
+{
+    instance.as<TDeclaringType>().ItemTemplate(value.as<TValue>());
 }
 
 template<typename TDeclaringType, typename TValue>
@@ -396,14 +432,6 @@ void SetReferenceTypeMember_Content(
     ::winrt::Windows::Foundation::IInspectable const& value)
 {
     instance.as<TDeclaringType>().Content(value.as<TValue>());
-}
-
-template<typename TDeclaringType, typename TValue>
-void SetReferenceTypeMember_GlyphBrush(
-    ::winrt::Windows::Foundation::IInspectable const& instance, 
-    ::winrt::Windows::Foundation::IInspectable const& value)
-{
-    instance.as<TDeclaringType>().GlyphBrush(value.as<TValue>());
 }
 
 enum TypeInfo_Flags
@@ -542,14 +570,14 @@ const TypeInfo TypeInfos[] =
     TypeInfo_Flags_IsSystemType | TypeInfo_Flags_None,
     -1,
     //  15
-    L"Windows.UI.Xaml.Controls.Control", L"",
+    L"Windows.UI.Xaml.DependencyObject", L"",
     nullptr, nullptr, nullptr, nullptr,
     -1,
     9, 0, -1, TypeKind::Metadata,
     TypeInfo_Flags_IsSystemType | TypeInfo_Flags_None,
     -1,
     //  16
-    L"Windows.UI.Xaml.DependencyObject", L"",
+    L"Windows.UI.Xaml.Controls.Control", L"",
     nullptr, nullptr, nullptr, nullptr,
     -1,
     9, 0, -1, TypeKind::Metadata,
@@ -565,7 +593,7 @@ const TypeInfo TypeInfos[] =
     //  18
     L"Microsoft.UI.Xaml.Controls.TreeView", L"",
     &ActivateType<::winrt::Microsoft::UI::Xaml::Controls::TreeView>, nullptr, nullptr, nullptr,
-    15, // Windows.UI.Xaml.Controls.Control
+    16, // Windows.UI.Xaml.Controls.Control
     9, 0, -1, TypeKind::Metadata,
     TypeInfo_Flags_None,
     -1,
@@ -591,25 +619,25 @@ const TypeInfo TypeInfos[] =
     TypeInfo_Flags_IsSystemType | TypeInfo_Flags_None,
     -1,
     //  22
-    L"Microsoft.UI.Xaml.Controls.TreeViewNode", L"",
-    &ActivateType<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode>, nullptr, nullptr, nullptr,
-    16, // Windows.UI.Xaml.DependencyObject
-    20, 0, -1, TypeKind::Metadata,
-    TypeInfo_Flags_IsBindable | TypeInfo_Flags_None,
-    -1,
-    //  23
     L"Microsoft.UI.Xaml.Controls.TreeViewItem", L"",
     &ActivateType<::winrt::Microsoft::UI::Xaml::Controls::TreeViewItem>, nullptr, nullptr, nullptr,
     20, // Windows.UI.Xaml.Controls.ListViewItem
-    27, 0, -1, TypeKind::Metadata,
+    20, 0, -1, TypeKind::Metadata,
     TypeInfo_Flags_None,
     -1,
-    //  24
+    //  23
     L"Windows.UI.Xaml.Controls.ContentControl", L"",
     nullptr, nullptr, nullptr, nullptr,
     -1,
-    36, 0, -1, TypeKind::Metadata,
+    29, 0, -1, TypeKind::Metadata,
     TypeInfo_Flags_IsSystemType | TypeInfo_Flags_None,
+    -1,
+    //  24
+    L"Microsoft.UI.Xaml.Controls.TreeViewNode", L"",
+    &ActivateType<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode>, nullptr, nullptr, nullptr,
+    15, // Windows.UI.Xaml.DependencyObject
+    29, 0, -1, TypeKind::Metadata,
+    TypeInfo_Flags_IsBindable | TypeInfo_Flags_None,
     -1,
     //  25
     L"Windows.UI.Xaml.Controls.DataTemplateSelector", L"",
@@ -619,52 +647,59 @@ const TypeInfo TypeInfos[] =
     TypeInfo_Flags_IsSystemType | TypeInfo_Flags_None,
     -1,
     //  26
+    L"SimplePhotoViewer.ExplorerItemTemplateSelector", L"",
+    &ActivateLocalType<::winrt::SimplePhotoViewer::implementation::ExplorerItemTemplateSelector>, nullptr, nullptr, nullptr,
+    25, // Windows.UI.Xaml.Controls.DataTemplateSelector
+    36, 0, -1, TypeKind::Custom,
+    TypeInfo_Flags_IsLocalType | TypeInfo_Flags_None,
+    -1,
+    //  27
     L"Microsoft.UI.Xaml.Controls.XamlControlsResources", L"",
     &ActivateType<::winrt::Microsoft::UI::Xaml::Controls::XamlControlsResources>, nullptr, &DictionaryAdd<::winrt::Microsoft::UI::Xaml::Controls::XamlControlsResources, ::winrt::Windows::Foundation::IInspectable, ::winrt::Windows::Foundation::IInspectable>, nullptr,
     17, // Windows.UI.Xaml.ResourceDictionary
-    36, 0, -1, TypeKind::Metadata,
-    TypeInfo_Flags_None,
-    -1,
-    //  27
-    L"Microsoft.UI.Xaml.Controls.TreeViewSelectionMode", L"",
-    nullptr, nullptr, nullptr, &FromStringConverter<::winrt::Microsoft::UI::Xaml::Controls::TreeViewSelectionMode>,
-    6, // System.Enum
-    36, 0, -1, TypeKind::Metadata,
+    38, 0, -1, TypeKind::Metadata,
     TypeInfo_Flags_None,
     -1,
     //  28
+    L"Microsoft.UI.Xaml.Controls.TreeViewSelectionMode", L"",
+    nullptr, nullptr, nullptr, &FromStringConverter<::winrt::Microsoft::UI::Xaml::Controls::TreeViewSelectionMode>,
+    6, // System.Enum
+    38, 0, -1, TypeKind::Metadata,
+    TypeInfo_Flags_None,
+    -1,
+    //  29
     L"Windows.UI.Xaml.Media.Animation.TransitionCollection", L"",
     nullptr, nullptr, nullptr, nullptr,
     -1,
-    36, 3, -1, TypeKind::Metadata,
+    38, 3, -1, TypeKind::Metadata,
     TypeInfo_Flags_IsSystemType | TypeInfo_Flags_None,
     -1,
-    //  29
+    //  30
     L"Microsoft.UI.Xaml.Controls.TreeViewItemTemplateSettings", L"",
     nullptr, nullptr, nullptr, nullptr,
-    16, // Windows.UI.Xaml.DependencyObject
-    36, 3, -1, TypeKind::Metadata,
-    TypeInfo_Flags_IsReturnTypeStub | TypeInfo_Flags_None,
-    -1,
-    //  30
-    L"Windows.Foundation.Collections.IObservableVector`1<Object>", L"",
-    nullptr, &CollectionAdd<::winrt::Windows::Foundation::Collections::IObservableVector<::winrt::Windows::Foundation::IInspectable>, ::winrt::Windows::Foundation::IInspectable>, nullptr, nullptr,
-    -1,
-    36, 3, -1, TypeKind::Metadata,
+    15, // Windows.UI.Xaml.DependencyObject
+    38, 3, -1, TypeKind::Metadata,
     TypeInfo_Flags_IsReturnTypeStub | TypeInfo_Flags_None,
     -1,
     //  31
+    L"Windows.Foundation.Collections.IObservableVector`1<Object>", L"",
+    nullptr, &CollectionAdd<::winrt::Windows::Foundation::Collections::IObservableVector<::winrt::Windows::Foundation::IInspectable>, ::winrt::Windows::Foundation::IInspectable>, nullptr, nullptr,
+    -1,
+    38, 3, -1, TypeKind::Metadata,
+    TypeInfo_Flags_IsReturnTypeStub | TypeInfo_Flags_None,
+    -1,
+    //  32
     L"Windows.Foundation.Collections.IVector`1<Microsoft.UI.Xaml.Controls.TreeViewNode>", L"",
     nullptr, &CollectionAdd<::winrt::Windows::Foundation::Collections::IVector<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode>, ::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode>, nullptr, nullptr,
     -1,
-    36, 3, -1, TypeKind::Metadata,
+    38, 3, -1, TypeKind::Metadata,
     TypeInfo_Flags_IsReturnTypeStub | TypeInfo_Flags_None,
     -1,
     //  Last type here is for padding
     L"", L"",
     nullptr, nullptr, nullptr, nullptr,
     -1, 
-    36, 3, -1, TypeKind::Custom,
+    38, 3, -1, TypeKind::Custom,
     TypeInfo_Flags_None,
 };
 
@@ -716,42 +751,42 @@ constexpr UINT TypeInfoLookup[] = {
      25,   //  44
      25,   //  45
      26,   //  46
-     26,   //  47
-     26,   //  48
-     28,   //  49
-     28,   //  50
-     28,   //  51
-     28,   //  52
-     29,   //  53
-     29,   //  54
-     29,   //  55
-     30,   //  56
-     30,   //  57
-     30,   //  58
-     31,   //  59
-     31,   //  60
-     31,   //  61
-     31,   //  62
-     31,   //  63
-     31,   //  64
-     31,   //  65
-     31,   //  66
-     31,   //  67
-     31,   //  68
-     31,   //  69
-     31,   //  70
-     31,   //  71
-     31,   //  72
-     31,   //  73
-     31,   //  74
-     31,   //  75
-     31,   //  76
-     31,   //  77
-     31,   //  78
-     31,   //  79
-     31,   //  80
-     31,   //  81
-     32,   //  82
+     27,   //  47
+     27,   //  48
+     29,   //  49
+     29,   //  50
+     29,   //  51
+     29,   //  52
+     30,   //  53
+     30,   //  54
+     30,   //  55
+     31,   //  56
+     31,   //  57
+     31,   //  58
+     32,   //  59
+     32,   //  60
+     32,   //  61
+     32,   //  62
+     32,   //  63
+     32,   //  64
+     32,   //  65
+     32,   //  66
+     32,   //  67
+     32,   //  68
+     32,   //  69
+     32,   //  70
+     32,   //  71
+     32,   //  72
+     32,   //  73
+     32,   //  74
+     32,   //  75
+     32,   //  76
+     32,   //  77
+     32,   //  78
+     32,   //  79
+     32,   //  80
+     32,   //  81
+     33,   //  82
 };
 
 struct EnumValueInfo
@@ -792,7 +827,7 @@ const MemberInfo MemberInfos[] =
     L"BufferImageSkus",
     &GetReferenceTypeMember_BufferImageSkus<::winrt::SimplePhotoViewer::MainPage>,
     nullptr,
-    30, // Windows.Foundation.Collections.IObservableVector`1<Object>
+    31, // Windows.Foundation.Collections.IObservableVector`1<Object>
     -1,
     true,  false, false,
     //   2 - SimplePhotoViewer.MainPage.CurrentFolderImageNumber
@@ -813,21 +848,21 @@ const MemberInfo MemberInfos[] =
     L"ImageSkus",
     &GetReferenceTypeMember_ImageSkus<::winrt::SimplePhotoViewer::MainPage>,
     nullptr,
-    30, // Windows.Foundation.Collections.IObservableVector`1<Object>
+    31, // Windows.Foundation.Collections.IObservableVector`1<Object>
     -1,
     true,  false, false,
     //   5 - SimplePhotoViewer.MainPage.SearchResults
     L"SearchResults",
     &GetReferenceTypeMember_SearchResults<::winrt::SimplePhotoViewer::MainPage>,
     nullptr,
-    30, // Windows.Foundation.Collections.IObservableVector`1<Object>
+    31, // Windows.Foundation.Collections.IObservableVector`1<Object>
     -1,
     true,  false, false,
     //   6 - SimplePhotoViewer.MainPage.TreeViewFolders
     L"TreeViewFolders",
     &GetReferenceTypeMember_TreeViewFolders<::winrt::SimplePhotoViewer::MainPage>,
     nullptr,
-    30, // Windows.Foundation.Collections.IObservableVector`1<Object>
+    31, // Windows.Foundation.Collections.IObservableVector`1<Object>
     -1,
     true,  false, false,
     //   7 - SimplePhotoViewer.DetailPage.SelectedItem
@@ -841,7 +876,7 @@ const MemberInfo MemberInfos[] =
     L"ImageSkus",
     &GetReferenceTypeMember_ImageSkus<::winrt::SimplePhotoViewer::DetailPage>,
     nullptr,
-    30, // Windows.Foundation.Collections.IObservableVector`1<Object>
+    31, // Windows.Foundation.Collections.IObservableVector`1<Object>
     -1,
     true,  false, false,
     //   9 - Microsoft.UI.Xaml.Controls.TreeView.ItemsSource
@@ -865,32 +900,32 @@ const MemberInfo MemberInfos[] =
     5, // Boolean
     -1,
     false, true,  false,
-    //  12 - Microsoft.UI.Xaml.Controls.TreeView.ItemTemplate
-    L"ItemTemplate",
-    &GetReferenceTypeMember_ItemTemplate<::winrt::Microsoft::UI::Xaml::Controls::TreeView>,
-    &SetReferenceTypeMember_ItemTemplate<::winrt::Microsoft::UI::Xaml::Controls::TreeView, ::winrt::Windows::UI::Xaml::DataTemplate>,
-    13, // Windows.UI.Xaml.DataTemplate
-    -1,
-    false, true,  false,
-    //  13 - Microsoft.UI.Xaml.Controls.TreeView.SelectionMode
-    L"SelectionMode",
-    &GetValueTypeMember_SelectionMode<::winrt::Microsoft::UI::Xaml::Controls::TreeView, ::winrt::Microsoft::UI::Xaml::Controls::TreeViewSelectionMode>,
-    &SetEnumMember_SelectionMode<::winrt::Microsoft::UI::Xaml::Controls::TreeView, ::winrt::Microsoft::UI::Xaml::Controls::TreeViewSelectionMode>,
-    27, // Microsoft.UI.Xaml.Controls.TreeViewSelectionMode
-    -1,
-    false, true,  false,
-    //  14 - Microsoft.UI.Xaml.Controls.TreeView.ItemTemplateSelector
+    //  12 - Microsoft.UI.Xaml.Controls.TreeView.ItemTemplateSelector
     L"ItemTemplateSelector",
     &GetReferenceTypeMember_ItemTemplateSelector<::winrt::Microsoft::UI::Xaml::Controls::TreeView>,
     &SetReferenceTypeMember_ItemTemplateSelector<::winrt::Microsoft::UI::Xaml::Controls::TreeView, ::winrt::Windows::UI::Xaml::Controls::DataTemplateSelector>,
     25, // Windows.UI.Xaml.Controls.DataTemplateSelector
     -1,
     false, true,  false,
+    //  13 - Microsoft.UI.Xaml.Controls.TreeView.SelectionMode
+    L"SelectionMode",
+    &GetValueTypeMember_SelectionMode<::winrt::Microsoft::UI::Xaml::Controls::TreeView, ::winrt::Microsoft::UI::Xaml::Controls::TreeViewSelectionMode>,
+    &SetEnumMember_SelectionMode<::winrt::Microsoft::UI::Xaml::Controls::TreeView, ::winrt::Microsoft::UI::Xaml::Controls::TreeViewSelectionMode>,
+    28, // Microsoft.UI.Xaml.Controls.TreeViewSelectionMode
+    -1,
+    false, true,  false,
+    //  14 - Microsoft.UI.Xaml.Controls.TreeView.ItemTemplate
+    L"ItemTemplate",
+    &GetReferenceTypeMember_ItemTemplate<::winrt::Microsoft::UI::Xaml::Controls::TreeView>,
+    &SetReferenceTypeMember_ItemTemplate<::winrt::Microsoft::UI::Xaml::Controls::TreeView, ::winrt::Windows::UI::Xaml::DataTemplate>,
+    13, // Windows.UI.Xaml.DataTemplate
+    -1,
+    false, true,  false,
     //  15 - Microsoft.UI.Xaml.Controls.TreeView.ItemContainerTransitions
     L"ItemContainerTransitions",
     &GetReferenceTypeMember_ItemContainerTransitions<::winrt::Microsoft::UI::Xaml::Controls::TreeView>,
     &SetReferenceTypeMember_ItemContainerTransitions<::winrt::Microsoft::UI::Xaml::Controls::TreeView, ::winrt::Windows::UI::Xaml::Media::Animation::TransitionCollection>,
-    28, // Windows.UI.Xaml.Media.Animation.TransitionCollection
+    29, // Windows.UI.Xaml.Media.Animation.TransitionCollection
     -1,
     false, true,  false,
     //  16 - Microsoft.UI.Xaml.Controls.TreeView.ItemContainerStyleSelector
@@ -911,128 +946,142 @@ const MemberInfo MemberInfos[] =
     L"RootNodes",
     &GetReferenceTypeMember_RootNodes<::winrt::Microsoft::UI::Xaml::Controls::TreeView>,
     nullptr,
-    31, // Windows.Foundation.Collections.IVector`1<Microsoft.UI.Xaml.Controls.TreeViewNode>
+    32, // Windows.Foundation.Collections.IVector`1<Microsoft.UI.Xaml.Controls.TreeViewNode>
     -1,
     true,  false, false,
     //  19 - Microsoft.UI.Xaml.Controls.TreeView.SelectedNodes
     L"SelectedNodes",
     &GetReferenceTypeMember_SelectedNodes<::winrt::Microsoft::UI::Xaml::Controls::TreeView>,
     nullptr,
-    31, // Windows.Foundation.Collections.IVector`1<Microsoft.UI.Xaml.Controls.TreeViewNode>
+    32, // Windows.Foundation.Collections.IVector`1<Microsoft.UI.Xaml.Controls.TreeViewNode>
     -1,
     true,  false, false,
-    //  20 - Microsoft.UI.Xaml.Controls.TreeViewNode.IsExpanded
-    L"IsExpanded",
-    &GetValueTypeMember_IsExpanded<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode, bool>,
-    &SetValueTypeMember_IsExpanded<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode, bool>,
-    5, // Boolean
-    -1,
-    false, true,  false,
-    //  21 - Microsoft.UI.Xaml.Controls.TreeViewNode.HasUnrealizedChildren
-    L"HasUnrealizedChildren",
-    &GetValueTypeMember_HasUnrealizedChildren<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode, bool>,
-    &SetValueTypeMember_HasUnrealizedChildren<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode, bool>,
-    5, // Boolean
-    -1,
-    false, false, false,
-    //  22 - Microsoft.UI.Xaml.Controls.TreeViewNode.Content
-    L"Content",
-    &GetReferenceTypeMember_Content<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode>,
-    &SetReferenceTypeMember_Content<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode, ::winrt::Windows::Foundation::IInspectable>,
-    1, // Object
-    -1,
-    false, true,  false,
-    //  23 - Microsoft.UI.Xaml.Controls.TreeViewNode.Children
-    L"Children",
-    &GetReferenceTypeMember_Children<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode>,
-    nullptr,
-    31, // Windows.Foundation.Collections.IVector`1<Microsoft.UI.Xaml.Controls.TreeViewNode>
-    -1,
-    true,  false, false,
-    //  24 - Microsoft.UI.Xaml.Controls.TreeViewNode.Depth
-    L"Depth",
-    &GetValueTypeMember_Depth<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode, int32_t>,
-    nullptr,
-    0, // Int32
-    -1,
-    true,  true,  false,
-    //  25 - Microsoft.UI.Xaml.Controls.TreeViewNode.HasChildren
-    L"HasChildren",
-    &GetValueTypeMember_HasChildren<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode, bool>,
-    nullptr,
-    5, // Boolean
-    -1,
-    true,  true,  false,
-    //  26 - Microsoft.UI.Xaml.Controls.TreeViewNode.Parent
-    L"Parent",
-    &GetReferenceTypeMember_Parent<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode>,
-    nullptr,
-    22, // Microsoft.UI.Xaml.Controls.TreeViewNode
-    -1,
-    true,  false, false,
-    //  27 - Microsoft.UI.Xaml.Controls.TreeViewItem.ItemsSource
+    //  20 - Microsoft.UI.Xaml.Controls.TreeViewItem.ItemsSource
     L"ItemsSource",
     &GetReferenceTypeMember_ItemsSource<::winrt::Microsoft::UI::Xaml::Controls::TreeViewItem>,
     &SetReferenceTypeMember_ItemsSource<::winrt::Microsoft::UI::Xaml::Controls::TreeViewItem, ::winrt::Windows::Foundation::IInspectable>,
     1, // Object
     -1,
     false, true,  false,
-    //  28 - Microsoft.UI.Xaml.Controls.TreeViewItem.IsExpanded
+    //  21 - Microsoft.UI.Xaml.Controls.TreeViewItem.IsExpanded
     L"IsExpanded",
     &GetValueTypeMember_IsExpanded<::winrt::Microsoft::UI::Xaml::Controls::TreeViewItem, bool>,
     &SetValueTypeMember_IsExpanded<::winrt::Microsoft::UI::Xaml::Controls::TreeViewItem, bool>,
     5, // Boolean
     -1,
     false, true,  false,
-    //  29 - Microsoft.UI.Xaml.Controls.TreeViewItem.HasUnrealizedChildren
+    //  22 - Microsoft.UI.Xaml.Controls.TreeViewItem.HasUnrealizedChildren
     L"HasUnrealizedChildren",
     &GetValueTypeMember_HasUnrealizedChildren<::winrt::Microsoft::UI::Xaml::Controls::TreeViewItem, bool>,
     &SetValueTypeMember_HasUnrealizedChildren<::winrt::Microsoft::UI::Xaml::Controls::TreeViewItem, bool>,
     5, // Boolean
     -1,
     false, true,  false,
-    //  30 - Microsoft.UI.Xaml.Controls.TreeViewItem.GlyphSize
+    //  23 - Microsoft.UI.Xaml.Controls.TreeViewItem.GlyphSize
     L"GlyphSize",
     &GetValueTypeMember_GlyphSize<::winrt::Microsoft::UI::Xaml::Controls::TreeViewItem, double>,
     &SetValueTypeMember_GlyphSize<::winrt::Microsoft::UI::Xaml::Controls::TreeViewItem, double>,
     2, // Double
     -1,
     false, true,  false,
-    //  31 - Microsoft.UI.Xaml.Controls.TreeViewItem.GlyphOpacity
+    //  24 - Microsoft.UI.Xaml.Controls.TreeViewItem.GlyphOpacity
     L"GlyphOpacity",
     &GetValueTypeMember_GlyphOpacity<::winrt::Microsoft::UI::Xaml::Controls::TreeViewItem, double>,
     &SetValueTypeMember_GlyphOpacity<::winrt::Microsoft::UI::Xaml::Controls::TreeViewItem, double>,
     2, // Double
     -1,
     false, true,  false,
-    //  32 - Microsoft.UI.Xaml.Controls.TreeViewItem.GlyphBrush
+    //  25 - Microsoft.UI.Xaml.Controls.TreeViewItem.GlyphBrush
     L"GlyphBrush",
     &GetReferenceTypeMember_GlyphBrush<::winrt::Microsoft::UI::Xaml::Controls::TreeViewItem>,
     &SetReferenceTypeMember_GlyphBrush<::winrt::Microsoft::UI::Xaml::Controls::TreeViewItem, ::winrt::Windows::UI::Xaml::Media::Brush>,
     11, // Windows.UI.Xaml.Media.Brush
     -1,
     false, true,  false,
-    //  33 - Microsoft.UI.Xaml.Controls.TreeViewItem.ExpandedGlyph
+    //  26 - Microsoft.UI.Xaml.Controls.TreeViewItem.ExpandedGlyph
     L"ExpandedGlyph",
     &GetReferenceTypeMember_ExpandedGlyph<::winrt::Microsoft::UI::Xaml::Controls::TreeViewItem>,
     &SetReferenceTypeMember_ExpandedGlyph<::winrt::Microsoft::UI::Xaml::Controls::TreeViewItem, ::winrt::hstring>,
     3, // String
     -1,
     false, true,  false,
-    //  34 - Microsoft.UI.Xaml.Controls.TreeViewItem.CollapsedGlyph
+    //  27 - Microsoft.UI.Xaml.Controls.TreeViewItem.CollapsedGlyph
     L"CollapsedGlyph",
     &GetReferenceTypeMember_CollapsedGlyph<::winrt::Microsoft::UI::Xaml::Controls::TreeViewItem>,
     &SetReferenceTypeMember_CollapsedGlyph<::winrt::Microsoft::UI::Xaml::Controls::TreeViewItem, ::winrt::hstring>,
     3, // String
     -1,
     false, true,  false,
-    //  35 - Microsoft.UI.Xaml.Controls.TreeViewItem.TreeViewItemTemplateSettings
+    //  28 - Microsoft.UI.Xaml.Controls.TreeViewItem.TreeViewItemTemplateSettings
     L"TreeViewItemTemplateSettings",
     &GetReferenceTypeMember_TreeViewItemTemplateSettings<::winrt::Microsoft::UI::Xaml::Controls::TreeViewItem>,
     nullptr,
-    29, // Microsoft.UI.Xaml.Controls.TreeViewItemTemplateSettings
+    30, // Microsoft.UI.Xaml.Controls.TreeViewItemTemplateSettings
     -1,
     true,  true,  false,
+    //  29 - Microsoft.UI.Xaml.Controls.TreeViewNode.IsExpanded
+    L"IsExpanded",
+    &GetValueTypeMember_IsExpanded<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode, bool>,
+    &SetValueTypeMember_IsExpanded<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode, bool>,
+    5, // Boolean
+    -1,
+    false, true,  false,
+    //  30 - Microsoft.UI.Xaml.Controls.TreeViewNode.HasUnrealizedChildren
+    L"HasUnrealizedChildren",
+    &GetValueTypeMember_HasUnrealizedChildren<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode, bool>,
+    &SetValueTypeMember_HasUnrealizedChildren<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode, bool>,
+    5, // Boolean
+    -1,
+    false, false, false,
+    //  31 - Microsoft.UI.Xaml.Controls.TreeViewNode.Content
+    L"Content",
+    &GetReferenceTypeMember_Content<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode>,
+    &SetReferenceTypeMember_Content<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode, ::winrt::Windows::Foundation::IInspectable>,
+    1, // Object
+    -1,
+    false, true,  false,
+    //  32 - Microsoft.UI.Xaml.Controls.TreeViewNode.Children
+    L"Children",
+    &GetReferenceTypeMember_Children<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode>,
+    nullptr,
+    32, // Windows.Foundation.Collections.IVector`1<Microsoft.UI.Xaml.Controls.TreeViewNode>
+    -1,
+    true,  false, false,
+    //  33 - Microsoft.UI.Xaml.Controls.TreeViewNode.Depth
+    L"Depth",
+    &GetValueTypeMember_Depth<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode, int32_t>,
+    nullptr,
+    0, // Int32
+    -1,
+    true,  true,  false,
+    //  34 - Microsoft.UI.Xaml.Controls.TreeViewNode.HasChildren
+    L"HasChildren",
+    &GetValueTypeMember_HasChildren<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode, bool>,
+    nullptr,
+    5, // Boolean
+    -1,
+    true,  true,  false,
+    //  35 - Microsoft.UI.Xaml.Controls.TreeViewNode.Parent
+    L"Parent",
+    &GetReferenceTypeMember_Parent<::winrt::Microsoft::UI::Xaml::Controls::TreeViewNode>,
+    nullptr,
+    24, // Microsoft.UI.Xaml.Controls.TreeViewNode
+    -1,
+    true,  false, false,
+    //  36 - SimplePhotoViewer.ExplorerItemTemplateSelector.FolderTemplate
+    L"FolderTemplate",
+    &GetReferenceTypeMember_FolderTemplate<::winrt::SimplePhotoViewer::ExplorerItemTemplateSelector>,
+    &SetReferenceTypeMember_FolderTemplate<::winrt::SimplePhotoViewer::ExplorerItemTemplateSelector, ::winrt::Windows::UI::Xaml::DataTemplate>,
+    13, // Windows.UI.Xaml.DataTemplate
+    -1,
+    false, false, false,
+    //  37 - SimplePhotoViewer.ExplorerItemTemplateSelector.FileTemplate
+    L"FileTemplate",
+    &GetReferenceTypeMember_FileTemplate<::winrt::SimplePhotoViewer::ExplorerItemTemplateSelector>,
+    &SetReferenceTypeMember_FileTemplate<::winrt::SimplePhotoViewer::ExplorerItemTemplateSelector, ::winrt::Windows::UI::Xaml::DataTemplate>,
+    13, // Windows.UI.Xaml.DataTemplate
+    -1,
+    false, false, false,
 };
 
 PCWSTR GetShortName(PCWSTR longName)

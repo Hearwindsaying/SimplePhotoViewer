@@ -30,6 +30,16 @@ namespace winrt::SimplePhotoViewer::implementation
 		void ImageFile(Windows::Storage::StorageFile const & value); //-
 		void ImageContent(Windows::UI::Xaml::Media::Imaging::BitmapImage const& value);
 
+		void RenderRotation(double const value) 
+		{ 
+			this->m_renderRotation = value; 
+			this->m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"RenderRotation" });
+		}
+		double RenderRotation()
+		{
+			return this->m_renderRotation;
+		}
+
 		//Observable property related event register and revoker, note that it's automatically registered by MVVM framework.
 		winrt::event_token PropertyChanged(Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler);
 		void PropertyChanged(winrt::event_token const& token) noexcept;
@@ -43,6 +53,9 @@ namespace winrt::SimplePhotoViewer::implementation
 		hstring m_imageName;
 		hstring m_imageFileType;
 		hstring m_imageNameWithType;
+
+		//rendering rotate transform angle:
+		double m_renderRotation = 0.0;
 
 		//Delegate for observable property
 		event<Windows::UI::Xaml::Data::PropertyChangedEventHandler> m_propertyChanged;

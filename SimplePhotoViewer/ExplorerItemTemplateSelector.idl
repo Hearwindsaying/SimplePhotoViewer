@@ -1,0 +1,11 @@
+namespace SimplePhotoViewer
+{
+	runtimeclass ExplorerItemTemplateSelector : Windows.UI.Xaml.Controls.DataTemplateSelector
+	{
+		ExplorerItemTemplateSelector();
+		Windows.UI.Xaml.DataTemplate SelectTemplateCore(IInspectable item);
+
+		Windows.UI.Xaml.DataTemplate FolderTemplate{ get; set; };
+		Windows.UI.Xaml.DataTemplate FileTemplate{ get; set; };
+	}
+}

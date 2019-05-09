@@ -3,6 +3,7 @@
 #include "pch.h"
 #include "DetailPage.h"
 #include "DirectoryItem.h"
+#include "ExplorerItemTemplateSelector.h"
 #include "ImageSku.h"
 #include "MainPage.h"
 #include "PageNavigationParameter.h"
@@ -49,6 +50,12 @@ int32_t WINRT_CALL WINRT_GetActivationFactory(void* classId, void** factory) noe
         if (requal(name, L"SimplePhotoViewer.DirectoryItem"))
         {
             *factory = winrt::detach_abi(winrt::make<winrt::SimplePhotoViewer::factory_implementation::DirectoryItem>());
+            return 0;
+        }
+
+        if (requal(name, L"SimplePhotoViewer.ExplorerItemTemplateSelector"))
+        {
+            *factory = winrt::detach_abi(winrt::make<winrt::SimplePhotoViewer::factory_implementation::ExplorerItemTemplateSelector>());
             return 0;
         }
 

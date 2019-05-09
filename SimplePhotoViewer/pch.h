@@ -16,6 +16,9 @@
 #include <winrt/Windows.ApplicationModel.Core.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 
+#include <winrt/Windows.Graphics.Imaging.h>
+#include <winrt/Windows.Graphics.h>
+
 #include <winrt/Windows.UI.Xaml.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
@@ -27,4 +30,7 @@
 
 #include <winrt/Windows.Storage.h>
 #include <winrt/Windows.Storage.Search.h>
+#include <winrt/Windows.Storage.Streams.h>
+#include <winrt/Windows.Storage.Pickers.h>
+#include <winrt/Windows.Storage.AccessCache.h>
 

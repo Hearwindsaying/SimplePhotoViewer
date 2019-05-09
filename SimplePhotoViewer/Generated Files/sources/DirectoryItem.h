@@ -15,6 +15,8 @@ namespace winrt::SimplePhotoViewer::implementation
         void Item(hstring const& value);
         Windows::Storage::StorageFolder ItemFolder();
         void ItemFolder(Windows::Storage::StorageFolder const& value);
+        bool IsFolder();
+        void IsFolder(bool value);
         winrt::event_token PropertyChanged(Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler);
         void PropertyChanged(winrt::event_token const& token) noexcept;
     };

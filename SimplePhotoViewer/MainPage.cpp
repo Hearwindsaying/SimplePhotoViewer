@@ -58,43 +58,26 @@ namespace winrt::SimplePhotoViewer::implementation
 		return this->m_bufferImageSkus;
 	}
 
-	Windows::Foundation::IAsyncAction MainPage::ClickHandler(Windows::Foundation::IInspectable const, Windows::UI::Xaml::RoutedEventArgs const)
+	Windows::Foundation::IAsyncAction MainPage::OpenFile_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&)
 	{
-		co_return;
-		//using TreeViewNode = Microsoft::UI::Xaml::Controls::TreeViewNode;
-		//using StorageFolder = Windows::Storage::StorageFolder;
+		auto folderPicker = Windows::Storage::Pickers::FolderPicker();
+		folderPicker.SuggestedStartLocation(Windows::Storage::Pickers::PickerLocationId::Desktop);
+		folderPicker.FileTypeFilter().Append(L"*");
 
-		///*Tests for TreeView control*/
-
-		////try
-		////{
-		////	StorageFolder rootFolder2 = co_await StorageFolder::GetFolderFromPathAsync(L"I:\\");
-		////}
-		////catch (winrt::hresult_error const& ex)
-		////{
-		////	winrt::hresult hr = ex.to_abi(); // HRESULT_FROM_WIN32(ERROR_FILE_NOT_FOUND).
-		////	winrt::hstring message = ex.message();
-		////}
-		//{
-		//	for (auto curDiskName = 'C'; curDiskName <= 'Z'; ++curDiskName)
-		//	{
-		//		auto validlstr_tmp = std::wstring(1, curDiskName) + L":\\";
-
-		//		StorageFolder rootFolder = co_await StorageFolder::GetFolderFromPathAsync(validlstr_tmp);
-		//		auto subFolderDirectoryItemsToRoot = winrt::single_threaded_observable_vector<Windows::Foundation::IInspectable>();
-		//		auto friendlyName = rootFolder.DisplayName();
-
-		//		auto rootHardDiskDriverDirectoryItem = winrt::make<DirectoryItem>(friendlyName, subFolderDirectoryItemsToRoot, rootFolder);
-		//		this->m_treeViewFolders.Append(rootHardDiskDriverDirectoryItem);
-
-		//	}
-		//	
-		//}
-		//wchar_t testchar[20] = { '6','6','e' };
-		//OutputDebugString(testchar);
+		Windows::Storage::StorageFolder folder = co_await folderPicker.PickSingleFolderAsync();
+		if (folder)
+		{
+			// Application now has read/write access to all contents in the picked folder
+			// (including other sub-folder contents)
+			Windows::Storage::AccessCache::StorageApplicationPermissions::
+				FutureAccessList().AddOrReplace(L"PickedFolderToken", folder);
+			this->currentSelectedFolderPathName = folder.Path();
+			this->CurrentSelectedFolder(folder.Name());
+			this->RefreshCurrentFolder(nullptr);
+		}
 	}
 
-	Windows::Foundation::IAsyncAction MainPage::DeleteButton_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&)
+	Windows::Foundation::IAsyncAction MainPage::Delete_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&)
 	{
 		Windows::UI::Xaml::Controls::ContentDialog contentDialog{};
 		contentDialog.Title(box_value(L"删除选中的图片文件"));
@@ -214,11 +197,6 @@ namespace winrt::SimplePhotoViewer::implementation
 	}
 
 
-	void MainPage::Node_ClickHandler(Microsoft::UI::Xaml::Controls::TreeView const&, Microsoft::UI::Xaml::Controls::TreeViewItemInvokedEventArgs const& args)
-	{
-		//auto myContent = args.try_as<winrt::Microsoft::UI::Xaml::Controls::TreeViewNode>();
-	}
-
 	Windows::Foundation::IAsyncAction MainPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs e)
 	{
 		if (this->m_treeViewFolders.Size() == 0)
@@ -233,6 +211,7 @@ namespace winrt::SimplePhotoViewer::implementation
 				auto subFolderDirectoryItemsToRoot = winrt::single_threaded_observable_vector<Windows::Foundation::IInspectable>();
 				auto friendlyName = rootFolder.DisplayName();
 				auto rootHardDiskDriverDirectoryItem = winrt::make<DirectoryItem>(friendlyName, subFolderDirectoryItemsToRoot, rootFolder);
+				rootHardDiskDriverDirectoryItem.IsFolder(false);
 				this->m_treeViewFolders.Append(rootHardDiskDriverDirectoryItem);
 			}
 
@@ -320,6 +299,7 @@ namespace winrt::SimplePhotoViewer::implementation
 							auto subDirectoryItem = winrt::make<DirectoryItem>(singlefolder.Name(), singlefolder);
 
 							expandingItem.SubItems().Append(subDirectoryItem);
+							/*Hack:stablize TreeView Control*/
 							if (j >= 10)
 								break;
 
@@ -376,7 +356,7 @@ namespace winrt::SimplePhotoViewer::implementation
 	{
 		auto selectedNum = this->ImageGridView().SelectedItems().Size();
 		this->CurrentFolderSelectedImageNumber(selectedNum);
-		this->DeleteButton().IsEnabled(selectedNum ? true : false);
+		this->DeleteAppBarButton().IsEnabled(selectedNum ? true : false);
 		this->RenameButton().IsEnabled(selectedNum ? true : false); //-
 		this->nameInput().IsEnabled(selectedNum ? true : false); //-
 	}

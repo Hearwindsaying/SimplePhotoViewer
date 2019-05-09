@@ -73,6 +73,16 @@ namespace winrt::SimplePhotoViewer::implementation
         throw hresult_not_implemented();
     }
 
+    double ImageSku::RenderRotation()
+    {
+        throw hresult_not_implemented();
+    }
+
+    void ImageSku::RenderRotation(double value)
+    {
+        throw hresult_not_implemented();
+    }
+
     winrt::event_token ImageSku::PropertyChanged(Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler)
     {
         throw hresult_not_implemented();

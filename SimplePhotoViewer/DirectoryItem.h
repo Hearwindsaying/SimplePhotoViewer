@@ -18,6 +18,8 @@ namespace winrt::SimplePhotoViewer::implementation
 		Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> SubItems() const;
 		Windows::Storage::StorageFolder ItemFolder() const;
 		void ItemFolder(Windows::Storage::StorageFolder const& value);
+		bool IsFolder() const { return this->m_isFolder; };
+		void IsFolder(bool const value) { this->m_isFolder = value; };
 
         winrt::event_token PropertyChanged(Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler);
         void PropertyChanged(winrt::event_token const& token) noexcept;
@@ -26,6 +28,7 @@ namespace winrt::SimplePhotoViewer::implementation
 		hstring m_item;
 		Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> m_subItems;
 		Windows::Storage::StorageFolder m_ItemFolder;
+		bool m_isFolder{ true };
 
 		//Delegate for observable property
 		event<Windows::UI::Xaml::Data::PropertyChangedEventHandler> m_propertyChanged;

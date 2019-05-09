@@ -2,6 +2,21 @@
 
 namespace winrt::SimplePhotoViewer
 {
+	/*double getRotateAngle(int const inputAngle)
+	{
+		switch (inputAngle)
+		{
+		case 0:
+			return 90;
+		case 90:
+			return 180;
+		case 180:
+			return 270;
+		default:
+			return 0;
+		}
+	}*/
+
 	/*find_if for winrt vector collections,searching [first,end) in the collection.*/
 	template<class InputIt, class UnaryPredicate>
 	constexpr InputIt find_if(InputIt first, UnaryPredicate p)

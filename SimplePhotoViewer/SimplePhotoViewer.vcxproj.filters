@@ -14,6 +14,7 @@
     <Midl Include="DirectoryItem.idl" />
     <Midl Include="DetailPage.idl" />
     <Midl Include="PageNavigationParameter.idl" />
+    <Midl Include="ExplorerItemTemplateSelector.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -24,6 +25,7 @@
     <ClCompile Include="DirectoryItem.cpp" />
     <ClCompile Include="DetailPage.cpp" />
     <ClCompile Include="PageNavigationParameter.cpp" />
+    <ClCompile Include="ExplorerItemTemplateSelector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -34,6 +36,7 @@
     <ClInclude Include="DetailPage.h" />
     <ClInclude Include="Utility.h" />
     <ClInclude Include="PageNavigationParameter.h" />
+    <ClInclude Include="ExplorerItemTemplateSelector.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Wide310x150Logo.scale-200.png">
@@ -58,6 +61,9 @@
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\folder.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\file.png">
       <Filter>Assets</Filter>
     </Image>
   </ItemGroup>

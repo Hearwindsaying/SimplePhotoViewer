@@ -3,12 +3,12 @@
 #pragma once
 #include "winrt/impl/Windows.Storage.1.h"
 #include "winrt/impl/Windows.Storage.FileProperties.1.h"
+#include "winrt/impl/Windows.UI.Xaml.1.h"
 #include "winrt/impl/Windows.UI.Xaml.Data.1.h"
 #include "winrt/impl/Windows.UI.Xaml.Interop.1.h"
 #include "winrt/impl/Windows.UI.Xaml.Markup.1.h"
 #include "winrt/impl/Windows.UI.Xaml.Media.Imaging.1.h"
 #include "winrt/impl/Windows.UI.Composition.1.h"
-#include "winrt/impl/Windows.UI.Xaml.1.h"
 #include "winrt/impl/Windows.UI.Xaml.Controls.1.h"
 #include "winrt/impl/SimplePhotoViewer.1.h"
 
@@ -38,6 +38,20 @@ struct WINRT_EBO DirectoryItem :
     DirectoryItem(std::nullptr_t) noexcept {}
     DirectoryItem(param::hstring const& itemName, Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> const& subItems, Windows::Storage::StorageFolder const& itemFolder);
     DirectoryItem(param::hstring const& itemName, Windows::Storage::StorageFolder const& itemFolder);
+};
+
+struct WINRT_EBO ExplorerItemTemplateSelector :
+    SimplePhotoViewer::IExplorerItemTemplateSelector,
+    impl::base<ExplorerItemTemplateSelector, Windows::UI::Xaml::Controls::DataTemplateSelector>,
+    impl::require<ExplorerItemTemplateSelector, Windows::UI::Xaml::Controls::IDataTemplateSelector, Windows::UI::Xaml::Controls::IDataTemplateSelector2, Windows::UI::Xaml::Controls::IDataTemplateSelectorOverrides, Windows::UI::Xaml::Controls::IDataTemplateSelectorOverrides2, Windows::UI::Xaml::IElementFactory>
+{
+    ExplorerItemTemplateSelector(std::nullptr_t) noexcept {}
+    ExplorerItemTemplateSelector();
+    using impl::consume_t<ExplorerItemTemplateSelector, Windows::UI::Xaml::Controls::IDataTemplateSelector>::SelectTemplate;
+    using impl::consume_t<ExplorerItemTemplateSelector, Windows::UI::Xaml::Controls::IDataTemplateSelector2>::SelectTemplate;
+    using impl::consume_t<ExplorerItemTemplateSelector, Windows::UI::Xaml::Controls::IDataTemplateSelectorOverrides>::SelectTemplateCore;
+    using impl::consume_t<ExplorerItemTemplateSelector, Windows::UI::Xaml::Controls::IDataTemplateSelectorOverrides2>::SelectTemplateCore;
+    using SimplePhotoViewer::IExplorerItemTemplateSelector::SelectTemplateCore;
 };
 
 struct WINRT_EBO ImageSku :

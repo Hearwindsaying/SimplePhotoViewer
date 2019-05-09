@@ -38,6 +38,16 @@ namespace winrt::SimplePhotoViewer::implementation
         throw hresult_not_implemented();
     }
 
+    bool DirectoryItem::IsFolder()
+    {
+        throw hresult_not_implemented();
+    }
+
+    void DirectoryItem::IsFolder(bool value)
+    {
+        throw hresult_not_implemented();
+    }
+
     winrt::event_token DirectoryItem::PropertyChanged(Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler)
     {
         throw hresult_not_implemented();

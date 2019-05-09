@@ -3,12 +3,12 @@
 #pragma once
 #include "winrt/impl/Windows.Storage.0.h"
 #include "winrt/impl/Windows.Storage.FileProperties.0.h"
+#include "winrt/impl/Windows.UI.Xaml.0.h"
 #include "winrt/impl/Windows.UI.Xaml.Data.0.h"
 #include "winrt/impl/Windows.UI.Xaml.Interop.0.h"
 #include "winrt/impl/Windows.UI.Xaml.Markup.0.h"
 #include "winrt/impl/Windows.UI.Xaml.Media.Imaging.0.h"
 #include "winrt/impl/Windows.UI.Composition.0.h"
-#include "winrt/impl/Windows.UI.Xaml.0.h"
 #include "winrt/impl/Windows.UI.Xaml.Controls.0.h"
 #include "winrt/impl/SimplePhotoViewer.0.h"
 
@@ -33,6 +33,13 @@ struct WINRT_EBO IDirectoryItemFactory :
     impl::consume_t<IDirectoryItemFactory>
 {
     IDirectoryItemFactory(std::nullptr_t = nullptr) noexcept {}
+};
+
+struct WINRT_EBO IExplorerItemTemplateSelector :
+    Windows::Foundation::IInspectable,
+    impl::consume_t<IExplorerItemTemplateSelector>
+{
+    IExplorerItemTemplateSelector(std::nullptr_t = nullptr) noexcept {}
 };
 
 struct WINRT_EBO IImageSku :

@@ -14,7 +14,7 @@ using namespace std::chrono;
 
 namespace winrt::SimplePhotoViewer::implementation
 {
-    DetailPage::DetailPage()
+    DetailPage::DetailPage()/*m_imageRenderTransform(Windows::UI::Xaml::Media::RotateTransform())*/
     {
         InitializeComponent();
 		this->m_imageSkus = single_threaded_observable_vector<Windows::Foundation::IInspectable>();
@@ -35,13 +35,27 @@ namespace winrt::SimplePhotoViewer::implementation
 		this->m_SelectedItem = value;
 	}
 
+	/*Windows::UI::Xaml::Media::RotateTransform DetailPage::ImageRenderTransform()
+	{
+		return this->m_imageRenderTransform;
+	}
+
+	void DetailPage::ImageRenderTransform(Windows::UI::Xaml::Media::RotateTransform const& value)
+	{
+		this->m_imageRenderTransform = value;
+		this->m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"ImageRenderTransform" });
+	}*/
+
 	Windows::Foundation::IAsyncAction DetailPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs e)
 	{
+
 		auto pageParameter = /*unbox_value<PageNavigationParameter>(e.Parameter());*/
 			e.Parameter().try_as<SimplePhotoViewer::PageNavigationParameter>();
 		
 		this->m_imageSkus = pageParameter.ImageSkus();
 		auto mainPageSelectedIndex = pageParameter.MainPageCurrentSelectedIndex();
+
+		
 		//this->m_imageSkus = e.Parameter().try_as< Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable>>();
 
 		//this->m_imageSkus = pageParameter.GetAt(0).try_as< Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable>>();
@@ -62,6 +76,11 @@ namespace winrt::SimplePhotoViewer::implementation
 			//stream.Close();
 		}
 
+		/*Deleteme*/
+		/*auto singleItem = this->m_imageSkus.GetAt(mainPageSelectedIndex);
+		auto singleImageSku = singleItem.try_as<SimplePhotoViewer::ImageSku>();
+		this->EditingImage().Source(singleImageSku.ImageContent());*/
+		
 		/*this->DetailPageFlipView().SelectedIndex(1);*/
 		/*auto myContent = this->m_imageSkus.GetAt(0).try_as<SimplePhotoViewer::ImageSku>().ImageContent();*/
 		//this->ThumbnailListView().SelectedIndex(0);
@@ -139,8 +158,11 @@ namespace winrt::SimplePhotoViewer::implementation
 			}
 		});
 
-		//this->DetailPageFlipView().SelectedIndex(mainPageSelectedIndex);
-		this->ThumbnailListView().SelectedIndex(0);
+		if (mainPageSelectedIndex != -1)
+		{
+			this->ThumbnailListView().SelectedIndex(mainPageSelectedIndex);
+			this->DetailPageFlipView().SelectedIndex(mainPageSelectedIndex);
+		}
 	}
 
 	void DetailPage::ImageGridView_ItemClick(Windows::Foundation::IInspectable const sender, Windows::UI::Xaml::Controls::ItemClickEventArgs const e)
@@ -176,6 +198,129 @@ namespace winrt::SimplePhotoViewer::implementation
 
 			wchar_t testchar[20] = { 'w','t','a' };
 			OutputDebugString(testchar);
+		}
+	}
+
+	void DetailPage::Counterclockwise_ClickHandler(Windows::Foundation::IInspectable const, Windows::UI::Xaml::RoutedEventArgs const)
+	{
+		auto currentSelectedItem = this->DetailPageFlipView().SelectedItem();
+		auto currentImageSku = currentSelectedItem.try_as<SimplePhotoViewer::ImageSku>();
+		if (currentImageSku)
+		{
+			auto getRotateAngle = [](int const inputAngle)->double
+			{
+				switch (inputAngle)
+				{
+				case 0:
+					return 90;
+				case 90:
+					return 180;
+				case 180:
+					return 270;
+				default:
+					return 0;
+				}
+			};
+
+			currentImageSku.RenderRotation(getRotateAngle(static_cast<int>(currentImageSku.RenderRotation())));
+			this->ConcentrateControls();
+		}
+	}
+
+	Windows::Foundation::IAsyncAction DetailPage::Save_ClickHandler(Windows::Foundation::IInspectable const, Windows::UI::Xaml::RoutedEventArgs const)
+	{
+		using StorageFile = Windows::Storage::StorageFile;
+		using FileAccessMode = Windows::Storage::FileAccessMode;
+		using InMemoryAccessStream = Windows::Storage::Streams::InMemoryRandomAccessStream;
+		using RandomAccessStream = Windows::Storage::Streams::RandomAccessStream;
+		using BitmapDecoder = Windows::Graphics::Imaging::BitmapDecoder;
+		using BitmapEncoder = Windows::Graphics::Imaging::BitmapEncoder;
+		using BitmapInterpolationMode = Windows::Graphics::Imaging::BitmapInterpolationMode;
+		using BitmapRotation = Windows::Graphics::Imaging::BitmapRotation;
+
+		auto currentSelectedItem = this->DetailPageFlipView().SelectedItem();
+		auto currentImageSku = currentSelectedItem.try_as<SimplePhotoViewer::ImageSku>();
+		if (currentImageSku)
+		{
+			currentImageSku.RenderRotation(0.0);
+
+			auto currentStorageFile = currentImageSku.ImageFile();
+			auto fileStream = co_await currentStorageFile.OpenAsync(FileAccessMode::ReadWrite);
+			auto memStream = InMemoryAccessStream();
+
+			auto bitmapDecoder = co_await BitmapDecoder::CreateAsync(fileStream);
+
+
+			// Use the native (no orientation applied) image dimensions because we want to handle
+					// orientation ourselves.
+			uint32_t originalWidth = bitmapDecoder.PixelWidth();
+			uint32_t originalHeight = bitmapDecoder.PixelHeight();
+
+			// Set the encoder's destination to the temporary, in-memory stream.
+			BitmapEncoder encoder = co_await BitmapEncoder::CreateForTranscodingAsync(memStream, bitmapDecoder);
+
+			// Scaling occurs before flip/rotation, therefore use the original dimensions
+			// (no orientation applied) as parameters for scaling.
+			// Dimensions are rounded down by BitmapEncoder to the nearest integer.
+			auto m_scaleFactor = 1.f;
+			if (m_scaleFactor != 1.0)
+			{
+				encoder.BitmapTransform().ScaledWidth(static_cast<uint32_t>(originalWidth * m_scaleFactor));
+				encoder.BitmapTransform().ScaledHeight(static_cast<uint32_t>(originalHeight * m_scaleFactor));
+
+				// Fant is a relatively high quality interpolation mode.
+				encoder.BitmapTransform().InterpolationMode(BitmapInterpolationMode::Fant);
+			}
+
+			// Otherwise, perform a hard rotate using BitmapTransform.
+			encoder.BitmapTransform().Rotation(/*Helpers.ConvertToBitmapRotation(m_userRotation);*/BitmapRotation::Clockwise180Degrees);
+
+
+			//// Attempt to generate a new thumbnail to reflect any rotation operation.
+			encoder.IsThumbnailGenerated(true);
+
+			try
+			{
+				co_await encoder.FlushAsync();
+			}
+			catch (hresult_error const& ex)
+			{
+				HRESULT hr = ex.to_abi();
+				switch (hr)
+				{
+				case WINCODEC_ERR_UNSUPPORTEDOPERATION:
+					// If the encoder does not support writing a thumbnail, then try again
+					// but disable thumbnail generation.
+					encoder.IsThumbnailGenerated(false);
+					break;
+				default:
+					throw;
+				}
+			}
+
+			if (encoder.IsThumbnailGenerated() == false)
+			{
+				co_await encoder.FlushAsync();
+			}
+
+			// Now that the file has been written to the temporary stream, copy the data to the file.
+			memStream.Seek(0);
+			fileStream.Seek(0);
+			fileStream.Size(0);
+			co_await RandomAccessStream::CopyAsync(memStream, fileStream);
+
+			this->RestoreControls();
+		}
+	}
+
+	void DetailPage::Cancel_ClickHandler(Windows::Foundation::IInspectable const, Windows::UI::Xaml::RoutedEventArgs const)
+	{
+		auto currentSelectedItem = this->DetailPageFlipView().SelectedItem();
+		auto currentImageSku = currentSelectedItem.try_as<SimplePhotoViewer::ImageSku>();
+		if (currentImageSku)
+		{
+			currentImageSku.RenderRotation(0.0);
+			this->RestoreControls();
 		}
 	}
 }

@@ -22,6 +22,8 @@ namespace winrt::SimplePhotoViewer::implementation
         Windows::UI::Xaml::Media::Imaging::BitmapImage ImageThumbnail();
         Windows::UI::Xaml::Media::Imaging::BitmapImage ImageContent();
         void ImageContent(Windows::UI::Xaml::Media::Imaging::BitmapImage const& value);
+        double RenderRotation();
+        void RenderRotation(double value);
         winrt::event_token PropertyChanged(Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler);
         void PropertyChanged(winrt::event_token const& token) noexcept;
     };

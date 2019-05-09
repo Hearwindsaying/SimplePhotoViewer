@@ -8,5 +8,6 @@ namespace SimplePhotoViewer
 		Windows.Foundation.Collections.IObservableVector<IInspectable> SubItems{ get; };
 		String Item{get;set;};
 		Windows.Storage.StorageFolder ItemFolder{ get; set; };
+		Boolean IsFolder{ get; set; };
 	}
 }

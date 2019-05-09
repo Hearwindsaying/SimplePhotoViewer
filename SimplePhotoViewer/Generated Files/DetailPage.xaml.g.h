@@ -46,103 +46,85 @@ namespace winrt::SimplePhotoViewer::implementation
             _Tooler = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::Button SlidePlay()
+        ::winrt::Windows::UI::Xaml::Controls::ContentDialog ImageContentDialog()
+        {
+            return _ImageContentDialog;
+        }
+        void ImageContentDialog(::winrt::Windows::UI::Xaml::Controls::ContentDialog value)
+        {
+            _ImageContentDialog = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton SlidePlay()
         {
             return _SlidePlay;
         }
-        void SlidePlay(::winrt::Windows::UI::Xaml::Controls::Button value)
+        void SlidePlay(::winrt::Windows::UI::Xaml::Controls::AppBarButton value)
         {
             _SlidePlay = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::Button ThePreviousPicture()
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton ZoomInAppBarButton()
         {
-            return _ThePreviousPicture;
+            return _ZoomInAppBarButton;
         }
-        void ThePreviousPicture(::winrt::Windows::UI::Xaml::Controls::Button value)
+        void ZoomInAppBarButton(::winrt::Windows::UI::Xaml::Controls::AppBarButton value)
         {
-            _ThePreviousPicture = value;
-        }
-
-        ::winrt::Windows::UI::Xaml::Controls::Button TheLatterPicture()
-        {
-            return _TheLatterPicture;
-        }
-        void TheLatterPicture(::winrt::Windows::UI::Xaml::Controls::Button value)
-        {
-            _TheLatterPicture = value;
+            _ZoomInAppBarButton = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::Button Enlarge()
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton ZoomOutAppBarButton()
         {
-            return _Enlarge;
+            return _ZoomOutAppBarButton;
         }
-        void Enlarge(::winrt::Windows::UI::Xaml::Controls::Button value)
+        void ZoomOutAppBarButton(::winrt::Windows::UI::Xaml::Controls::AppBarButton value)
         {
-            _Enlarge = value;
-        }
-
-        ::winrt::Windows::UI::Xaml::Controls::Button Reduce()
-        {
-            return _Reduce;
-        }
-        void Reduce(::winrt::Windows::UI::Xaml::Controls::Button value)
-        {
-            _Reduce = value;
+            _ZoomOutAppBarButton = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::Button Counterclockwise()
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton RotateAppBarButton()
         {
-            return _Counterclockwise;
+            return _RotateAppBarButton;
         }
-        void Counterclockwise(::winrt::Windows::UI::Xaml::Controls::Button value)
+        void RotateAppBarButton(::winrt::Windows::UI::Xaml::Controls::AppBarButton value)
         {
-            _Counterclockwise = value;
-        }
-
-        ::winrt::Windows::UI::Xaml::Controls::Button Clockwise()
-        {
-            return _Clockwise;
-        }
-        void Clockwise(::winrt::Windows::UI::Xaml::Controls::Button value)
-        {
-            _Clockwise = value;
+            _RotateAppBarButton = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::Button Edit()
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton CancelAppBarButton()
         {
-            return _Edit;
+            return _CancelAppBarButton;
         }
-        void Edit(::winrt::Windows::UI::Xaml::Controls::Button value)
+        void CancelAppBarButton(::winrt::Windows::UI::Xaml::Controls::AppBarButton value)
         {
-            _Edit = value;
-        }
-
-        ::winrt::Windows::UI::Xaml::Controls::Button Information()
-        {
-            return _Information;
-        }
-        void Information(::winrt::Windows::UI::Xaml::Controls::Button value)
-        {
-            _Information = value;
+            _CancelAppBarButton = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::Button OpenFile()
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton EditAppBarButton()
         {
-            return _OpenFile;
+            return _EditAppBarButton;
         }
-        void OpenFile(::winrt::Windows::UI::Xaml::Controls::Button value)
+        void EditAppBarButton(::winrt::Windows::UI::Xaml::Controls::AppBarButton value)
         {
-            _OpenFile = value;
+            _EditAppBarButton = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::Button Maker()
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton InformationAppBarButton()
         {
-            return _Maker;
+            return _InformationAppBarButton;
         }
-        void Maker(::winrt::Windows::UI::Xaml::Controls::Button value)
+        void InformationAppBarButton(::winrt::Windows::UI::Xaml::Controls::AppBarButton value)
         {
-            _Maker = value;
+            _InformationAppBarButton = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton SaveAppBarButton()
+        {
+            return _SaveAppBarButton;
+        }
+        void SaveAppBarButton(::winrt::Windows::UI::Xaml::Controls::AppBarButton value)
+        {
+            _SaveAppBarButton = value;
         }
 
         ::winrt::Windows::UI::Xaml::Controls::FlipView DetailPageFlipView()
@@ -196,23 +178,21 @@ namespace winrt::SimplePhotoViewer::implementation
         bool _contentLoaded{false};
 
     private:
-        struct DetailPage_obj16_Bindings;
-        struct DetailPage_obj20_Bindings;
+        struct DetailPage_obj14_Bindings;
+        struct DetailPage_obj18_Bindings;
         struct DetailPage_obj1_Bindings;
 
         ::winrt::Windows::UI::Xaml::Controls::Grid _Display{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Grid _Tooler{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _SlidePlay{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _ThePreviousPicture{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _TheLatterPicture{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _Enlarge{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _Reduce{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _Counterclockwise{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _Clockwise{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _Edit{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _Information{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _OpenFile{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _Maker{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::ContentDialog _ImageContentDialog{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton _SlidePlay{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton _ZoomInAppBarButton{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton _ZoomOutAppBarButton{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton _RotateAppBarButton{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton _CancelAppBarButton{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton _EditAppBarButton{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton _InformationAppBarButton{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton _SaveAppBarButton{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::FlipView _DetailPageFlipView{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::ScrollViewer _ThumbnailScrollViewer{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::ListView _ThumbnailListView{nullptr};
