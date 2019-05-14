@@ -8,6 +8,7 @@ namespace winrt::SimplePhotoViewer::implementation
     {
         ImageSku() = delete;
         ImageSku(Windows::Storage::FileProperties::ImageProperties const& imageProps, Windows::Storage::StorageFile const& imageFile, hstring const& name, hstring const& type, Windows::UI::Xaml::Media::Imaging::BitmapImage const& imageThumbnail, hstring const& nameWithType);
+        ImageSku(Windows::Storage::FileProperties::ImageProperties const& imageProps, Windows::Storage::StorageFile const& imageFile, hstring const& name, hstring const& type, hstring const& nameWithType);
         ImageSku(hstring const& defaultTipString);
 
         Windows::Storage::StorageFile ImageFile();
@@ -20,6 +21,7 @@ namespace winrt::SimplePhotoViewer::implementation
         hstring ImageNameWithType();
         void ImageNameWithType(hstring const& value);
         Windows::UI::Xaml::Media::Imaging::BitmapImage ImageThumbnail();
+        void ImageThumbnail(Windows::UI::Xaml::Media::Imaging::BitmapImage const& value);
         Windows::UI::Xaml::Media::Imaging::BitmapImage ImageContent();
         void ImageContent(Windows::UI::Xaml::Media::Imaging::BitmapImage const& value);
         double RenderRotation();

@@ -8,6 +8,11 @@ namespace winrt::SimplePhotoViewer::implementation
         throw hresult_not_implemented();
     }
 
+    ImageSku::ImageSku(Windows::Storage::FileProperties::ImageProperties const& imageProps, Windows::Storage::StorageFile const& imageFile, hstring const& name, hstring const& type, hstring const& nameWithType)
+    {
+        throw hresult_not_implemented();
+    }
+
     ImageSku::ImageSku(hstring const& defaultTipString)
     {
         throw hresult_not_implemented();
@@ -59,6 +64,11 @@ namespace winrt::SimplePhotoViewer::implementation
     }
 
     Windows::UI::Xaml::Media::Imaging::BitmapImage ImageSku::ImageThumbnail()
+    {
+        throw hresult_not_implemented();
+    }
+
+    void ImageSku::ImageThumbnail(Windows::UI::Xaml::Media::Imaging::BitmapImage const& value)
     {
         throw hresult_not_implemented();
     }

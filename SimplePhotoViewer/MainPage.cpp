@@ -222,10 +222,32 @@ namespace winrt::SimplePhotoViewer::implementation
 		}
 	}
 	
+	
+	Windows::Foundation::IAsyncOperation<SimplePhotoViewer::ImageSku> MainPage::LoadImageInfoAsync(Windows::Storage::StorageFile file)
+	{
+		auto properties = co_await file.Properties().GetImagePropertiesAsync();
+		auto info = winrt::make<ImageSku>(properties, file, file.DisplayName(), file.DisplayType(), file.Name());
+		co_return info;
+	}
 	/*Refresh current displaying folder using specified storageFolder*/
 	/*See also:DirectoryItem_Invoked()*/
+	Windows::Foundation::IAsyncAction MainPage::CancellationPropagatorAsync()
+	{
+		auto cancellation_token{ co_await winrt::get_cancellation_token() };
+		auto nested_coroutine{ this->RefreshCurrentFolder(nullptr) };
+		cancellation_token.callback([=] {nested_coroutine.Cancel(); });
+		co_await nested_coroutine;
+	}
+	/*Windows::Foundation::IAsyncAction MainPage::RefreshCurrentFolderCoroutineAsync()
+	{
+		auto cancellation_propagator{ this->CancellationPropagatorAsync() };
+
+	}*/
+
 	Windows::Foundation::IAsyncAction MainPage::RefreshCurrentFolder(Windows::Storage::StorageFolder const storageFolder)
 	{
+		
+
 		this->m_imageSkus.Clear();
 
 		auto defaultFolder = co_await this->LoadDefaultFolder();
@@ -247,26 +269,31 @@ namespace winrt::SimplePhotoViewer::implementation
 		//// Populate Photos collection.
 		for (auto&& file : imageFiles)
 		{
-			auto imageProperties = co_await file.Properties().GetImagePropertiesAsync();
+			//auto imageProperties = co_await file.Properties().GetImagePropertiesAsync();
 
 
-			auto thumbnail = co_await file.GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::SingleItem);
-			//or:auto thumbnail = co_await file.GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::PicturesView);
-			Windows::UI::Xaml::Media::Imaging::BitmapImage bitmapImage{};
-			bitmapImage.SetSource(thumbnail);
-			thumbnail.Close();
+			//auto thumbnail = co_await file.GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::SingleItem);
+			////or:auto thumbnail = co_await file.GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::PicturesView);
+			//Windows::UI::Xaml::Media::Imaging::BitmapImage bitmapImage{};
+			//bitmapImage.SetSource(thumbnail);
+			//thumbnail.Close();
 
-			auto imageSku = winrt::make<ImageSku>(imageProperties, file, file.DisplayName(), file.DisplayType(), bitmapImage, file.Name());
+			//auto imageSku = winrt::make<ImageSku>(imageProperties, file, file.DisplayName(), file.DisplayType(), bitmapImage, file.Name());
 
 			/*Windows::Storage::Streams::IRandomAccessStream stream{ co_await file.OpenAsync(Windows::Storage::FileAccessMode::Read) };
 			Windows::UI::Xaml::Media::Imaging::BitmapImage bitmap{};
 			bitmap.SetSource(stream);
 			imageSku.ImageContent(bitmap);*/
+			//this->refreshing = true;
+			auto imageSku = co_await LoadImageInfoAsync(file);
 			this->ImageSkus().Append(imageSku);
+			//if(!this->refreshing)
+
 		}
+		//this->refreshing = false;
 	}
 
-	Windows::Foundation::IAsyncAction MainPage::DirectoryItem_Expanding(Microsoft::UI::Xaml::Controls::TreeView const sender, Microsoft::UI::Xaml::Controls::TreeViewExpandingEventArgs const args)
+	void MainPage::DirectoryItem_Expanding(Microsoft::UI::Xaml::Controls::TreeView const sender, Microsoft::UI::Xaml::Controls::TreeViewExpandingEventArgs const args)
 	{
 		using StorageFolder = Windows::Storage::StorageFolder;
 		SimplePhotoViewer::DirectoryItem expandingItem = args.Item().try_as<SimplePhotoViewer::DirectoryItem>();
@@ -302,9 +329,6 @@ namespace winrt::SimplePhotoViewer::implementation
 							/*Hack:stablize TreeView Control*/
 							if (j >= 10)
 								break;
-
-							/*co_await 10ms;
-							co_await winrt::resume_foreground(this->DirectoryTreeView().Dispatcher());*/
 						}
 					}
 				}
@@ -315,7 +339,6 @@ namespace winrt::SimplePhotoViewer::implementation
 				}
 			}
 		}
-		co_return;
 	}
 	void MainPage::DirectoryItem_Collapsed(Microsoft::UI::Xaml::Controls::TreeView const sender, Microsoft::UI::Xaml::Controls::TreeViewCollapsedEventArgs const args)
 	{
@@ -338,11 +361,6 @@ namespace winrt::SimplePhotoViewer::implementation
 			auto node = strong_this->DirectoryTreeView().NodeFromContainer(itemContainer);
 			node.IsExpanded(!node.IsExpanded());
 		}
-		else
-		{
-			wchar_t testchar[20] = { 'e','r','3' };
-			OutputDebugString(testchar);
-		}
 
 		auto itemFolder = args.InvokedItem().try_as<SimplePhotoViewer::DirectoryItem>().ItemFolder();
 		strong_this->currentSelectedFolderPathName = itemFolder.Path();
@@ -352,6 +370,65 @@ namespace winrt::SimplePhotoViewer::implementation
 
 	}
 	
+
+	Windows::Foundation::IAsyncAction MainPage::OnContainerContentChanging(Windows::UI::Xaml::Controls::ListViewBase sender, Windows::UI::Xaml::Controls::ContainerContentChangingEventArgs args)
+	{
+		auto elementVisual = Windows::UI::Xaml::Hosting::ElementCompositionPreview::GetElementVisual(args.ItemContainer());
+		auto stackPanelChildren = args.ItemContainer().ContentTemplateRoot().as<Windows::UI::Xaml::Controls::StackPanel>().Children();
+		auto image = stackPanelChildren.GetAt(0).as< Windows::UI::Xaml::Controls::Image>();
+		//auto image = args.ItemContainer().ContentTemplateRoot().as<Windows::UI::Xaml::Controls::Image>();
+
+		if (args.InRecycleQueue())
+		{
+			elementVisual.ImplicitAnimations(nullptr);
+
+			image.Source(nullptr);
+		}
+
+		if (args.Phase() == 0)
+		{
+			///Add implicit animation to each visual.
+			//elementVisual.ImplicitAnimations(m_elementImplicitAnimation);
+
+			args.RegisterUpdateCallback([&](auto sender, auto args)
+			{
+				OnContainerContentChanging(sender, args);
+			});
+
+			args.Handled(true);
+		}
+
+		if (args.Phase() == 1)
+		{
+			// It's phase 1, so show this item's image.
+			image.Opacity(100);
+
+			auto item = unbox_value<SimplePhotoViewer::ImageSku>(args.Item());
+			ImageSku* impleType = from_abi<ImageSku>(item);
+
+			try
+			{
+				auto thumbnail = co_await impleType->ImageFile().GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::SingleItem);
+				//or:auto thumbnail = co_await file.GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::PicturesView);
+				Windows::UI::Xaml::Media::Imaging::BitmapImage bitmapImage{};
+				bitmapImage.SetSource(thumbnail);
+				thumbnail.Close();
+
+				//auto thumbnail = co_await impleType->GetImageThumbnailAsync();
+				image.Source(bitmapImage);
+			}
+			catch (winrt::hresult_error)
+			{
+				// File could be corrupt, or it might have an image file
+				// extension, but not really be an image file.
+				Windows::UI::Xaml::Media::Imaging::BitmapImage bitmapImage{};
+				//Uri uri{ image.BaseUri().AbsoluteUri(), L"Assets/StoreLogo.png" };
+				//bitmapImage.UriSource(uri);
+				image.Source(bitmapImage);
+			}
+		}
+	}
+
 	void MainPage::GridViewItem_SelectionChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const& e)
 	{
 		auto selectedNum = this->ImageGridView().SelectedItems().Size();
@@ -510,6 +587,11 @@ namespace winrt::SimplePhotoViewer::implementation
 		for (auto i = 0; i < this->ImageGridView().Items().Size(); ++i)
 		{
 			auto selectorItem = this->ImageGridView().ContainerFromIndex(i).try_as<Windows::UI::Xaml::Controls::GridViewItem>();
+			/*Possibly be nullptr due to UI Virtualization*/
+			if (!selectorItem)
+			{
+				continue;
+			}
 			auto itemTransform = selectorItem.TransformToVisual(nullptr);
 			Windows::Foundation::Point itemCoords = itemTransform.TransformPoint(Windows::Foundation::Point(0,0));
 			

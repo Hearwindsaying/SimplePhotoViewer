@@ -1,42 +1,84 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="MainPage.xaml" />
-    <Page Include="DetailPage.xaml" />
+    <Page Include="DetailPage.xaml">
+      <Filter>Page</Filter>
+    </Page>
+    <Page Include="MainPage.xaml">
+      <Filter>Page</Filter>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="App.idl" />
     <Midl Include="MainPage.idl" />
-    <Midl Include="ImageSku.idl" />
-    <Midl Include="DirectoryItem.idl" />
     <Midl Include="DetailPage.idl" />
-    <Midl Include="PageNavigationParameter.idl" />
-    <Midl Include="ExplorerItemTemplateSelector.idl" />
+    <Midl Include="BackdropBlurBrush .idl">
+      <Filter>CompositionBrush</Filter>
+    </Midl>
+    <Midl Include="ExplorerItemTemplateSelector.idl">
+      <Filter>App</Filter>
+    </Midl>
+    <Midl Include="DirectoryItem.idl">
+      <Filter>Model</Filter>
+    </Midl>
+    <Midl Include="ImageSku.idl">
+      <Filter>Model</Filter>
+    </Midl>
+    <Midl Include="PageNavigationParameter.idl">
+      <Filter>App</Filter>
+    </Midl>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="MainPage.cpp" />
-    <ClCompile Include="ImageSku.cpp" />
-    <ClCompile Include="Generated Files\module.g.cpp" />
-    <ClCompile Include="DirectoryItem.cpp" />
     <ClCompile Include="DetailPage.cpp" />
-    <ClCompile Include="PageNavigationParameter.cpp" />
-    <ClCompile Include="ExplorerItemTemplateSelector.cpp" />
+    <ClCompile Include="ExplorerItemTemplateSelector.cpp">
+      <Filter>App</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>App</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectoryItem.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageSku.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="PageNavigationParameter.cpp">
+      <Filter>App</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated Files\module.g.cpp">
+      <Filter>Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="BackdropBlurBrush.cpp">
+      <Filter>CompositionBrush</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h" />
     <ClInclude Include="App.h" />
     <ClInclude Include="MainPage.h" />
-    <ClInclude Include="ImageSku.h" />
-    <ClInclude Include="DirectoryItem.h" />
     <ClInclude Include="DetailPage.h" />
-    <ClInclude Include="Utility.h" />
-    <ClInclude Include="PageNavigationParameter.h" />
-    <ClInclude Include="ExplorerItemTemplateSelector.h" />
+    <ClInclude Include="ExplorerItemTemplateSelector.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectoryItem.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageSku.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="PageNavigationParameter.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="BackdropBlurBrush.h">
+      <Filter>CompositionBrush</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Wide310x150Logo.scale-200.png">
@@ -68,18 +110,46 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="Package.appxmanifest" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="SimplePhotoViewer_TemporaryKey.pfx" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <Filter>Miscellaneous</Filter>
+    </None>
+    <None Include="SimplePhotoViewer_TemporaryKey.pfx">
+      <Filter>Miscellaneous</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
       <UniqueIdentifier>{e48dc53e-40b1-40cb-970a-f89935452892}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CompositionBrush">
+      <UniqueIdentifier>{fdd1b9a4-04ca-4b7d-b1de-6735e7cd9a39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="App">
+      <UniqueIdentifier>{86e37102-1638-4fa6-9e3e-8df58bda905c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Page">
+      <UniqueIdentifier>{7414e5d0-e198-41bc-b04e-5460a4a440f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model">
+      <UniqueIdentifier>{ac50c52b-55a6-416d-ad86-aae7ff90177d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Miscellaneous">
+      <UniqueIdentifier>{20e3070f-431c-4823-bdba-6c3c0f498e29}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="readme.txt" />
+    <ApplicationDefinition Include="App.xaml">
+      <Filter>App</Filter>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <Filter>Miscellaneous</Filter>
+    </AppxManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="readme.txt">
+      <Filter>Miscellaneous</Filter>
+    </Text>
   </ItemGroup>
 </Project>

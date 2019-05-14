@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "BackdropBlurBrush.h"
 #include "ImageSku.h"
 #include "DetailPage.g.h"
 
@@ -20,28 +21,35 @@ namespace winrt::SimplePhotoViewer::implementation
 
 		Windows::Foundation::IAsyncAction OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs e);
 		void GoBack_ClickHandler(Windows::Foundation::IInspectable const& param, Windows::UI::Xaml::RoutedEventArgs const&);
-		void ImageGridView_ItemClick(Windows::Foundation::IInspectable const sender, Windows::UI::Xaml::Controls::ItemClickEventArgs const e);
-		void ImageFlipView_SelectionChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const& e);
+		Windows::Foundation::IAsyncAction ImageGridView_ItemClick(Windows::Foundation::IInspectable const sender, Windows::UI::Xaml::Controls::ItemClickEventArgs const e);
 
 		Windows::Foundation::IAsyncAction PlayButton_ClickHandler(Windows::Foundation::IInspectable const, Windows::UI::Xaml::RoutedEventArgs const);
+		void PauseButton_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&);
 		void Counterclockwise_ClickHandler(Windows::Foundation::IInspectable const, Windows::UI::Xaml::RoutedEventArgs const);
 		Windows::Foundation::IAsyncAction Save_ClickHandler(Windows::Foundation::IInspectable const, Windows::UI::Xaml::RoutedEventArgs const);
-		void Cancel_ClickHandler(Windows::Foundation::IInspectable const, Windows::UI::Xaml::RoutedEventArgs const);
-
-		/*Windows::UI::Xaml::Media::RotateTransform ImageRenderTransform();
-		void ImageRenderTransform(Windows::UI::Xaml::Media::RotateTransform const& value);
-
-		winrt::event_token PropertyChanged(Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler)
+		void Cancel_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&);
+		void ZoomIn_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&)
 		{
-			return this->m_propertyChanged.add(handler);
+			if (this->FlipViewScrollViewer())
+			{
+				this->FlipViewScrollViewer().ChangeView(nullptr, nullptr, this->FlipViewScrollViewer().ZoomFactor() + 0.05f);
+			}
 		}
-		void PropertyChanged(winrt::event_token const& token) noexcept
+		void ZoomOut_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&)
 		{
-			this->m_propertyChanged.remove(token);
-		}*/
+			if (this->FlipViewScrollViewer())
+			{
+				this->FlipViewScrollViewer().ChangeView(nullptr, nullptr, this->FlipViewScrollViewer().ZoomFactor() - 0.05f);
+			}
+		}
+		Windows::Foundation::IAsyncAction Edit_ClickHandler(Windows::Foundation::IInspectable const, Windows::UI::Xaml::RoutedEventArgs const);
+		Windows::Foundation::IAsyncAction InformationAppBarButton_ClickHandler(Windows::Foundation::IInspectable const, Windows::UI::Xaml::RoutedEventArgs const);
+		void BlurAmountSlider_ValueChanged(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs const&);
+
 	private:
 		void ConcentrateControls()
 		{
+			this->ThumbnailListView().IsEnabled(false);
 			this->DetailPageFlipView().IsEnabled(false);
 			this->ZoomInAppBarButton().IsEnabled(false);
 			this->ZoomOutAppBarButton().IsEnabled(false);
@@ -52,6 +60,7 @@ namespace winrt::SimplePhotoViewer::implementation
 		}
 		void RestoreControls()
 		{
+			this->ThumbnailListView().IsEnabled(true);
 			this->DetailPageFlipView().IsEnabled(true);
 			this->ZoomInAppBarButton().IsEnabled(true);
 			this->ZoomOutAppBarButton().IsEnabled(true);
@@ -65,9 +74,9 @@ namespace winrt::SimplePhotoViewer::implementation
 		Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> m_imageSkus{ nullptr };
 		SimplePhotoViewer::ImageSku m_SelectedItem{ nullptr };
 
-		/*Windows::UI::Xaml::Media::RotateTransform m_imageRenderTransform;
+		bool shouldPausePlay{ false };
 
-		event<Windows::UI::Xaml::Data::PropertyChangedEventHandler> m_propertyChanged;*/
+		Windows::UI::Composition::Compositor m_compositor{ nullptr };
     };
 }
 

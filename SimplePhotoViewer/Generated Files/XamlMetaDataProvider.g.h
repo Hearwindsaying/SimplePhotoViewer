@@ -11,6 +11,7 @@
 #include "winrt/Windows.UI.Xaml.Media.Imaging.h"
 #include "winrt/Windows.UI.Composition.h"
 #include "winrt/Windows.UI.Xaml.Controls.h"
+#include "winrt/Windows.UI.Xaml.Media.h"
 #include "winrt/SimplePhotoViewer.h"
 
 namespace winrt::SimplePhotoViewer::implementation {

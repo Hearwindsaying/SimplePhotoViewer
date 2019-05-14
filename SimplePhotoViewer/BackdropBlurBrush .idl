@@ -1,0 +1,10 @@
+namespace SimplePhotoViewer
+{
+	[default_interface]
+	runtimeclass BackdropBlurBrush : Windows.UI.Xaml.Media.XamlCompositionBrushBase
+	{
+		BackdropBlurBrush();
+		static Windows.UI.Xaml.DependencyProperty BlurAmountProperty{ get; };
+		Double BlurAmount;
+	}
+}

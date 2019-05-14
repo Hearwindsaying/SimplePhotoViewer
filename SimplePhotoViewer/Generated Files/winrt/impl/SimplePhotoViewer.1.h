@@ -10,9 +10,24 @@
 #include "winrt/impl/Windows.UI.Xaml.Media.Imaging.0.h"
 #include "winrt/impl/Windows.UI.Composition.0.h"
 #include "winrt/impl/Windows.UI.Xaml.Controls.0.h"
+#include "winrt/impl/Windows.UI.Xaml.Media.0.h"
 #include "winrt/impl/SimplePhotoViewer.0.h"
 
 WINRT_EXPORT namespace winrt::SimplePhotoViewer {
+
+struct WINRT_EBO IBackdropBlurBrush :
+    Windows::Foundation::IInspectable,
+    impl::consume_t<IBackdropBlurBrush>
+{
+    IBackdropBlurBrush(std::nullptr_t = nullptr) noexcept {}
+};
+
+struct WINRT_EBO IBackdropBlurBrushStatics :
+    Windows::Foundation::IInspectable,
+    impl::consume_t<IBackdropBlurBrushStatics>
+{
+    IBackdropBlurBrushStatics(std::nullptr_t = nullptr) noexcept {}
+};
 
 struct WINRT_EBO IDetailPage :
     Windows::Foundation::IInspectable,

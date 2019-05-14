@@ -12,9 +12,19 @@ using namespace winrt;
 using namespace Windows::UI::Xaml;
 using namespace std::chrono;
 
+using namespace Microsoft::Graphics::Canvas;
+using namespace Microsoft::Graphics::Canvas::Effects;
+using namespace Microsoft::Graphics::Canvas::Text;
+using namespace Microsoft::Graphics::Canvas::UI::Xaml;
+using namespace Microsoft::Graphics::Canvas::UI;
+using namespace Windows::Foundation;
+using namespace Windows::Foundation::Numerics;
+using namespace Windows::UI::Xaml::Hosting;
+using namespace Windows::UI::Composition;
+
 namespace winrt::SimplePhotoViewer::implementation
 {
-    DetailPage::DetailPage()/*m_imageRenderTransform(Windows::UI::Xaml::Media::RotateTransform())*/
+    DetailPage::DetailPage():m_compositor(Window::Current().Compositor())
     {
         InitializeComponent();
 		this->m_imageSkus = single_threaded_observable_vector<Windows::Foundation::IInspectable>();
@@ -35,20 +45,10 @@ namespace winrt::SimplePhotoViewer::implementation
 		this->m_SelectedItem = value;
 	}
 
-	/*Windows::UI::Xaml::Media::RotateTransform DetailPage::ImageRenderTransform()
-	{
-		return this->m_imageRenderTransform;
-	}
-
-	void DetailPage::ImageRenderTransform(Windows::UI::Xaml::Media::RotateTransform const& value)
-	{
-		this->m_imageRenderTransform = value;
-		this->m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"ImageRenderTransform" });
-	}*/
 
 	Windows::Foundation::IAsyncAction DetailPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs e)
 	{
-
+		this->shouldPausePlay = false;
 		auto pageParameter = /*unbox_value<PageNavigationParameter>(e.Parameter());*/
 			e.Parameter().try_as<SimplePhotoViewer::PageNavigationParameter>();
 		
@@ -76,11 +76,6 @@ namespace winrt::SimplePhotoViewer::implementation
 			//stream.Close();
 		}
 
-		/*Deleteme*/
-		/*auto singleItem = this->m_imageSkus.GetAt(mainPageSelectedIndex);
-		auto singleImageSku = singleItem.try_as<SimplePhotoViewer::ImageSku>();
-		this->EditingImage().Source(singleImageSku.ImageContent());*/
-		
 		/*this->DetailPageFlipView().SelectedIndex(1);*/
 		/*auto myContent = this->m_imageSkus.GetAt(0).try_as<SimplePhotoViewer::ImageSku>().ImageContent();*/
 		//this->ThumbnailListView().SelectedIndex(0);
@@ -147,11 +142,6 @@ namespace winrt::SimplePhotoViewer::implementation
 								//stream.Close();
 							}
 						}
-						else
-						{
-							wchar_t testchar[20] = { 'e','r','4' };
-							OutputDebugString(testchar);
-						}
 					}
 					
 				}
@@ -165,40 +155,65 @@ namespace winrt::SimplePhotoViewer::implementation
 		}
 	}
 
-	void DetailPage::ImageGridView_ItemClick(Windows::Foundation::IInspectable const sender, Windows::UI::Xaml::Controls::ItemClickEventArgs const e)
+	Windows::Foundation::IAsyncAction DetailPage::ImageGridView_ItemClick(Windows::Foundation::IInspectable const sender, Windows::UI::Xaml::Controls::ItemClickEventArgs const e)
 	{
 		auto clickedItem = e.ClickedItem();
 		this->DetailPageFlipView().SelectedItem(clickedItem);
 
+		auto currentImageSku = clickedItem.try_as<SimplePhotoViewer::ImageSku>();
+		auto thumbnailImage = currentImageSku.ImageThumbnail();
+		if (!thumbnailImage)//UI Virtualization(OnContainerChanged) should be used instead
+		{
+			auto thumbnail = co_await currentImageSku.ImageFile().GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::SingleItem);
+			//or:auto thumbnail = co_await file.GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::PicturesView);
+			Windows::UI::Xaml::Media::Imaging::BitmapImage bitmapImage{};
+			bitmapImage.SetSource(thumbnail);
+			thumbnail.Close();
+
+			//auto thumbnail = co_await impleType->GetImageThumbnailAsync();
+			currentImageSku.ImageThumbnail(bitmapImage);
+			//image.Source(bitmapImage);
+		}
 		//this->DetailPageFlipView().ItemTemplate().
 		/*this->ThumbnailListView().ScrollIntoView();*/
 		/*this->ThumbnailListView().ScrollIntoView(m_imageSkus.GetAt(10));*/
 	}
 
-	/*void DetailPage::ImageFlipView_SelectionChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const& e)
-	{
-		
-	}*/
-
 	void DetailPage::GoBack_ClickHandler(Windows::Foundation::IInspectable const& param, Windows::UI::Xaml::RoutedEventArgs const&)
 	{
+		this->shouldPausePlay = true;
 		Frame().Navigate(winrt::xaml_typename<SimplePhotoViewer::MainPage>());
 	}
 
 	Windows::Foundation::IAsyncAction DetailPage::PlayButton_ClickHandler(Windows::Foundation::IInspectable const param, Windows::UI::Xaml::RoutedEventArgs const)
 	{
+		this->shouldPausePlay = false;
+
+		this->SlidePlay().IsEnabled(false);
+		this->SlidePause().IsEnabled(true);
 		/*todo:note that even clicking goback button,caching the detail page,this background thread is still running!*/
 		auto currentSelectedIndex = this->DetailPageFlipView().SelectedIndex();
 		for (; currentSelectedIndex < this->m_imageSkus.Size(); )
 		{
+			if (this->shouldPausePlay)
+				break;
 			co_await 1s;
 
 			co_await winrt::resume_foreground(this->DetailPageFlipView().Dispatcher());
-			this->DetailPageFlipView().SelectedIndex(++currentSelectedIndex);
 
-			wchar_t testchar[20] = { 'w','t','a' };
-			OutputDebugString(testchar);
+			if (currentSelectedIndex + 1 >= this->m_imageSkus.Size())
+				break;
+			this->DetailPageFlipView().SelectedIndex(++currentSelectedIndex);
 		}
+
+		this->SlidePlay().IsEnabled(true);
+		this->SlidePause().IsEnabled(false);
+	}
+	void DetailPage::PauseButton_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&)
+	{
+		this->SlidePlay().IsEnabled(true);
+		this->SlidePause().IsEnabled(false);
+		this->shouldPausePlay = true;
 	}
 
 	void DetailPage::Counterclockwise_ClickHandler(Windows::Foundation::IInspectable const, Windows::UI::Xaml::RoutedEventArgs const)
@@ -242,6 +257,25 @@ namespace winrt::SimplePhotoViewer::implementation
 		auto currentImageSku = currentSelectedItem.try_as<SimplePhotoViewer::ImageSku>();
 		if (currentImageSku)
 		{
+			auto rotatedAngle = currentImageSku.RenderRotation();
+			auto getRotateAngle = [](int const inputAngle)
+			{
+				switch (inputAngle)
+				{
+				case 0:
+					return BitmapRotation::None;
+				case 90:
+					return BitmapRotation::Clockwise90Degrees;
+				case 180:
+					return BitmapRotation::Clockwise180Degrees;
+				case 270:
+					return BitmapRotation::Clockwise270Degrees;
+				default:
+					return BitmapRotation::None;
+				}
+			};
+			auto rotatedEnum = getRotateAngle(rotatedAngle);
+
 			currentImageSku.RenderRotation(0.0);
 
 			auto currentStorageFile = currentImageSku.ImageFile();
@@ -259,21 +293,8 @@ namespace winrt::SimplePhotoViewer::implementation
 			// Set the encoder's destination to the temporary, in-memory stream.
 			BitmapEncoder encoder = co_await BitmapEncoder::CreateForTranscodingAsync(memStream, bitmapDecoder);
 
-			// Scaling occurs before flip/rotation, therefore use the original dimensions
-			// (no orientation applied) as parameters for scaling.
-			// Dimensions are rounded down by BitmapEncoder to the nearest integer.
-			auto m_scaleFactor = 1.f;
-			if (m_scaleFactor != 1.0)
-			{
-				encoder.BitmapTransform().ScaledWidth(static_cast<uint32_t>(originalWidth * m_scaleFactor));
-				encoder.BitmapTransform().ScaledHeight(static_cast<uint32_t>(originalHeight * m_scaleFactor));
-
-				// Fant is a relatively high quality interpolation mode.
-				encoder.BitmapTransform().InterpolationMode(BitmapInterpolationMode::Fant);
-			}
-
 			// Otherwise, perform a hard rotate using BitmapTransform.
-			encoder.BitmapTransform().Rotation(/*Helpers.ConvertToBitmapRotation(m_userRotation);*/BitmapRotation::Clockwise180Degrees);
+			encoder.BitmapTransform().Rotation(rotatedEnum);
 
 
 			//// Attempt to generate a new thumbnail to reflect any rotation operation.
@@ -310,10 +331,24 @@ namespace winrt::SimplePhotoViewer::implementation
 			co_await RandomAccessStream::CopyAsync(memStream, fileStream);
 
 			this->RestoreControls();
+
+			//Update Rotated Image File
+			Windows::Storage::Streams::IRandomAccessStream stream{ co_await currentImageSku.ImageFile().OpenAsync(Windows::Storage::FileAccessMode::Read) };
+			Windows::UI::Xaml::Media::Imaging::BitmapImage bitmap{};
+			bitmap.SetSource(stream);
+			currentImageSku.ImageContent(bitmap);
+			
+			auto file = currentImageSku.ImageFile();
+			auto imageProperties = co_await file.Properties().GetImagePropertiesAsync();
+			auto thumbnail = co_await file.GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::SingleItem);
+			//or:auto thumbnail = co_await file.GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::PicturesView);
+			Windows::UI::Xaml::Media::Imaging::BitmapImage bitmapImage{};
+			bitmapImage.SetSource(thumbnail);
+			currentImageSku.ImageThumbnail(bitmapImage);
 		}
 	}
 
-	void DetailPage::Cancel_ClickHandler(Windows::Foundation::IInspectable const, Windows::UI::Xaml::RoutedEventArgs const)
+	void DetailPage::Cancel_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&)
 	{
 		auto currentSelectedItem = this->DetailPageFlipView().SelectedItem();
 		auto currentImageSku = currentSelectedItem.try_as<SimplePhotoViewer::ImageSku>();
@@ -323,4 +358,25 @@ namespace winrt::SimplePhotoViewer::implementation
 			this->RestoreControls();
 		}
 	}
+
+	Windows::Foundation::IAsyncAction DetailPage::Edit_ClickHandler(Windows::Foundation::IInspectable const, Windows::UI::Xaml::RoutedEventArgs const)
+	{
+		co_return;
+	}
+
+	Windows::Foundation::IAsyncAction DetailPage::InformationAppBarButton_ClickHandler(Windows::Foundation::IInspectable const, Windows::UI::Xaml::RoutedEventArgs const)
+	{
+		co_return;
+	}
+
+	void DetailPage::BlurAmountSlider_ValueChanged(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs const&)
+	{
+		//this->ConcentrateControls();
+		auto slider = sender.try_as<Windows::UI::Xaml::Controls::Slider>();
+		if(slider)
+			this->bsh().BlurAmount(slider.Value());
+		//auto fillBrush = this->BackdropBlur_Rectangle().Fill();
+	}
+
+
 }

@@ -12,6 +12,7 @@ namespace winrt::SimplePhotoViewer::implementation
 		//Constructors 
 		ImageSku() = default;
 		ImageSku(Windows::Storage::FileProperties::ImageProperties const& imageProps, Windows::Storage::StorageFile const& imageFile, hstring const& name, hstring const& type, Windows::UI::Xaml::Media::Imaging::BitmapImage const& imageThumbnail, hstring const& nameWithType);
+		ImageSku(Windows::Storage::FileProperties::ImageProperties const& imageProps, Windows::Storage::StorageFile const& imageFile, hstring const& name, hstring const& type, hstring const& nameWithType);
 		ImageSku(hstring const& defaultTipString) :m_imageNameWithType(defaultTipString) {}
 
 		//Properties
@@ -19,7 +20,7 @@ namespace winrt::SimplePhotoViewer::implementation
 
 		Windows::Storage::FileProperties::ImageProperties ImageProperties() const;
 		Windows::UI::Xaml::Media::Imaging::BitmapImage ImageThumbnail()const;
-		/*void ImageThumbnail(Windows::UI::Xaml::Media::Imaging::BitmapImage imageThumbnail);*/
+		void ImageThumbnail(Windows::UI::Xaml::Media::Imaging::BitmapImage imageThumbnail);
 		hstring ImageName() const;
 		hstring ImageFileType() const;
 		hstring ImageNameWithType() const;

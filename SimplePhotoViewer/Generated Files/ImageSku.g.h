@@ -11,6 +11,7 @@
 #include "winrt/Windows.UI.Xaml.Media.Imaging.h"
 #include "winrt/Windows.UI.Composition.h"
 #include "winrt/Windows.UI.Xaml.Controls.h"
+#include "winrt/Windows.UI.Xaml.Media.h"
 #include "winrt/SimplePhotoViewer.h"
 
 namespace winrt::SimplePhotoViewer::implementation {
@@ -68,7 +69,12 @@ struct WINRT_EBO ImageSkuT : implements<D, Windows::Foundation::IActivationFacto
         return make<T>(imageProps, imageFile, name, type, imageThumbnail, nameWithType);
     }
 
-    SimplePhotoViewer::ImageSku CreateInstance2(hstring const& defaultTipString)
+    SimplePhotoViewer::ImageSku CreateInstance2(Windows::Storage::FileProperties::ImageProperties const& imageProps, Windows::Storage::StorageFile const& imageFile, hstring const& name, hstring const& type, hstring const& nameWithType)
+    {
+        return make<T>(imageProps, imageFile, name, type, nameWithType);
+    }
+
+    SimplePhotoViewer::ImageSku CreateInstance3(hstring const& defaultTipString)
     {
         return make<T>(defaultTipString);
     }

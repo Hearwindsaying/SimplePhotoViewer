@@ -17,9 +17,29 @@ static_assert(winrt::check_version(CPPWINRT_VERSION, "1.0.180821.2"), "Mismatche
 #include "winrt/impl/Windows.UI.Xaml.Media.Imaging.2.h"
 #include "winrt/impl/Windows.UI.Composition.2.h"
 #include "winrt/impl/Windows.UI.Xaml.Controls.2.h"
+#include "winrt/impl/Windows.UI.Xaml.Media.2.h"
 #include "winrt/impl/SimplePhotoViewer.2.h"
 
 namespace winrt::impl {
+
+template <typename D> double consume_SimplePhotoViewer_IBackdropBlurBrush<D>::BlurAmount() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IBackdropBlurBrush)->get_BlurAmount(&value));
+    return value;
+}
+
+template <typename D> void consume_SimplePhotoViewer_IBackdropBlurBrush<D>::BlurAmount(double value) const
+{
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IBackdropBlurBrush)->put_BlurAmount(value));
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_SimplePhotoViewer_IBackdropBlurBrushStatics<D>::BlurAmountProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IBackdropBlurBrushStatics)->get_BlurAmountProperty(put_abi(value)));
+    return value;
+}
 
 template <typename D> Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> consume_SimplePhotoViewer_IDetailPage<D>::ImageSkus() const
 {
@@ -190,6 +210,11 @@ template <typename D> Windows::UI::Xaml::Media::Imaging::BitmapImage consume_Sim
     return value;
 }
 
+template <typename D> void consume_SimplePhotoViewer_IImageSku<D>::ImageThumbnail(Windows::UI::Xaml::Media::Imaging::BitmapImage const& value) const
+{
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IImageSku)->put_ImageThumbnail(get_abi(value)));
+}
+
 template <typename D> Windows::UI::Xaml::Media::Imaging::BitmapImage consume_SimplePhotoViewer_IImageSku<D>::ImageContent() const
 {
     Windows::UI::Xaml::Media::Imaging::BitmapImage value{ nullptr };
@@ -221,10 +246,17 @@ template <typename D> SimplePhotoViewer::ImageSku consume_SimplePhotoViewer_IIma
     return value;
 }
 
-template <typename D> SimplePhotoViewer::ImageSku consume_SimplePhotoViewer_IImageSkuFactory<D>::CreateInstance2(param::hstring const& defaultTipString) const
+template <typename D> SimplePhotoViewer::ImageSku consume_SimplePhotoViewer_IImageSkuFactory<D>::CreateInstance2(Windows::Storage::FileProperties::ImageProperties const& imageProps, Windows::Storage::StorageFile const& imageFile, param::hstring const& name, param::hstring const& type, param::hstring const& nameWithType) const
 {
     SimplePhotoViewer::ImageSku value{ nullptr };
-    check_hresult(WINRT_SHIM(SimplePhotoViewer::IImageSkuFactory)->CreateInstance2(get_abi(defaultTipString), put_abi(value)));
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IImageSkuFactory)->CreateInstance2(get_abi(imageProps), get_abi(imageFile), get_abi(name), get_abi(type), get_abi(nameWithType), put_abi(value)));
+    return value;
+}
+
+template <typename D> SimplePhotoViewer::ImageSku consume_SimplePhotoViewer_IImageSkuFactory<D>::CreateInstance3(param::hstring const& defaultTipString) const
+{
+    SimplePhotoViewer::ImageSku value{ nullptr };
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IImageSkuFactory)->CreateInstance3(get_abi(defaultTipString), put_abi(value)));
     return value;
 }
 
@@ -302,6 +334,51 @@ template <typename D> SimplePhotoViewer::PageNavigationParameter consume_SimpleP
     check_hresult(WINRT_SHIM(SimplePhotoViewer::IPageNavigationParameterFactory)->CreateInstance(get_abi(imageSkus), mainPageCurrentSelectedIndex, put_abi(value)));
     return value;
 }
+
+template <typename D>
+struct produce<D, SimplePhotoViewer::IBackdropBlurBrush> : produce_base<D, SimplePhotoViewer::IBackdropBlurBrush>
+{
+    int32_t WINRT_CALL get_BlurAmount(double* value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(BlurAmount, WINRT_WRAP(double));
+            *value = detach_from<double>(this->shim().BlurAmount());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL put_BlurAmount(double value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(BlurAmount, WINRT_WRAP(void), double);
+            this->shim().BlurAmount(value);
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+};
+
+template <typename D>
+struct produce<D, SimplePhotoViewer::IBackdropBlurBrushStatics> : produce_base<D, SimplePhotoViewer::IBackdropBlurBrushStatics>
+{
+    int32_t WINRT_CALL get_BlurAmountProperty(void** value) noexcept final
+    {
+        try
+        {
+            *value = nullptr;
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(BlurAmountProperty, WINRT_WRAP(Windows::UI::Xaml::DependencyProperty));
+            *value = detach_from<Windows::UI::Xaml::DependencyProperty>(this->shim().BlurAmountProperty());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+};
 
 template <typename D>
 struct produce<D, SimplePhotoViewer::IDetailPage> : produce_base<D, SimplePhotoViewer::IDetailPage>
@@ -662,6 +739,18 @@ struct produce<D, SimplePhotoViewer::IImageSku> : produce_base<D, SimplePhotoVie
         catch (...) { return to_hresult(); }
     }
 
+    int32_t WINRT_CALL put_ImageThumbnail(void* value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(ImageThumbnail, WINRT_WRAP(void), Windows::UI::Xaml::Media::Imaging::BitmapImage const&);
+            this->shim().ImageThumbnail(*reinterpret_cast<Windows::UI::Xaml::Media::Imaging::BitmapImage const*>(&value));
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
     int32_t WINRT_CALL get_ImageContent(void** value) noexcept final
     {
         try
@@ -728,14 +817,27 @@ struct produce<D, SimplePhotoViewer::IImageSkuFactory> : produce_base<D, SimpleP
         catch (...) { return to_hresult(); }
     }
 
-    int32_t WINRT_CALL CreateInstance2(void* defaultTipString, void** value) noexcept final
+    int32_t WINRT_CALL CreateInstance2(void* imageProps, void* imageFile, void* name, void* type, void* nameWithType, void** value) noexcept final
     {
         try
         {
             *value = nullptr;
             typename D::abi_guard guard(this->shim());
-            WINRT_ASSERT_DECLARATION(CreateInstance2, WINRT_WRAP(SimplePhotoViewer::ImageSku), hstring const&);
-            *value = detach_from<SimplePhotoViewer::ImageSku>(this->shim().CreateInstance2(*reinterpret_cast<hstring const*>(&defaultTipString)));
+            WINRT_ASSERT_DECLARATION(CreateInstance2, WINRT_WRAP(SimplePhotoViewer::ImageSku), Windows::Storage::FileProperties::ImageProperties const&, Windows::Storage::StorageFile const&, hstring const&, hstring const&, hstring const&);
+            *value = detach_from<SimplePhotoViewer::ImageSku>(this->shim().CreateInstance2(*reinterpret_cast<Windows::Storage::FileProperties::ImageProperties const*>(&imageProps), *reinterpret_cast<Windows::Storage::StorageFile const*>(&imageFile), *reinterpret_cast<hstring const*>(&name), *reinterpret_cast<hstring const*>(&type), *reinterpret_cast<hstring const*>(&nameWithType)));
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL CreateInstance3(void* defaultTipString, void** value) noexcept final
+    {
+        try
+        {
+            *value = nullptr;
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(CreateInstance3, WINRT_WRAP(SimplePhotoViewer::ImageSku), hstring const&);
+            *value = detach_from<SimplePhotoViewer::ImageSku>(this->shim().CreateInstance3(*reinterpret_cast<hstring const*>(&defaultTipString)));
             return 0;
         }
         catch (...) { return to_hresult(); }
@@ -897,6 +999,15 @@ struct produce<D, SimplePhotoViewer::IPageNavigationParameterFactory> : produce_
 
 WINRT_EXPORT namespace winrt::SimplePhotoViewer {
 
+inline BackdropBlurBrush::BackdropBlurBrush() :
+    BackdropBlurBrush(impl::call_factory<BackdropBlurBrush>([](auto&& f) { return f.template ActivateInstance<BackdropBlurBrush>(); }))
+{}
+
+inline Windows::UI::Xaml::DependencyProperty BackdropBlurBrush::BlurAmountProperty()
+{
+    return impl::call_factory<BackdropBlurBrush, SimplePhotoViewer::IBackdropBlurBrushStatics>([&](auto&& f) { return f.BlurAmountProperty(); });
+}
+
 inline DetailPage::DetailPage() :
     DetailPage(impl::call_factory<DetailPage>([](auto&& f) { return f.template ActivateInstance<DetailPage>(); }))
 {}
@@ -917,8 +1028,12 @@ inline ImageSku::ImageSku(Windows::Storage::FileProperties::ImageProperties cons
     ImageSku(impl::call_factory<ImageSku, SimplePhotoViewer::IImageSkuFactory>([&](auto&& f) { return f.CreateInstance(imageProps, imageFile, name, type, imageThumbnail, nameWithType); }))
 {}
 
+inline ImageSku::ImageSku(Windows::Storage::FileProperties::ImageProperties const& imageProps, Windows::Storage::StorageFile const& imageFile, param::hstring const& name, param::hstring const& type, param::hstring const& nameWithType) :
+    ImageSku(impl::call_factory<ImageSku, SimplePhotoViewer::IImageSkuFactory>([&](auto&& f) { return f.CreateInstance2(imageProps, imageFile, name, type, nameWithType); }))
+{}
+
 inline ImageSku::ImageSku(param::hstring const& defaultTipString) :
-    ImageSku(impl::call_factory<ImageSku, SimplePhotoViewer::IImageSkuFactory>([&](auto&& f) { return f.CreateInstance2(defaultTipString); }))
+    ImageSku(impl::call_factory<ImageSku, SimplePhotoViewer::IImageSkuFactory>([&](auto&& f) { return f.CreateInstance3(defaultTipString); }))
 {}
 
 inline MainPage::MainPage() :
@@ -936,6 +1051,58 @@ inline XamlMetaDataProvider::XamlMetaDataProvider() :
 }
 
 namespace winrt::impl {
+
+struct property_SimplePhotoViewer_IBackdropBlurBrush
+{ struct named {
+    struct BlurAmount
+    {
+        struct name { static constexpr std::wstring_view value{ L"BlurAmount"sv }; };
+        using property_type = double;
+        using target_type = winrt::SimplePhotoViewer::IBackdropBlurBrush;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.BlurAmount();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.BlurAmount(std::forward<Value>(value));
+            }
+        };
+    };};
+    struct list { using type = impl::typelist<named::BlurAmount>; };
+};
+
+struct property_SimplePhotoViewer_IBackdropBlurBrushStatics
+{ struct named {
+    struct BlurAmountProperty
+    {
+        struct name { static constexpr std::wstring_view value{ L"BlurAmountProperty"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+        using target_type = winrt::SimplePhotoViewer::IBackdropBlurBrushStatics;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.BlurAmountProperty();
+            }
+        };
+    };};
+    struct list { using type = impl::typelist<named::BlurAmountProperty>; };
+};
 
 struct property_SimplePhotoViewer_IDetailPage
 { struct named {
@@ -1287,13 +1454,21 @@ struct property_SimplePhotoViewer_IImageSku
         using target_type = winrt::SimplePhotoViewer::IImageSku;
 
         using is_readable = std::true_type;
-        using is_writable = std::false_type;
+        using is_writable = std::true_type;
         using is_static = std::false_type;
         struct getter
         {
             auto operator()(target_type const& target) const
             {
                 return target.ImageThumbnail();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.ImageThumbnail(std::forward<Value>(value));
             }
         };
     };
@@ -1494,6 +1669,53 @@ struct property_SimplePhotoViewer_IPageNavigationParameter
         };
     };};
     struct list { using type = impl::typelist<named::ImageSkus, named::MainPageCurrentSelectedIndex>; };
+};
+
+struct property_SimplePhotoViewer_BackdropBlurBrush
+{ struct named {
+    struct BlurAmount
+    {
+        struct name { static constexpr std::wstring_view value{ L"BlurAmount"sv }; };
+        using property_type = double;
+        using target_type = winrt::SimplePhotoViewer::BackdropBlurBrush;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.BlurAmount();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.BlurAmount(std::forward<Value>(value));
+            }
+        };
+    };
+    struct BlurAmountProperty
+    {
+        struct name { static constexpr std::wstring_view value{ L"BlurAmountProperty"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+        using target_type = winrt::SimplePhotoViewer::BackdropBlurBrush;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::true_type;
+        struct getter
+        {
+            auto operator()() const
+            {
+                return target_type::BlurAmountProperty();
+            }
+        };
+    };};
+    struct list { using type = impl::typelist<named::BlurAmount, named::BlurAmountProperty>; };
 };
 
 struct property_SimplePhotoViewer_DetailPage
@@ -1722,6 +1944,31 @@ struct property_SimplePhotoViewer_ImageSku
             }
         };
     };
+    struct ImageThumbnail
+    {
+        struct name { static constexpr std::wstring_view value{ L"ImageThumbnail"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage;
+        using target_type = winrt::SimplePhotoViewer::ImageSku;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.ImageThumbnail();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.ImageThumbnail(std::forward<Value>(value));
+            }
+        };
+    };
     struct ImageNameWithType
     {
         struct name { static constexpr std::wstring_view value{ L"ImageNameWithType"sv }; };
@@ -1863,25 +2110,8 @@ struct property_SimplePhotoViewer_ImageSku
                 return target.ImageProperties();
             }
         };
-    };
-    struct ImageThumbnail
-    {
-        struct name { static constexpr std::wstring_view value{ L"ImageThumbnail"sv }; };
-        using property_type = winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage;
-        using target_type = winrt::SimplePhotoViewer::ImageSku;
-
-        using is_readable = std::true_type;
-        using is_writable = std::false_type;
-        using is_static = std::false_type;
-        struct getter
-        {
-            auto operator()(target_type const& target) const
-            {
-                return target.ImageThumbnail();
-            }
-        };
     };};
-    struct list { using type = impl::typelist<named::RenderRotation, named::ImageNameWithType, named::ImageName, named::ImageFileType, named::ImageFile, named::ImageContent, named::ImageProperties, named::ImageThumbnail>; };
+    struct list { using type = impl::typelist<named::RenderRotation, named::ImageThumbnail, named::ImageNameWithType, named::ImageName, named::ImageFileType, named::ImageFile, named::ImageContent, named::ImageProperties>; };
 };
 
 struct property_SimplePhotoViewer_MainPage
@@ -2058,6 +2288,10 @@ struct property_SimplePhotoViewer_PageNavigationParameter
 }
 
 WINRT_EXPORT namespace winrt::experimental::reflect {
+template <> struct named_property<SimplePhotoViewer::IBackdropBlurBrush> : impl::property_SimplePhotoViewer_IBackdropBlurBrush::named {};
+template <> struct properties<SimplePhotoViewer::IBackdropBlurBrush> : impl::property_SimplePhotoViewer_IBackdropBlurBrush::list {};
+template <> struct named_property<SimplePhotoViewer::IBackdropBlurBrushStatics> : impl::property_SimplePhotoViewer_IBackdropBlurBrushStatics::named {};
+template <> struct properties<SimplePhotoViewer::IBackdropBlurBrushStatics> : impl::property_SimplePhotoViewer_IBackdropBlurBrushStatics::list {};
 template <> struct named_property<SimplePhotoViewer::IDetailPage> : impl::property_SimplePhotoViewer_IDetailPage::named {};
 template <> struct properties<SimplePhotoViewer::IDetailPage> : impl::property_SimplePhotoViewer_IDetailPage::list {};
 template <> struct named_property<SimplePhotoViewer::IDirectoryItem> : impl::property_SimplePhotoViewer_IDirectoryItem::named {};
@@ -2070,6 +2304,8 @@ template <> struct named_property<SimplePhotoViewer::IMainPage> : impl::property
 template <> struct properties<SimplePhotoViewer::IMainPage> : impl::property_SimplePhotoViewer_IMainPage::list {};
 template <> struct named_property<SimplePhotoViewer::IPageNavigationParameter> : impl::property_SimplePhotoViewer_IPageNavigationParameter::named {};
 template <> struct properties<SimplePhotoViewer::IPageNavigationParameter> : impl::property_SimplePhotoViewer_IPageNavigationParameter::list {};
+template <> struct named_property<SimplePhotoViewer::BackdropBlurBrush> : impl::property_SimplePhotoViewer_BackdropBlurBrush::named {};
+template <> struct properties<SimplePhotoViewer::BackdropBlurBrush> : impl::property_SimplePhotoViewer_BackdropBlurBrush::list {};
 template <> struct named_property<SimplePhotoViewer::DetailPage> : impl::property_SimplePhotoViewer_DetailPage::named {};
 template <> struct properties<SimplePhotoViewer::DetailPage> : impl::property_SimplePhotoViewer_DetailPage::list {};
 template <> struct named_property<SimplePhotoViewer::DirectoryItem> : impl::property_SimplePhotoViewer_DirectoryItem::named {};
@@ -2084,6 +2320,8 @@ template <> struct named_property<SimplePhotoViewer::PageNavigationParameter> : 
 template <> struct properties<SimplePhotoViewer::PageNavigationParameter> : impl::property_SimplePhotoViewer_PageNavigationParameter::list {};
 
 template <>
+struct base_type<SimplePhotoViewer::BackdropBlurBrush> { using type = Windows::UI::Xaml::Media::XamlCompositionBrushBase; };
+template <>
 struct base_type<SimplePhotoViewer::DetailPage> { using type = Windows::UI::Xaml::Controls::Page; };
 template <>
 struct base_type<SimplePhotoViewer::ExplorerItemTemplateSelector> { using type = Windows::UI::Xaml::Controls::DataTemplateSelector; };
@@ -2093,6 +2331,8 @@ struct base_type<SimplePhotoViewer::MainPage> { using type = Windows::UI::Xaml::
 
 WINRT_EXPORT namespace std {
 
+template<> struct hash<winrt::SimplePhotoViewer::IBackdropBlurBrush> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IBackdropBlurBrush> {};
+template<> struct hash<winrt::SimplePhotoViewer::IBackdropBlurBrushStatics> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IBackdropBlurBrushStatics> {};
 template<> struct hash<winrt::SimplePhotoViewer::IDetailPage> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IDetailPage> {};
 template<> struct hash<winrt::SimplePhotoViewer::IDirectoryItem> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IDirectoryItem> {};
 template<> struct hash<winrt::SimplePhotoViewer::IDirectoryItemFactory> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IDirectoryItemFactory> {};
@@ -2102,6 +2342,7 @@ template<> struct hash<winrt::SimplePhotoViewer::IImageSkuFactory> : winrt::impl
 template<> struct hash<winrt::SimplePhotoViewer::IMainPage> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IMainPage> {};
 template<> struct hash<winrt::SimplePhotoViewer::IPageNavigationParameter> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IPageNavigationParameter> {};
 template<> struct hash<winrt::SimplePhotoViewer::IPageNavigationParameterFactory> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IPageNavigationParameterFactory> {};
+template<> struct hash<winrt::SimplePhotoViewer::BackdropBlurBrush> : winrt::impl::hash_base<winrt::SimplePhotoViewer::BackdropBlurBrush> {};
 template<> struct hash<winrt::SimplePhotoViewer::DetailPage> : winrt::impl::hash_base<winrt::SimplePhotoViewer::DetailPage> {};
 template<> struct hash<winrt::SimplePhotoViewer::DirectoryItem> : winrt::impl::hash_base<winrt::SimplePhotoViewer::DirectoryItem> {};
 template<> struct hash<winrt::SimplePhotoViewer::ExplorerItemTemplateSelector> : winrt::impl::hash_base<winrt::SimplePhotoViewer::ExplorerItemTemplateSelector> {};

@@ -154,12 +154,25 @@ namespace winrt::SimplePhotoViewer::implementation
 		void SearchBox_QuerySubmitted(Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, Windows::UI::Xaml::Controls::AutoSuggestBoxQuerySubmittedEventArgs const& args);
 
 		Windows::Foundation::IAsyncAction MainPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs e);
-		Windows::Foundation::IAsyncAction DirectoryItem_Expanding(Microsoft::UI::Xaml::Controls::TreeView const sender, Microsoft::UI::Xaml::Controls::TreeViewExpandingEventArgs const args);
+		void DirectoryItem_Expanding(Microsoft::UI::Xaml::Controls::TreeView const sender, Microsoft::UI::Xaml::Controls::TreeViewExpandingEventArgs const args);
 		void DirectoryItem_Collapsed(Microsoft::UI::Xaml::Controls::TreeView const sender, Microsoft::UI::Xaml::Controls::TreeViewCollapsedEventArgs const args);
 		Windows::Foundation::IAsyncAction DirectoryItem_Invoked(Microsoft::UI::Xaml::Controls::TreeView const sender, Microsoft::UI::Xaml::Controls::TreeViewItemInvokedEventArgs const args);
 
-		void SelectionListView_SelectionChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const& e){}
+		void SelectionListView_SelectionChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e)
+		{
+			
+			auto itemStackPanel = e.ClickedItem().try_as<Windows::UI::Xaml::Controls::StackPanel>();
 
+			if (itemStackPanel)
+			{
+				if (unbox_value<hstring>(itemStackPanel.Tag()) == L"tag1")
+				{
+					this->ImageGridView().SelectAll();
+				}
+			}
+		}
+
+		Windows::Foundation::IAsyncAction OnContainerContentChanging(Windows::UI::Xaml::Controls::ListViewBase sender, Windows::UI::Xaml::Controls::ContainerContentChangingEventArgs args);
 		void GridViewItem_SelectionChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const& e);
 		void GridViewItem_DoubleTapped(winrt::Windows::Foundation::IInspectable const& , Windows::UI::Xaml::Input::DoubleTappedRoutedEventArgs const& e)
 		{
@@ -192,6 +205,10 @@ namespace winrt::SimplePhotoViewer::implementation
 		Windows::Foundation::IAsyncAction FillTreeNodes(Microsoft::UI::Xaml::Controls::TreeViewNode const node);
 
 		Windows::Foundation::IAsyncAction RefreshCurrentFolder(Windows::Storage::StorageFolder const storageFolder);
+		Windows::Foundation::IAsyncAction CancellationPropagatorAsync();
+
+		//Optimization:
+		Windows::Foundation::IAsyncOperation<SimplePhotoViewer::ImageSku> LoadImageInfoAsync(Windows::Storage::StorageFile file);
 
 		/*TODO:should author and cosume relevant event for elegance.*/
 		void CurrentFolderImageNumber(uint32_t value)
@@ -215,6 +232,8 @@ namespace winrt::SimplePhotoViewer::implementation
 		Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> m_bufferImageSkus{ nullptr };
 
 		Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> m_searchResults{ nullptr };
+
+		bool refreshing{ false };
 
 		hstring currentSelectedFolderPathName;
 		hstring m_currentSelectedFolderName;

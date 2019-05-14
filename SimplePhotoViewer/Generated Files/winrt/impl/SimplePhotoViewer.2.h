@@ -10,6 +10,7 @@
 #include "winrt/impl/Windows.UI.Xaml.Media.Imaging.1.h"
 #include "winrt/impl/Windows.UI.Composition.1.h"
 #include "winrt/impl/Windows.UI.Xaml.Controls.1.h"
+#include "winrt/impl/Windows.UI.Xaml.Media.1.h"
 #include "winrt/impl/SimplePhotoViewer.1.h"
 
 WINRT_EXPORT namespace winrt::SimplePhotoViewer {
@@ -21,6 +22,16 @@ namespace winrt::impl {
 }
 
 WINRT_EXPORT namespace winrt::SimplePhotoViewer {
+
+struct WINRT_EBO BackdropBlurBrush :
+    SimplePhotoViewer::IBackdropBlurBrush,
+    impl::base<BackdropBlurBrush, Windows::UI::Xaml::Media::XamlCompositionBrushBase, Windows::UI::Xaml::Media::Brush, Windows::UI::Xaml::DependencyObject>,
+    impl::require<BackdropBlurBrush, Windows::UI::Composition::IAnimationObject, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::Media::IBrush, Windows::UI::Xaml::Media::IBrushOverrides2, Windows::UI::Xaml::Media::IXamlCompositionBrushBase, Windows::UI::Xaml::Media::IXamlCompositionBrushBaseOverrides, Windows::UI::Xaml::Media::IXamlCompositionBrushBaseProtected>
+{
+    BackdropBlurBrush(std::nullptr_t) noexcept {}
+    BackdropBlurBrush();
+    static Windows::UI::Xaml::DependencyProperty BlurAmountProperty();
+};
 
 struct WINRT_EBO DetailPage :
     SimplePhotoViewer::IDetailPage,
@@ -60,6 +71,7 @@ struct WINRT_EBO ImageSku :
 {
     ImageSku(std::nullptr_t) noexcept {}
     ImageSku(Windows::Storage::FileProperties::ImageProperties const& imageProps, Windows::Storage::StorageFile const& imageFile, param::hstring const& name, param::hstring const& type, Windows::UI::Xaml::Media::Imaging::BitmapImage const& imageThumbnail, param::hstring const& nameWithType);
+    ImageSku(Windows::Storage::FileProperties::ImageProperties const& imageProps, Windows::Storage::StorageFile const& imageFile, param::hstring const& name, param::hstring const& type, param::hstring const& nameWithType);
     ImageSku(param::hstring const& defaultTipString);
 };
 

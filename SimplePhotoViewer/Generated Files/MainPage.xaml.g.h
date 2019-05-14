@@ -296,8 +296,8 @@ namespace winrt::SimplePhotoViewer::implementation
 
     private:
         struct MainPage_obj2_Bindings;
-        struct MainPage_obj4_Bindings;
-        struct MainPage_obj33_Bindings;
+        struct MainPage_obj6_Bindings;
+        struct MainPage_obj8_Bindings;
         struct MainPage_obj38_Bindings;
         struct MainPage_obj1_Bindings;
 

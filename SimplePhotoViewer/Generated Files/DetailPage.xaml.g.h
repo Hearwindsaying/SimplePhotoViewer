@@ -64,6 +64,15 @@ namespace winrt::SimplePhotoViewer::implementation
             _SlidePlay = value;
         }
 
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton SlidePause()
+        {
+            return _SlidePause;
+        }
+        void SlidePause(::winrt::Windows::UI::Xaml::Controls::AppBarButton value)
+        {
+            _SlidePause = value;
+        }
+
         ::winrt::Windows::UI::Xaml::Controls::AppBarButton ZoomInAppBarButton()
         {
             return _ZoomInAppBarButton;
@@ -127,6 +136,42 @@ namespace winrt::SimplePhotoViewer::implementation
             _SaveAppBarButton = value;
         }
 
+        ::winrt::Windows::UI::Xaml::Controls::ScrollViewer FlipViewScrollViewer()
+        {
+            return _FlipViewScrollViewer;
+        }
+        void FlipViewScrollViewer(::winrt::Windows::UI::Xaml::Controls::ScrollViewer value)
+        {
+            _FlipViewScrollViewer = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Shapes::Rectangle rtg()
+        {
+            return _rtg;
+        }
+        void rtg(::winrt::Windows::UI::Xaml::Shapes::Rectangle value)
+        {
+            _rtg = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::Image testImage()
+        {
+            return _testImage;
+        }
+        void testImage(::winrt::Windows::UI::Xaml::Controls::Image value)
+        {
+            _testImage = value;
+        }
+
+        ::winrt::SimplePhotoViewer::BackdropBlurBrush bsh()
+        {
+            return _bsh;
+        }
+        void bsh(::winrt::SimplePhotoViewer::BackdropBlurBrush value)
+        {
+            _bsh = value;
+        }
+
         ::winrt::Windows::UI::Xaml::Controls::FlipView DetailPageFlipView()
         {
             return _DetailPageFlipView;
@@ -178,14 +223,15 @@ namespace winrt::SimplePhotoViewer::implementation
         bool _contentLoaded{false};
 
     private:
-        struct DetailPage_obj14_Bindings;
-        struct DetailPage_obj18_Bindings;
+        struct DetailPage_obj20_Bindings;
+        struct DetailPage_obj24_Bindings;
         struct DetailPage_obj1_Bindings;
 
         ::winrt::Windows::UI::Xaml::Controls::Grid _Display{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Grid _Tooler{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::ContentDialog _ImageContentDialog{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::AppBarButton _SlidePlay{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton _SlidePause{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::AppBarButton _ZoomInAppBarButton{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::AppBarButton _ZoomOutAppBarButton{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::AppBarButton _RotateAppBarButton{nullptr};
@@ -193,6 +239,10 @@ namespace winrt::SimplePhotoViewer::implementation
         ::winrt::Windows::UI::Xaml::Controls::AppBarButton _EditAppBarButton{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::AppBarButton _InformationAppBarButton{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::AppBarButton _SaveAppBarButton{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::ScrollViewer _FlipViewScrollViewer{nullptr};
+        ::winrt::Windows::UI::Xaml::Shapes::Rectangle _rtg{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Image _testImage{nullptr};
+        ::winrt::SimplePhotoViewer::BackdropBlurBrush _bsh{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::FlipView _DetailPageFlipView{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::ScrollViewer _ThumbnailScrollViewer{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::ListView _ThumbnailListView{nullptr};

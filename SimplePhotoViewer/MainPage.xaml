@@ -36,6 +36,35 @@
             </muxcontrols:TreeViewItem>
         </DataTemplate>
 
+        <DataTemplate x:Key="ImageGridView_DefaultItemTemplate" x:DataType="local:ImageSku">
+            <StackPanel>
+                <Image x:Name="ItemImage" Source="{x:Bind ImageThumbnail, Mode=OneWay}"
+                                                 Stretch="Uniform" Opacity="1" IsDoubleTapEnabled="True" DoubleTapped="GridViewItem_DoubleTapped"
+                                                 Height="90" Width="120" Margin="2">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind ImageName, Mode=OneWay}"/>
+                    </ToolTipService.ToolTip>
+                </Image>
+                <TextBlock Text="{x:Bind ImageNameWithType, Mode=OneWay}"
+                                                    MaxWidth="110" TextWrapping="Wrap" TextAlignment="Center" />
+            </StackPanel>
+        </DataTemplate>
+
+        <!--<DataTemplate x:Key="ImageGridView_DefaultItemTemplate" x:DataType="local:ImageSku">
+            <Image x:Name="ItemImage" Source="{x:Bind ImageThumbnail, Mode=OneWay}"
+                                                 Stretch="Uniform" Opacity="0"
+                                                 Height="200" Width="300" >
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{x:Bind ImageName, Mode=OneWay}"/>
+                </ToolTipService.ToolTip>
+            </Image>
+        </DataTemplate>-->
+
+        <ItemsPanelTemplate x:Key="ImageGridView_ItemsPanelTemplate">
+            <ItemsWrapGrid Orientation="Horizontal"
+                           HorizontalAlignment="Center" />
+        </ItemsPanelTemplate>
+
         <local:ExplorerItemTemplateSelector 
             x:Key="ExplorerItemTemplateSelector"
             FolderTemplate="{StaticResource FolderTemplate}"
@@ -127,10 +156,10 @@
                 <!--第四行：导入、全选、清除选择、逆选-->
                 <Grid Grid.Row ="3">
                     <ListView Name="ListView2" VerticalAlignment="Stretch" IsItemClickEnabled="True" SelectionMode="None"
-                              SelectionChanged="SelectionListView_SelectionChanged">
+                              ItemClick="SelectionListView_SelectionChanged">
                         <ListView.Items>
                             <ListViewItem>
-                                <StackPanel Orientation="Horizontal" >
+                                <StackPanel Orientation="Horizontal" Tag="tag1">
                                     <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE14E;" VerticalAlignment="Center"/>
                                     <TextBlock Text="全选" VerticalAlignment="Center" Margin="12,0,0,0"/>
                                 </StackPanel>
@@ -238,31 +267,11 @@
                                     SelectionMode="Extended"
                                     SelectionChanged="GridViewItem_SelectionChanged"
                                     Opacity="1"  Margin="9,9,9,9"
-                                    Visibility="Visible" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <GridView.ItemTemplate>
-                                <DataTemplate x:DataType="local:ImageSku">
-                                    <StackPanel>
-                                        <Image x:Name="ItemImage" Source="{x:Bind ImageThumbnail, Mode=OneWay}"
-                                                 Stretch="Uniform" Opacity="1" IsDoubleTapEnabled="True" DoubleTapped="GridViewItem_DoubleTapped"
-                                                 Height="90" Width="120" Margin="2">
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip Content="{x:Bind ImageName, Mode=OneWay}"/>
-                                            </ToolTipService.ToolTip>
-                                        </Image>
-                                        <TextBlock Text="{x:Bind ImageNameWithType, Mode=OneWay}"
-                                                    MaxWidth="110" TextWrapping="Wrap" TextAlignment="Center" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </GridView.ItemTemplate>
-
-                            <!--变四列-->
-                            <GridView.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <ItemsWrapGrid MaximumRowsOrColumns="12" Orientation="Horizontal"/>
-                                </ItemsPanelTemplate>
-                            </GridView.ItemsPanel>
-
-
+                                    Visibility="Visible" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                    ContainerContentChanging="OnContainerContentChanging"
+                                  
+                                    ItemsPanel="{StaticResource ImageGridView_ItemsPanelTemplate}"
+                                    ItemTemplate="{StaticResource ImageGridView_DefaultItemTemplate}">
                         </GridView>
                         <!--</ScrollViewer>-->
 
