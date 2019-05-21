@@ -1,4 +1,4 @@
-﻿<Page
+﻿<Page x:ConnectionId='1'
     x:Class="SimplePhotoViewer.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -11,41 +11,41 @@
     NavigationCacheMode="Enabled">
 
     <Page.Resources>
-        <DataTemplate x:Key="FolderTemplate" x:DataType="local:DirectoryItem">
-            <muxcontrols:TreeViewItem ItemsSource="{x:Bind SubItems, Mode=OneWay}" >
+        <DataTemplate x:Key="FolderTemplate"                                 >
+            <muxcontrols:TreeViewItem x:ConnectionId='8'                                              >
                 <StackPanel Orientation="Horizontal">
                     <Image Width="20">
                         <Image.Source>
                             <BitmapImage UriSource="/Assets/folder.png" DecodePixelHeight="100" />
                         </Image.Source>
                     </Image>
-                    <TextBlock Text="{x:Bind Item}" />
+                    <TextBlock x:ConnectionId='9'                      />
                 </StackPanel>
             </muxcontrols:TreeViewItem>
         </DataTemplate>
-        <DataTemplate x:Key="FileTemplate" x:DataType="local:DirectoryItem">
-            <muxcontrols:TreeViewItem ItemsSource="{x:Bind SubItems, Mode=OneWay}" >
+        <DataTemplate x:Key="FileTemplate"                                 >
+            <muxcontrols:TreeViewItem x:ConnectionId='6'                                              >
                 <StackPanel Orientation="Horizontal">
                     <Image Width="20">
                         <Image.Source>
                             <BitmapImage UriSource="/Assets/file.png" DecodePixelHeight="100" />
                         </Image.Source>
                     </Image>
-                    <TextBlock Text="{x:Bind Item}" />
+                    <TextBlock x:ConnectionId='7'                      />
                 </StackPanel>
             </muxcontrols:TreeViewItem>
         </DataTemplate>
 
-        <DataTemplate x:Key="ImageGridView_DefaultItemTemplate" x:DataType="local:ImageSku">
-            <StackPanel>
-                <Image x:Name="ItemImage" Source="{x:Bind ImageThumbnail, Mode=OneWay}"
-                                                 Stretch="Uniform" Opacity="1" IsDoubleTapEnabled="True" DoubleTapped="GridViewItem_DoubleTapped"
+        <DataTemplate x:Key="ImageGridView_DefaultItemTemplate"                            >
+            <StackPanel x:ConnectionId='2'>
+                <Image x:ConnectionId='3' x:Name="ItemImage"                                              
+                                                 Stretch="Uniform" Opacity="1" IsDoubleTapEnabled="True"                                         
                                                  Height="90" Width="120" Margin="2">
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind ImageName, Mode=OneWay}"/>
+                        <ToolTip x:ConnectionId='5'                                          />
                     </ToolTipService.ToolTip>
                 </Image>
-                <TextBlock Text="{x:Bind ImageNameWithType, Mode=OneWay}"
+                <TextBlock x:ConnectionId='4'                                               
                                                     MaxWidth="110" TextWrapping="Wrap" TextAlignment="Center" />
             </StackPanel>
         </DataTemplate>
@@ -72,7 +72,7 @@
         </local:ExplorerItemTemplateSelector>
     </Page.Resources>
     
-    <SplitView x:Name="splitView" PaneBackground="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+    <SplitView x:ConnectionId='10' x:Name="splitView" PaneBackground="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
            IsPaneOpen="True"  OpenPaneLength="200" CompactPaneLength="38" DisplayMode="CompactInline">
         <!--左边栏-->
         <SplitView.Pane>
@@ -88,23 +88,23 @@
                 </Grid.RowDefinitions>
 
                 <!--第一行：收缩键、软件名-->
-                <Grid x:Name="TopLeftGrid">
+                <Grid x:ConnectionId='11' x:Name="TopLeftGrid">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Button Name="SplitView_Button" Click="SplitViewButton_ClickHandler"
+                    <Button x:ConnectionId='16' Name="SplitView_Button"                                     
                             FontFamily="Segoe MDL2 Assets" Content="&#xE14C;"
                             Background="Transparent"
                             Width="38" Height="32" 
                             />
-                    <TextBlock  x:Name="SimplePhotoViewer_TextBlock" Text="简单图片浏览器" Style="{StaticResource BaseTextBlockStyle}"
+                    <TextBlock x:ConnectionId='17'  x:Name="SimplePhotoViewer_TextBlock" Text="简单图片浏览器" Style="{StaticResource BaseTextBlockStyle}"
                                  Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,5"/>
                 </Grid>
 
                 <!--第二行：缩略图、大图、幻灯片-->
                 <Grid Grid.Row ="1">
-                    <ListView Name="ListView1" VerticalAlignment="Stretch" IsItemClickEnabled="True" SelectionMode="None">
+                    <ListView x:ConnectionId='15' Name="ListView1" VerticalAlignment="Stretch" IsItemClickEnabled="True" SelectionMode="None">
                         <ListView.Items>
                             <ListViewItem IsEnabled="False">
                                 <StackPanel Orientation="Horizontal" ToolTipService.ToolTip="缩略图（当前界面）">
@@ -123,17 +123,17 @@
                 </Grid>
 
                 <!--第三行：treeview-->
-                <Grid Grid.Row ="2" x:Name="TreeView_Grid">
+                <Grid x:ConnectionId='12' Grid.Row ="2" x:Name="TreeView_Grid">
                     <ScrollViewer HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch">
-                        <muxcontrols:TreeView x:Name="DirectoryTreeView" 
+                        <muxcontrols:TreeView x:ConnectionId='14' x:Name="DirectoryTreeView" 
                            Height="848"
-                           ItemsSource="{x:Bind TreeViewFolders, Mode=OneWay}"
+                                                                              
                            CanDrag="False"
                            CanDragItems="False"
                            CanReorderItems="False"
-                           Expanding="DirectoryItem_Expanding"
-                           Collapsed="DirectoryItem_Collapsed"
-                           ItemInvoked="DirectoryItem_Invoked" Width="200" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch"
+                                                              
+                                                              
+                                                               Width="200" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch"
                            ItemTemplateSelector="{StaticResource ExplorerItemTemplateSelector}">
                             <!--<muxcontrols:TreeView.ItemTemplate>
                                 <DataTemplate x:DataType="local:DirectoryItem">
@@ -155,8 +155,8 @@
 
                 <!--第四行：导入、全选、清除选择、逆选-->
                 <Grid Grid.Row ="3">
-                    <ListView Name="ListView2" VerticalAlignment="Stretch" IsItemClickEnabled="True" SelectionMode="None"
-                              ItemClick="SelectionListView_ItemClicked">
+                    <ListView x:ConnectionId='13' Name="ListView2" VerticalAlignment="Stretch" IsItemClickEnabled="True" SelectionMode="None"
+                                                                       >
                         <ListView.Items>
                             <ListViewItem>
                                 <StackPanel Orientation="Horizontal" Tag="all_select" >
@@ -185,16 +185,16 @@
 
         <!--右边栏-->
         <SplitView.Content>
-            <RelativePanel x:Name="Windows_RelativePanel">
+            <RelativePanel x:ConnectionId='18' x:Name="Windows_RelativePanel">
 
 
 
-                <Grid   RelativePanel.AlignLeftWithPanel="True"
+                <Grid x:ConnectionId='19'   RelativePanel.AlignLeftWithPanel="True"
                         RelativePanel.AlignTopWithPanel="True"
                         RelativePanel.AlignRightWithPanel="True"
                         RelativePanel.AlignBottomWithPanel="True"
                         x:Name="PointerDetectedGrid"
-                        PointerPressed="Windows_MouseDown" PointerMoved="Windows_MouseHold" PointerReleased="Windows_MouseUp"
+                                                                                                                             
                         >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="32"/>
@@ -203,7 +203,7 @@
                     </Grid.RowDefinitions>
 
                     <!--第一行：简单功能行-->
-                    <Grid x:Name="TitleGrid" Margin="0,0,138,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Grid x:ConnectionId='22' x:Name="TitleGrid" Margin="0,0,138,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Grid.Background>
                             <AcrylicBrush BackgroundSource="HostBackdrop" TintColor="White" TintOpacity="0.9"/>
                         </Grid.Background>
@@ -218,14 +218,14 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
-                                <Button Name="ParentFolderButton" Click="ParentFolderButton_ClickHandler"
+                                <Button x:ConnectionId='43' Name="ParentFolderButton"                                        
                                     FontFamily="Segoe MDL2 Assets" Content="&#xE112;"
                                     ToolTipService.ToolTip="上一级" Background="Transparent"
                                     />
                             </Grid>
 
-                            <Grid Grid.Column="2" x:Name="RealFolderPath_Grid">
-                                <TextBlock Text="{x:Bind CurrentSelectedFolder, Mode=OneWay}"/>
+                            <Grid x:ConnectionId='41' Grid.Column="2" x:Name="RealFolderPath_Grid">
+                                <TextBlock x:ConnectionId='42'                                                   />
                             </Grid>
 
                             <!--<Grid x:Name="FolderPath" Grid.Column="2" Margin="34.8,60,0.4,-918" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -234,14 +234,14 @@
 
                         </Grid>
                         <Grid Grid.Column="1">
-                            <AutoSuggestBox Name="SearchAutoSuggetsBox" 
+                            <AutoSuggestBox x:ConnectionId='39' Name="SearchAutoSuggetsBox" 
                                         PlaceholderText="在当前文件夹中搜索" QueryIcon="Find"
                                         MinWidth="180" MaxWidth="200" Opacity="0.7"
                                         HorizontalAlignment="Right" 
-                                        SuggestionChosen="SearchBox_SuggestionChosen" TextChanged="SearchBox_TextChanged" QuerySubmitted="SearchBox_QuerySubmitted" UpdateTextOnSelect="False">
+                                                                                                                                                                    UpdateTextOnSelect="False">
                                 <AutoSuggestBox.ItemTemplate>
-                                    <DataTemplate x:DataType="local:ImageSku">
-                                        <TextBlock Text="{x:Bind ImageNameWithType, Mode=OneWay}"></TextBlock>
+                                    <DataTemplate                            >
+                                        <TextBlock x:ConnectionId='40'                                               ></TextBlock>
                                     </DataTemplate>
                                 </AutoSuggestBox.ItemTemplate>
                             </AutoSuggestBox>
@@ -249,7 +249,7 @@
                     </Grid>
 
                     <!--第二行：图片行-->
-                    <Grid Name="DisplayGrid" Grid.Row="1"
+                    <Grid x:ConnectionId='23' Name="DisplayGrid" Grid.Row="1"
                           >
                         <Grid.Background>
                             <AcrylicBrush BackgroundSource="HostBackdrop" TintColor="WhiteSmoke" TintOpacity="0.85"/>
@@ -263,14 +263,14 @@
 
                         <ScrollViewer Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                       >
-                        <GridView x:Name="ImageGridView"
+                        <GridView x:ConnectionId='38' x:Name="ImageGridView"
                                     IsItemClickEnabled="True" 
-                                    ItemsSource="{x:Bind ImageSkus, Mode=OneWay}" 
+                                                                                  
                                     SelectionMode="Extended"
-                                    SelectionChanged="GridViewItem_SelectionChanged"
+                                                                                    
                                     Opacity="1"  Margin="9,9,9,9"
                                     Visibility="Visible" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                    ContainerContentChanging="OnContainerContentChanging"
+                                                                                         
                                   
                                     ItemsPanel="{StaticResource ImageGridView_ItemsPanelTemplate}"
                                     ItemTemplate="{StaticResource ImageGridView_DefaultItemTemplate}">
@@ -287,44 +287,44 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <StackPanel Name="Deleteme_StackPanel" Orientation="Horizontal">
-                            <AppBarButton x:Name="CopyAppBarButton" Click="Copy_ClickHandler" IsEnabled="False"
+                        <StackPanel x:ConnectionId='24' Name="Deleteme_StackPanel" Orientation="Horizontal">
+                            <AppBarButton x:ConnectionId='28' x:Name="CopyAppBarButton"                           IsEnabled="False"
                                       Icon="Copy" Label="复制" Background="Transparent"/>
-                            <AppBarButton x:Name="ShearAppBarButton" Click="Shear_ClickHandler" IsEnabled="False"
+                            <AppBarButton x:ConnectionId='29' x:Name="ShearAppBarButton"                            IsEnabled="False"
                                       Icon="Cut" Label="剪切" Background="Transparent"/>
-                            <AppBarButton x:Name="PasteAppBarButton" Click="Paste_ClickHandler" IsEnabled="False"
+                            <AppBarButton x:ConnectionId='30' x:Name="PasteAppBarButton"                            IsEnabled="False"
                                       Icon="Paste" Label="粘贴" Background="Transparent"/>
-                            <AppBarButton x:Name="DeleteAppBarButton" Click="Delete_ClickHandler" IsEnabled="False"
+                            <AppBarButton x:ConnectionId='31' x:Name="DeleteAppBarButton"                             IsEnabled="False"
                                       Icon="Delete" Label="删除" Background="Transparent"/>
-                            <AppBarButton x:Name="RenameButton" IsEnabled="False"
+                            <AppBarButton x:ConnectionId='32' x:Name="RenameButton" IsEnabled="False"
                                       Icon="Rename" Label="重命名" Background="Transparent" AllowFocusOnInteraction="True"
                                 >
                                 <AppBarButton.Flyout>
                                     <Flyout>
                                         <StackPanel Orientation="Vertical" Margin="0,20,0,20">
-                                            <TextBox x:Name="nameInput" 
+                                            <TextBox x:ConnectionId='34' x:Name="nameInput" 
                                                      Header="请输入新的文件名:" PlaceholderText="Name" IsEnabled="True"
                                                      Width="200" HorizontalAlignment="Left"/>
-                                            <TextBox x:Name="FirstCode"
+                                            <TextBox x:ConnectionId='35' x:Name="FirstCode"
                                                      Header="请输入起始编号:" PlaceholderText="(可选)" IsEnabled="True"
                                                      Width="200" HorizontalAlignment="Left"/>
-                                            <TextBox x:Name="DigitNum"
+                                            <TextBox x:ConnectionId='36' x:Name="DigitNum"
                                                      Header="请输入编号位数:" PlaceholderText="(可选)" IsEnabled="True"
                                                      Width="200" HorizontalAlignment="Left"/>
-                                            <Button x:Name="Rename" Content="确认" Click="Rename_ClickHandler" />
+                                            <Button x:ConnectionId='37' x:Name="Rename" Content="确认"                             />
                                         </StackPanel>
                                     </Flyout>
                                 </AppBarButton.Flyout>
                             </AppBarButton>
                             
-                            <AppBarButton x:Name="OpenAppBarButton" Click="OpenFile_ClickHandler" 
+                            <AppBarButton x:ConnectionId='33' x:Name="OpenAppBarButton"                               
                                       Icon="OpenFile" Label="导入" ToolTipService.ToolTip="导入文件夹" Background="Transparent"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
-                            <TextBlock Text="{x:Bind CurrentFolderSelectedImageNumber, Mode=OneWay}" VerticalAlignment="Center" Margin="0,0,20,0"/>
-                            <TextBlock Text="{x:Bind CurrentFolderImageNumber, Mode=OneWay}" VerticalAlignment="Center" Margin="0,0,20,0"/>
-                            <Button Name="SlidePlay" Click="SlidePlay_ClickHandler"
+                            <TextBlock x:ConnectionId='25'                                                               VerticalAlignment="Center" Margin="0,0,20,0"/>
+                            <TextBlock x:ConnectionId='26'                                                       VerticalAlignment="Center" Margin="0,0,20,0"/>
+                            <Button x:ConnectionId='27' Name="SlidePlay"                               
                                 FontFamily="Segoe MDL2 Assets" Content="&#xE786;"
                                 ToolTipService.ToolTip="幻灯片播放" Background="Transparent" HorizontalAlignment="Right"
                                 />
@@ -333,8 +333,8 @@
                 </Grid>
 
 
-                <Canvas x:Name="dragSelectionCanvas" Visibility="Visible" HorizontalAlignment="Stretch" Margin="0,0,-1640,-930" VerticalAlignment="Stretch" >
-                    <Border x:Name="dragSelectionBorder"
+                <Canvas x:ConnectionId='20' x:Name="dragSelectionCanvas" Visibility="Visible" HorizontalAlignment="Stretch" Margin="0,0,-1640,-930" VerticalAlignment="Stretch" >
+                    <Border x:ConnectionId='21' x:Name="dragSelectionBorder"
                                 Visibility="Visible"
                                 BorderBrush="Blue"
                                 BorderThickness="1"
@@ -347,3 +347,4 @@
         </SplitView.Content>
     </SplitView>
 </Page>
+

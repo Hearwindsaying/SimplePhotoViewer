@@ -123,7 +123,7 @@ template <> struct guid_storage<SimplePhotoViewer::IDetailPage>{ static constexp
 template <> struct guid_storage<SimplePhotoViewer::IDirectoryItem>{ static constexpr guid value{ 0xF2622683,0x28F7,0x5F8F,{ 0x80,0xA4,0x82,0x3D,0xB1,0xB3,0xF3,0xB2 } }; };
 template <> struct guid_storage<SimplePhotoViewer::IDirectoryItemFactory>{ static constexpr guid value{ 0x7BEFC8C0,0x6F19,0x5386,{ 0xA3,0xE2,0xDF,0x87,0x35,0x72,0xB2,0xE9 } }; };
 template <> struct guid_storage<SimplePhotoViewer::IExplorerItemTemplateSelector>{ static constexpr guid value{ 0x16A14019,0xF278,0x51DD,{ 0x96,0x4B,0x58,0x11,0xB6,0x0E,0xA5,0x19 } }; };
-template <> struct guid_storage<SimplePhotoViewer::IImageSku>{ static constexpr guid value{ 0x19BB1BD2,0x8F92,0x5591,{ 0xB0,0x0C,0xA3,0xA1,0x45,0x1E,0xD2,0xA1 } }; };
+template <> struct guid_storage<SimplePhotoViewer::IImageSku>{ static constexpr guid value{ 0x721C8435,0x27F3,0x5500,{ 0xA9,0xAD,0x2E,0x40,0x5F,0x84,0xB5,0x68 } }; };
 template <> struct guid_storage<SimplePhotoViewer::IImageSkuFactory>{ static constexpr guid value{ 0x036DF874,0x154D,0x5B24,{ 0x9E,0xED,0x79,0xA3,0x30,0x14,0xA0,0x14 } }; };
 template <> struct guid_storage<SimplePhotoViewer::IMainPage>{ static constexpr guid value{ 0xB50FFCC1,0x6D4B,0x5557,{ 0xA8,0xE0,0x13,0xE7,0xDF,0x45,0x87,0x2D } }; };
 template <> struct guid_storage<SimplePhotoViewer::IPageNavigationParameter>{ static constexpr guid value{ 0xB6E2879B,0x0373,0x5A16,{ 0x89,0x47,0x62,0x18,0x6B,0x7B,0xE7,0x24 } }; };
@@ -183,6 +183,8 @@ template <> struct abi<SimplePhotoViewer::IExplorerItemTemplateSelector>{ struct
 
 template <> struct abi<SimplePhotoViewer::IImageSku>{ struct type : IInspectable
 {
+    virtual int32_t WINRT_CALL get_ImageIsSelected(bool* value) noexcept = 0;
+    virtual int32_t WINRT_CALL put_ImageIsSelected(bool value) noexcept = 0;
     virtual int32_t WINRT_CALL get_ImageFile(void** value) noexcept = 0;
     virtual int32_t WINRT_CALL put_ImageFile(void* value) noexcept = 0;
     virtual int32_t WINRT_CALL get_ImageProperties(void** value) noexcept = 0;
@@ -289,6 +291,8 @@ template <> struct consume<SimplePhotoViewer::IExplorerItemTemplateSelector> { t
 template <typename D>
 struct consume_SimplePhotoViewer_IImageSku
 {
+    bool ImageIsSelected() const;
+    void ImageIsSelected(bool value) const;
     Windows::Storage::StorageFile ImageFile() const;
     void ImageFile(Windows::Storage::StorageFile const& value) const;
     Windows::Storage::FileProperties::ImageProperties ImageProperties() const;

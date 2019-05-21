@@ -162,6 +162,8 @@ namespace winrt::SimplePhotoViewer::implementation
 
 		auto currentImageSku = clickedItem.try_as<SimplePhotoViewer::ImageSku>();
 		auto thumbnailImage = currentImageSku.ImageThumbnail();
+
+
 		if (!thumbnailImage)//UI Virtualization(OnContainerChanged) should be used instead
 		{
 			auto thumbnail = co_await currentImageSku.ImageFile().GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::SingleItem);
@@ -173,6 +175,29 @@ namespace winrt::SimplePhotoViewer::implementation
 			//auto thumbnail = co_await impleType->GetImageThumbnailAsync();
 			currentImageSku.ImageThumbnail(bitmapImage);
 			//image.Source(bitmapImage);
+		}
+
+		for (auto i = 0; i < 10; ++i)
+		{
+			auto thumbnailSelectedItem = this->ThumbnailListView().SelectedItem();
+			auto selectedImageSkuItemIndex = SimplePhotoViewer::find_index(this->m_imageSkus.First(), [thumbnailSelectedItem](auto const& item)->bool
+			{
+				return item == thumbnailSelectedItem;
+			});
+
+			if ((i + selectedImageSkuItemIndex) >= this->m_imageSkus.Size())
+				break;
+			auto singleItem = this->m_imageSkus.GetAt(i + selectedImageSkuItemIndex);
+
+			auto singleImageSku = singleItem.try_as<SimplePhotoViewer::ImageSku>();
+			if (singleImageSku.ImageThumbnail())
+				continue;
+
+			Windows::UI::Xaml::Media::Imaging::BitmapImage bitmapImage{};
+			auto thumbnail = co_await singleImageSku.ImageFile().GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::SingleItem);
+			bitmapImage.SetSource(thumbnail);
+			thumbnail.Close();
+			singleImageSku.ImageThumbnail(bitmapImage);
 		}
 		//this->DetailPageFlipView().ItemTemplate().
 		/*this->ThumbnailListView().ScrollIntoView();*/

@@ -1,0 +1,284 @@
+﻿<Page x:ConnectionId='1'
+    x:Class="SimplePhotoViewer.DetailPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SimplePhotoViewer"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    
+    NavigationCacheMode="Enabled">
+
+
+
+    <RelativePanel>
+        <Grid   RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignTopWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.AlignBottomWithPanel="True"
+                >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!--第一行：标题栏功能行-->
+            <Grid Height="32">
+                <Grid.Background>
+                    <AcrylicBrush BackgroundSource="HostBackdrop" TintColor="White" TintOpacity="0.9"/>
+                </Grid.Background>
+
+                <!--第一行-->
+                <Grid>
+                    <!--做标题栏移动用-->
+                    <Grid x:ConnectionId='25' Name="FolderPath">
+                        <TextBlock Opacity="0.1" FontSize="20" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"
+                            Text="|                                    |             |            |                       
+                                                                                                                            
+                                                                                                                           
+                                                                                                                            |" >
+                    <!--上面全是空格-->
+                            <TextBlock.RenderTransform>
+                                <CompositeTransform TranslateY="-2"/>
+                            </TextBlock.RenderTransform>
+                        </TextBlock>
+                    </Grid>
+
+                    <!--软件名字-->
+                    <Grid Width="200" HorizontalAlignment="Left">
+                        <TextBlock  Text="简易图片浏览器" Style="{StaticResource BaseTextBlockStyle}"
+                            HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0"/>
+                    </Grid>
+
+                    <!--大图、缩略图跳转-->
+                    <Grid Margin="200,0,0,5">
+                        <CommandBar DefaultLabelPosition="Right" Background="Transparent" HorizontalAlignment="Left" >
+                            <!--Click事件-->
+                            <AppBarButton x:ConnectionId='26'  Name="Thumbnail" Icon="Home" Label="缩略图"                            
+                                           Height="32" RenderTransformOrigin="0.5,0.5" >
+                                <AppBarButton.RenderTransform>
+                                    <CompositeTransform TranslateY="-5"/>
+                                </AppBarButton.RenderTransform>
+                            </AppBarButton>
+                            <AppBarButton  Label="大图" IsEnabled="False" Margin="0,0,0,8" RenderTransformOrigin="0.5,0.5">
+                                <AppBarButton.RenderTransform>
+                                    <CompositeTransform TranslateY="-5"/>
+                                </AppBarButton.RenderTransform>
+                                <AppBarButton.Icon>
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEB9F;"/>
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                        </CommandBar>
+                    </Grid>
+
+                </Grid>
+
+            </Grid>
+
+            
+            <!--第三行,缩略图行-->
+            <Grid Grid.Row="2">
+                <Grid.Background>
+                    <AcrylicBrush BackgroundSource="HostBackdrop" TintColor="White" TintOpacity="0.9"/>
+                </Grid.Background>
+                <ScrollViewer x:ConnectionId='22'   x:Name="ThumbnailScrollViewer"
+                      HorizontalScrollMode="Auto"
+                      HorizontalScrollBarVisibility="Auto"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch">
+                    <ListView x:ConnectionId='23'   x:Name="ThumbnailListView"
+                            IsItemClickEnabled="True"
+                                                               
+                                                                         
+                            SelectionMode="Extended" Opacity="1" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <ListView.ItemTemplate>
+                            <DataTemplate                            >
+                                <Image x:ConnectionId='24' x:Name="ItemImage"
+                                  Opacity="1"
+                                  Height="60"
+                                  Width="60"
+                                                                               
+                                  Stretch="Uniform">
+                                </Image>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ItemsStackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                    </ListView>
+                </ScrollViewer>
+            </Grid>
+
+            <!--第二行：大图行-->
+            <Grid x:ConnectionId='2' Name="Display" Grid.Row="1">
+                <Grid.Background>
+                    <AcrylicBrush BackgroundSource="HostBackdrop" TintColor="WhiteSmoke" TintOpacity="0.85"/>
+                </Grid.Background>
+
+                <!--<Border BorderThickness="1" BorderBrush="#FF00008B" Background="#FFFFFFFF" Margin="495,193,610,238">
+                    <Image x:Name="EditingImage" Opacity="1" Margin="0" Stretch="Uniform"
+                                           RenderTransform="{x:Bind ImageRenderTransform}"/>
+                </Border>-->
+                
+
+                <ScrollViewer x:ConnectionId='15' x:Name="FlipViewScrollViewer" Margin="0,0,0,0"
+                        Grid.RowSpan="2"
+                        HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto"
+                        VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Auto"
+                        ZoomMode="Enabled"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch">
+                    <FlipView x:ConnectionId='19' x:Name="DetailPageFlipView" IsEnabled="True" Opacity="1" Visibility="Visible"
+                                                                                 RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWith="ThumbnailScrollViewer" RelativePanel.AlignBottomWith="Tooler" 
+                              >
+                        <!--<FlipView.Foreground>
+                            <local:BackdropBlurBrush>
+                                
+                            </local:BackdropBlurBrush>
+                        </FlipView.Foreground>-->
+                        <FlipView.ItemTemplate>
+                            <DataTemplate                             >
+                                <Image x:ConnectionId='20' x:Name="ItemImage" Opacity="1" Margin="0"                                                  
+                                           Stretch="Uniform"
+                                           RenderTransformOrigin="0.5,0.5">
+                                    <Image.RenderTransform>
+                                        <RotateTransform x:ConnectionId='21'                                                  />
+                                    </Image.RenderTransform>
+                                </Image>
+                            </DataTemplate>
+                        </FlipView.ItemTemplate>
+
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </FlipView>
+                </ScrollViewer>
+
+                <Rectangle x:ConnectionId='16' x:Name="rtg" HorizontalAlignment="Stretch" Grid.RowSpan="2" VerticalAlignment="Stretch">
+                    <Rectangle.Fill>
+                        <local:BackdropBlurBrush x:ConnectionId='18' x:Name="bsh" BlurAmount="0"/>
+                        <!--<ImageBrush ImageSource="/Assets/folder.png" />-->
+                    </Rectangle.Fill>
+                </Rectangle>
+
+                <Image x:ConnectionId='17' x:Name="testImage" Visibility="Collapsed">
+                </Image>
+                <!--debug-->
+                <!--<Rectangle x:Name="rtg2" Visibility="Collapsed" HorizontalAlignment="Stretch" Grid.RowSpan="2" VerticalAlignment="Stretch">
+                    <Rectangle.Fill>
+                       
+                        <ImageBrush/>
+                    </Rectangle.Fill>
+                </Rectangle>-->
+                
+            </Grid>
+
+
+            <!--第四行：具体功能行-->
+            <Grid x:ConnectionId='3' Grid.Row="3" Name="Tooler">
+                <Grid.Background>
+                    <AcrylicBrush BackgroundSource="HostBackdrop" TintColor="White" TintOpacity="0.85"/>
+                </Grid.Background>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <StackPanel Orientation="Horizontal">
+
+                        <AppBarButton x:ConnectionId='7' Name="ZoomInAppBarButton"                            
+                                Icon="ZoomIn" Label="放大"
+                                ToolTipService.ToolTip="放大查看" Background="Transparent"
+                                />
+
+                        <AppBarButton x:ConnectionId='8' Name="ZoomOutAppBarButton"                             
+                                Icon="ZoomIn" Label="缩小"
+                                ToolTipService.ToolTip="缩小查看" Background="Transparent" HorizontalAlignment="Center" Height="56" VerticalAlignment="Center" Margin="0,0,0,0"
+                                />
+
+                        <AppBarButton x:ConnectionId='9' x:Name="RotateAppBarButton"                                       
+                                      Icon="Rotate" Label="旋转" Background="Transparent" ToolTipService.ToolTip="逆时针旋转90°"/>
+
+                        <AppBarButton x:ConnectionId='10' x:Name="CancelAppBarButton" IsEnabled="False"                            
+                                      Icon="Cancel" Label="取消" Background="Transparent" />
+
+
+                        <AppBarButton x:ConnectionId='11' x:Name="EditAppBarButton"                          
+                                Icon="Edit" Label="调整" 
+                                ToolTipService.ToolTip="图片编辑" Background="Transparent"
+                                >
+                            <AppBarButton.Flyout>
+                                <Flyout>
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal" >
+                                            <TextBlock Text="Blur Amount" VerticalAlignment="Center" Margin="14,0,10,0"/>
+                                            <Slider x:ConnectionId='14' Width="200" TickFrequency="10" TickPlacement="Outside"
+                                                                                                />
+                                        </StackPanel>
+                                        <!--<StackPanel Orientation="Horizontal" >
+                                            <TextBlock Text="冷暖度" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                            <Slider Width="200" TickFrequency="10" TickPlacement="Outside"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" >
+                                            <TextBlock Text="色调" VerticalAlignment="Center" Margin="14,0,10,0"/>
+                                            <Slider Width="200" TickFrequency="10" TickPlacement="Outside"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" >
+                                            <TextBlock Text="对比度" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                            <Slider Width="200" TickFrequency="10" TickPlacement="Outside"/>
+                                        </StackPanel>-->
+
+                                    </StackPanel>
+                                </Flyout>
+                            </AppBarButton.Flyout>
+                        </AppBarButton>
+                        <AppBarButton x:ConnectionId='12' x:Name="InformationAppBarButton" Label="信息"                                             >
+                            <AppBarButton.Icon>
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE946;"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+
+                        <AppBarButton x:ConnectionId='13' x:Name="SaveAppBarButton"                           Icon="Save" Label="保存" IsEnabled="False"/>
+
+                    </StackPanel>
+                </Grid>
+
+                <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+                    <AppBarButton x:ConnectionId='5' x:Name="SlidePlay" Label="播放"                                
+                            ToolTipService.ToolTip="幻灯片播放" Background="Transparent" HorizontalAlignment="Right">
+                        <AppBarButton.Icon>
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE768;"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton x:ConnectionId='6' x:Name="SlidePause" Label="暂停"                                  IsEnabled="False"
+                            ToolTipService.ToolTip="暂停播放" Background="Transparent" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center">
+                        <AppBarButton.Icon>
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE769;"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </StackPanel>
+            </Grid>
+
+            <ContentDialog x:ConnectionId='4'  x:Name="ImageContentDialog"
+                            Title="Save your work?"
+                            PrimaryButtonText="Save"
+                            SecondaryButtonText="Don't Save"
+                            CloseButtonText="Cancel"
+                            DefaultButton="Primary">
+                <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <TextBlock Text="Lorem ipsum dolor sit amet, adipisicing elit." TextWrapping="Wrap" />
+                    <CheckBox Content="Upload your content to the cloud."/>
+                </StackPanel>
+            </ContentDialog>
+        </Grid>
+    </RelativePanel>
+
+</Page>
+
+    
+

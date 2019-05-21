@@ -5,6 +5,8 @@
 #include "PageNavigationParameter.h"
 #include "ExplorerItemTemplateSelector.h"
 
+#include <sstream>
+
 namespace winrt::SimplePhotoViewer::implementation
 {
     struct MainPage : MainPageT<MainPage>
@@ -43,7 +45,25 @@ namespace winrt::SimplePhotoViewer::implementation
 
 		void SplitViewButton_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) {}
 
-		void ParentFolderButton_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) {}
+		Windows::Foundation::IAsyncAction ParentFolderButton_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) 
+		{
+			Windows::Storage::StorageFolder targetFolder = co_await this->LoadDefaultFolder();
+			auto parentFolder = co_await targetFolder.GetParentAsync();
+			if (parentFolder) 
+			{
+				Windows::Storage::StorageFolder parentfolder = co_await Windows::Storage::StorageFolder::GetFolderFromPathAsync(parentFolder.Path());
+				this->currentSelectedFolderPathName = parentfolder.Path();
+				this->CurrentSelectedFolder(parentfolder.Path());
+			}
+
+			if (this->refreshCurrentFolder_async)
+			{
+				if (this->refreshCurrentFolder_async.Status() != Windows::Foundation::AsyncStatus::Completed)
+					this->refreshCurrentFolder_async.Cancel();
+			}
+			this->refreshCurrentFolder_async = this->RefreshCurrentFolder(nullptr);
+			co_await this->refreshCurrentFolder_async;
+		}
 
 		Windows::Foundation::IAsyncAction Copy_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) 
 		{
@@ -52,6 +72,7 @@ namespace winrt::SimplePhotoViewer::implementation
 			contentDialog.CloseButtonText(L"取消");
 			contentDialog.DefaultButton(Windows::UI::Xaml::Controls::ContentDialogButton::Primary);
 
+			//CutFlag = false;
 			Windows::UI::Xaml::Controls::ContentDialogResult contentDialogResult = co_await contentDialog.ShowAsync();
 			if (contentDialogResult == Windows::UI::Xaml::Controls::ContentDialogResult::None)
 				return;
@@ -60,9 +81,11 @@ namespace winrt::SimplePhotoViewer::implementation
 			auto currentSelectedItems = this->ImageGridView().SelectedItems();
 			//auto deleteCounter = 0;
 
-			auto totalDelteTimes = currentSelectedItems.Size();
-			auto imageSku = currentSelectedItems.GetAt(0).try_as<SimplePhotoViewer::ImageSku>();
-			this->m_bufferImageSkus.Append(imageSku);
+			auto totalTimes = currentSelectedItems.Size();
+			for (int i = 0; i < totalTimes; i++) {
+				auto imageSku = currentSelectedItems.GetAt(i).try_as<SimplePhotoViewer::ImageSku>();
+				this->m_bufferImageSkus.Append(imageSku);
+			}
 		}
 		void Shear_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) {}
 		Windows::Foundation::IAsyncAction Paste_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&)
@@ -79,17 +102,23 @@ namespace winrt::SimplePhotoViewer::implementation
 
 			auto currentSelectedItems = this->ImageGridView().SelectedItems();
 
-			auto imageSku = this->m_bufferImageSkus.GetAt(0).try_as<SimplePhotoViewer::ImageSku>();
-			winrt::Windows::Storage::IStorageFolder filefold;
-			hstring copyFileName = imageSku.ImageNameWithType();
-
 			Windows::Storage::StorageFolder targetFolder = co_await this->LoadDefaultFolder();
-			imageSku.ImageFile().CopyAsync(targetFolder, copyFileName, Windows::Storage::NameCollisionOption::GenerateUniqueName);
-			//winrt::Microsoft::UI::Xaml::Controls::TreeViewItem args;
-			//args.TreeViewItemInvokedEventArgs args;
-			this->m_imageSkus.Append(imageSku);
-			this->m_imageSkus = single_threaded_observable_vector<Windows::Foundation::IInspectable>();
+			for (int i = 0; i < this->m_bufferImageSkus.Size(); i++) {
+				auto imageSku = this->m_bufferImageSkus.GetAt(i).try_as<SimplePhotoViewer::ImageSku>();
+				winrt::Windows::Storage::IStorageFolder filefold;
+				hstring copyFileName = imageSku.ImageNameWithType();
+				imageSku.ImageFile().CopyAsync(targetFolder, copyFileName, Windows::Storage::NameCollisionOption::GenerateUniqueName);
+				this->m_imageSkus.Append(imageSku);
 
+			}
+			
+			if (this->refreshCurrentFolder_async)
+			{
+				if (this->refreshCurrentFolder_async.Status() != Windows::Foundation::AsyncStatus::Completed)
+					this->refreshCurrentFolder_async.Cancel();
+			}
+			this->refreshCurrentFolder_async = this->RefreshCurrentFolder(nullptr);
+			co_await this->refreshCurrentFolder_async;
 
 			currentSelectedItems.Clear();
 		}
@@ -106,29 +135,59 @@ namespace winrt::SimplePhotoViewer::implementation
 				return;
 			WINRT_ASSERT(contentDialogResult == Windows::UI::Xaml::Controls::ContentDialogResult::Primary);
 
+			std::stringstream buf1, buf2;
+			std::string temp1 = to_string(this->DigitNum().Text());
+			std::string temp2 = to_string(this->FirstCode().Text());
+			buf1 << temp1;
+			buf2 << temp2;
+			int firstcode = 0;
+			int digitnum = 0;
+
 			auto currentSelectedItems = this->ImageGridView().SelectedItems();
-			//auto deleteCounter = 0;
-
 			auto TotalTimes = currentSelectedItems.Size();
-			auto imageSku = currentSelectedItems.GetAt(0).try_as<SimplePhotoViewer::ImageSku>();
-			auto index = currentSelectedItems.GetAt(0);
+			if ((!buf1 >> digitnum) || (!buf2 >> firstcode) || (pow(10, digitnum) - firstcode < TotalTimes)) {
+				Windows::UI::Xaml::Controls::ContentDialog contentDialog{};
+				contentDialog.Title(box_value(L"输入有误请重新输入"));
+				contentDialog.CloseButtonText(L"确认");
+				contentDialog.DefaultButton(Windows::UI::Xaml::Controls::ContentDialogButton::Close);
 
-			//enum class winrt::Windows::Storage::NameCollisionOption::GenerateUniqueName;
-			imageSku.ImageFile().RenameAsync(this->nameInput().Text() + L".jpg", Windows::Storage::NameCollisionOption::GenerateUniqueName);
-			imageSku.ImageName(this->nameInput().Text());
-			imageSku.ImageFileType(L"jpg");
-			imageSku.ImageNameWithType(this->nameInput().Text() + L".jpg");
-			for (auto renameCounter = 1; renameCounter <= TotalTimes; ++renameCounter)
+				Windows::UI::Xaml::Controls::ContentDialogResult contentDialogResult = co_await contentDialog.ShowAsync();
+				if (contentDialogResult == Windows::UI::Xaml::Controls::ContentDialogResult::None)
+					return;
+				WINRT_ASSERT(contentDialogResult == Windows::UI::Xaml::Controls::ContentDialogResult::Primary);
+			}
+			buf1 >> digitnum; buf2 >> firstcode;
+
+			for (int i = 0; i < TotalTimes; ++i)
 			{
 				auto imageSku = currentSelectedItems.GetAt(0).try_as<SimplePhotoViewer::ImageSku>();
-				auto curItem = currentSelectedItems.GetAt(0);
-				auto curItemIndex = SimplePhotoViewer::find_index(this->m_imageSkus.First(), [curItem](auto const& item)->bool
+				auto current_ImageFileType = L".jpg";
+				hstring Textname = this->nameInput().Text();
+				hstring code = L"";
+				code = to_hstring(i + firstcode);
+				for (int count = code.size(); count < this->DigitNum().Text().size(); count++) {
+					Textname = Textname + L"0";
+				}
+				auto index = currentSelectedItems.GetAt(0);
+				imageSku.ImageFile().RenameAsync(Textname + current_ImageFileType, Windows::Storage::NameCollisionOption::GenerateUniqueName);
+				imageSku.ImageName(Textname);
+				imageSku.ImageFileType(current_ImageFileType);
+				imageSku.ImageNameWithType(Textname + current_ImageFileType);
+				auto curItemIndex = SimplePhotoViewer::find_index(this->m_imageSkus.First(), [index](auto const& item)->bool
 				{
-					return item == curItem;
+					return item == index;
 				});
 				this->m_imageSkus.SetAt(curItemIndex, imageSku);
 				//currentSelectedItems.RemoveAt(deleteCounter++);
 			}
+			if (this->refreshCurrentFolder_async)
+			{
+				if (this->refreshCurrentFolder_async.Status() != Windows::Foundation::AsyncStatus::Completed)
+					this->refreshCurrentFolder_async.Cancel();
+			}
+			this->refreshCurrentFolder_async = this->RefreshCurrentFolder(nullptr);
+			co_await this->refreshCurrentFolder_async;
+
 			currentSelectedItems.Clear();
 		}
 		Windows::Foundation::IAsyncAction OpenFile_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&);
@@ -158,16 +217,36 @@ namespace winrt::SimplePhotoViewer::implementation
 		void DirectoryItem_Collapsed(Microsoft::UI::Xaml::Controls::TreeView const sender, Microsoft::UI::Xaml::Controls::TreeViewCollapsedEventArgs const args);
 		Windows::Foundation::IAsyncAction DirectoryItem_Invoked(Microsoft::UI::Xaml::Controls::TreeView const sender, Microsoft::UI::Xaml::Controls::TreeViewItemInvokedEventArgs const args);
 
-		void SelectionListView_SelectionChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e)
+		void SelectionListView_ItemClicked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e)
 		{
-			
 			auto itemStackPanel = e.ClickedItem().try_as<Windows::UI::Xaml::Controls::StackPanel>();
-
 			if (itemStackPanel)
 			{
-				if (unbox_value<hstring>(itemStackPanel.Tag()) == L"tag1")
-				{
+				if (unbox_value<hstring>(itemStackPanel.Tag()) == L"all_select") {
 					this->ImageGridView().SelectAll();
+				}
+				else if (unbox_value<hstring>(itemStackPanel.Tag()) == L"clear_select") {
+					this->ImageGridView().SelectedItems().Clear();
+				}
+				else if (unbox_value<hstring>(itemStackPanel.Tag()) == L"opposite_select") {
+					for (auto i = 0; i < this->ImageGridView().SelectedItems().Size(); ++i)
+					{
+						auto curItem = this->ImageGridView().SelectedItems().GetAt(i).try_as<SimplePhotoViewer::ImageSku>();
+						curItem.ImageIsSelected(true);
+					}
+					this->ImageGridView().SelectedItems().Clear();
+					for (auto i = 0; i < this->ImageGridView().Items().Size(); ++i)
+					{
+						auto this_item = this->ImageGridView().Items().GetAt(i).try_as<SimplePhotoViewer::ImageSku>();
+						if (!this_item.ImageIsSelected()) {
+							auto is = this_item.ImageIsSelected();
+							this->ImageGridView().SelectedItems().Append(this_item);
+						}
+						else if (this_item.ImageIsSelected())
+						{
+							this_item.ImageIsSelected(false);
+						}
+					}
 				}
 			}
 		}
@@ -205,7 +284,7 @@ namespace winrt::SimplePhotoViewer::implementation
 		Windows::Foundation::IAsyncAction FillTreeNodes(Microsoft::UI::Xaml::Controls::TreeViewNode const node);
 
 		Windows::Foundation::IAsyncAction RefreshCurrentFolder(Windows::Storage::StorageFolder const storageFolder);
-		Windows::Foundation::IAsyncAction CancellationPropagatorAsync();
+		//Windows::Foundation::IAsyncAction CancellationPropagatorAsync();
 
 		//Optimization:
 		Windows::Foundation::IAsyncOperation<SimplePhotoViewer::ImageSku> LoadImageInfoAsync(Windows::Storage::StorageFile file);
@@ -233,7 +312,7 @@ namespace winrt::SimplePhotoViewer::implementation
 
 		Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> m_searchResults{ nullptr };
 
-		bool refreshing{ false };
+		Windows::Foundation::IAsyncAction refreshCurrentFolder_async{ nullptr };
 
 		hstring currentSelectedFolderPathName;
 		hstring m_currentSelectedFolderName;

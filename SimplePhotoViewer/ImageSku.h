@@ -31,6 +31,16 @@ namespace winrt::SimplePhotoViewer::implementation
 		void ImageFile(Windows::Storage::StorageFile const & value); //-
 		void ImageContent(Windows::UI::Xaml::Media::Imaging::BitmapImage const& value);
 
+		//non-observable property:
+		bool ImageIsSelected() const
+		{
+			return this->m_imageIsSelected;
+		}
+		void ImageIsSelected(bool const& IsSelected) //-
+		{
+			this->m_imageIsSelected = IsSelected;
+		}
+
 		void RenderRotation(double const value) 
 		{ 
 			this->m_renderRotation = value; 
@@ -54,6 +64,9 @@ namespace winrt::SimplePhotoViewer::implementation
 		hstring m_imageName;
 		hstring m_imageFileType;
 		hstring m_imageNameWithType;
+
+		//non-observable memeber:
+		bool m_imageIsSelected = false;
 
 		//rendering rotate transform angle:
 		double m_renderRotation = 0.0;

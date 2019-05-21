@@ -73,7 +73,14 @@ namespace winrt::SimplePhotoViewer::implementation
 				FutureAccessList().AddOrReplace(L"PickedFolderToken", folder);
 			this->currentSelectedFolderPathName = folder.Path();
 			this->CurrentSelectedFolder(folder.Name());
-			this->RefreshCurrentFolder(nullptr);
+
+			if (this->refreshCurrentFolder_async)
+			{
+				if (this->refreshCurrentFolder_async.Status() != Windows::Foundation::AsyncStatus::Completed)
+					this->refreshCurrentFolder_async.Cancel();
+			}
+			this->refreshCurrentFolder_async = this->RefreshCurrentFolder(nullptr);
+			co_await this->refreshCurrentFolder_async;
 		}
 	}
 
@@ -231,13 +238,13 @@ namespace winrt::SimplePhotoViewer::implementation
 	}
 	/*Refresh current displaying folder using specified storageFolder*/
 	/*See also:DirectoryItem_Invoked()*/
-	Windows::Foundation::IAsyncAction MainPage::CancellationPropagatorAsync()
+	/*Windows::Foundation::IAsyncAction MainPage::CancellationPropagatorAsync()
 	{
 		auto cancellation_token{ co_await winrt::get_cancellation_token() };
 		auto nested_coroutine{ this->RefreshCurrentFolder(nullptr) };
 		cancellation_token.callback([=] {nested_coroutine.Cancel(); });
 		co_await nested_coroutine;
-	}
+	}*/
 	/*Windows::Foundation::IAsyncAction MainPage::RefreshCurrentFolderCoroutineAsync()
 	{
 		auto cancellation_propagator{ this->CancellationPropagatorAsync() };
@@ -246,8 +253,6 @@ namespace winrt::SimplePhotoViewer::implementation
 
 	Windows::Foundation::IAsyncAction MainPage::RefreshCurrentFolder(Windows::Storage::StorageFolder const storageFolder)
 	{
-		
-
 		this->m_imageSkus.Clear();
 
 		auto defaultFolder = co_await this->LoadDefaultFolder();
@@ -366,8 +371,17 @@ namespace winrt::SimplePhotoViewer::implementation
 		strong_this->currentSelectedFolderPathName = itemFolder.Path();
 		strong_this->CurrentSelectedFolder(itemFolder.Name());
 
-		co_await strong_this->RefreshCurrentFolder(nullptr);
+		if (strong_this->refreshCurrentFolder_async)
+		{
+			if (strong_this->refreshCurrentFolder_async.Status() != Windows::Foundation::AsyncStatus::Completed)
+				strong_this->refreshCurrentFolder_async.Cancel();
+		}
+		
+		co_await 1ms;//hack
+		co_await winrt::resume_foreground(this->DirectoryTreeView().Dispatcher());
 
+		strong_this->refreshCurrentFolder_async = strong_this->RefreshCurrentFolder(nullptr);
+		co_await strong_this->refreshCurrentFolder_async;
 	}
 	
 
@@ -435,6 +449,7 @@ namespace winrt::SimplePhotoViewer::implementation
 		this->CurrentFolderSelectedImageNumber(selectedNum);
 		this->DeleteAppBarButton().IsEnabled(selectedNum ? true : false);
 		this->RenameButton().IsEnabled(selectedNum ? true : false); //-
+		this->CopyAppBarButton().IsEnabled(selectedNum ? true : false);
 		this->nameInput().IsEnabled(selectedNum ? true : false); //-
 	}
 

@@ -18,6 +18,16 @@ namespace winrt::SimplePhotoViewer::implementation
         throw hresult_not_implemented();
     }
 
+    bool ImageSku::ImageIsSelected()
+    {
+        throw hresult_not_implemented();
+    }
+
+    void ImageSku::ImageIsSelected(bool value)
+    {
+        throw hresult_not_implemented();
+    }
+
     Windows::Storage::StorageFile ImageSku::ImageFile()
     {
         throw hresult_not_implemented();

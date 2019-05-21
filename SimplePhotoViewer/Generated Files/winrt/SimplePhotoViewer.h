@@ -148,6 +148,18 @@ template <typename D> void consume_SimplePhotoViewer_IExplorerItemTemplateSelect
     check_hresult(WINRT_SHIM(SimplePhotoViewer::IExplorerItemTemplateSelector)->put_FileTemplate(get_abi(value)));
 }
 
+template <typename D> bool consume_SimplePhotoViewer_IImageSku<D>::ImageIsSelected() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IImageSku)->get_ImageIsSelected(&value));
+    return value;
+}
+
+template <typename D> void consume_SimplePhotoViewer_IImageSku<D>::ImageIsSelected(bool value) const
+{
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IImageSku)->put_ImageIsSelected(value));
+}
+
 template <typename D> Windows::Storage::StorageFile consume_SimplePhotoViewer_IImageSku<D>::ImageFile() const
 {
     Windows::Storage::StorageFile value{ nullptr };
@@ -613,6 +625,30 @@ struct produce<D, SimplePhotoViewer::IExplorerItemTemplateSelector> : produce_ba
 template <typename D>
 struct produce<D, SimplePhotoViewer::IImageSku> : produce_base<D, SimplePhotoViewer::IImageSku>
 {
+    int32_t WINRT_CALL get_ImageIsSelected(bool* value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(ImageIsSelected, WINRT_WRAP(bool));
+            *value = detach_from<bool>(this->shim().ImageIsSelected());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL put_ImageIsSelected(bool value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(ImageIsSelected, WINRT_WRAP(void), bool);
+            this->shim().ImageIsSelected(value);
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
     int32_t WINRT_CALL get_ImageFile(void** value) noexcept final
     {
         try
@@ -1380,6 +1416,31 @@ struct property_SimplePhotoViewer_IImageSku
             }
         };
     };
+    struct ImageIsSelected
+    {
+        struct name { static constexpr std::wstring_view value{ L"ImageIsSelected"sv }; };
+        using property_type = bool;
+        using target_type = winrt::SimplePhotoViewer::IImageSku;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.ImageIsSelected();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.ImageIsSelected(std::forward<Value>(value));
+            }
+        };
+    };
     struct ImageName
     {
         struct name { static constexpr std::wstring_view value{ L"ImageName"sv }; };
@@ -1497,7 +1558,7 @@ struct property_SimplePhotoViewer_IImageSku
             }
         };
     };};
-    struct list { using type = impl::typelist<named::ImageContent, named::ImageFile, named::ImageFileType, named::ImageName, named::ImageNameWithType, named::ImageProperties, named::ImageThumbnail, named::RenderRotation>; };
+    struct list { using type = impl::typelist<named::ImageContent, named::ImageFile, named::ImageFileType, named::ImageIsSelected, named::ImageName, named::ImageNameWithType, named::ImageProperties, named::ImageThumbnail, named::RenderRotation>; };
 };
 
 struct property_SimplePhotoViewer_IMainPage
@@ -2019,6 +2080,31 @@ struct property_SimplePhotoViewer_ImageSku
             }
         };
     };
+    struct ImageIsSelected
+    {
+        struct name { static constexpr std::wstring_view value{ L"ImageIsSelected"sv }; };
+        using property_type = bool;
+        using target_type = winrt::SimplePhotoViewer::ImageSku;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.ImageIsSelected();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.ImageIsSelected(std::forward<Value>(value));
+            }
+        };
+    };
     struct ImageFileType
     {
         struct name { static constexpr std::wstring_view value{ L"ImageFileType"sv }; };
@@ -2111,7 +2197,7 @@ struct property_SimplePhotoViewer_ImageSku
             }
         };
     };};
-    struct list { using type = impl::typelist<named::RenderRotation, named::ImageThumbnail, named::ImageNameWithType, named::ImageName, named::ImageFileType, named::ImageFile, named::ImageContent, named::ImageProperties>; };
+    struct list { using type = impl::typelist<named::RenderRotation, named::ImageThumbnail, named::ImageNameWithType, named::ImageName, named::ImageIsSelected, named::ImageFileType, named::ImageFile, named::ImageContent, named::ImageProperties>; };
 };
 
 struct property_SimplePhotoViewer_MainPage

@@ -235,6 +235,24 @@ namespace winrt::SimplePhotoViewer::implementation
             _nameInput = value;
         }
 
+        ::winrt::Windows::UI::Xaml::Controls::TextBox FirstCode()
+        {
+            return _FirstCode;
+        }
+        void FirstCode(::winrt::Windows::UI::Xaml::Controls::TextBox value)
+        {
+            _FirstCode = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::TextBox DigitNum()
+        {
+            return _DigitNum;
+        }
+        void DigitNum(::winrt::Windows::UI::Xaml::Controls::TextBox value)
+        {
+            _DigitNum = value;
+        }
+
         ::winrt::Windows::UI::Xaml::Controls::Button Rename()
         {
             return _Rename;
@@ -271,15 +289,6 @@ namespace winrt::SimplePhotoViewer::implementation
             _RealFolderPath_Grid = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::Grid FolderPath()
-        {
-            return _FolderPath;
-        }
-        void FolderPath(::winrt::Windows::UI::Xaml::Controls::Grid value)
-        {
-            _FolderPath = value;
-        }
-
         ::winrt::Windows::UI::Xaml::Controls::Button ParentFolderButton()
         {
             return _ParentFolderButton;
@@ -298,7 +307,7 @@ namespace winrt::SimplePhotoViewer::implementation
         struct MainPage_obj2_Bindings;
         struct MainPage_obj6_Bindings;
         struct MainPage_obj8_Bindings;
-        struct MainPage_obj38_Bindings;
+        struct MainPage_obj40_Bindings;
         struct MainPage_obj1_Bindings;
 
         ::winrt::Windows::UI::Xaml::Controls::SplitView _splitView{nullptr};
@@ -324,11 +333,12 @@ namespace winrt::SimplePhotoViewer::implementation
         ::winrt::Windows::UI::Xaml::Controls::AppBarButton _RenameButton{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::AppBarButton _OpenAppBarButton{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::TextBox _nameInput{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::TextBox _FirstCode{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::TextBox _DigitNum{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Button _Rename{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::GridView _ImageGridView{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::AutoSuggestBox _SearchAutoSuggetsBox{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Grid _RealFolderPath_Grid{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Grid _FolderPath{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Button _ParentFolderButton{nullptr};
     };
 }

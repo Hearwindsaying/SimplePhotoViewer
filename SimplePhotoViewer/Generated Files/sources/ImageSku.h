@@ -11,6 +11,8 @@ namespace winrt::SimplePhotoViewer::implementation
         ImageSku(Windows::Storage::FileProperties::ImageProperties const& imageProps, Windows::Storage::StorageFile const& imageFile, hstring const& name, hstring const& type, hstring const& nameWithType);
         ImageSku(hstring const& defaultTipString);
 
+        bool ImageIsSelected();
+        void ImageIsSelected(bool value);
         Windows::Storage::StorageFile ImageFile();
         void ImageFile(Windows::Storage::StorageFile const& value);
         Windows::Storage::FileProperties::ImageProperties ImageProperties();
