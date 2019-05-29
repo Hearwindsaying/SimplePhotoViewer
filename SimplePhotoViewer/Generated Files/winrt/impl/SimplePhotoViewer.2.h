@@ -33,6 +33,47 @@ struct WINRT_EBO BackdropBlurBrush :
     static Windows::UI::Xaml::DependencyProperty BlurAmountProperty();
 };
 
+struct WINRT_EBO BackdropExposureBrush :
+    SimplePhotoViewer::IBackdropExposureBrush,
+    impl::base<BackdropExposureBrush, Windows::UI::Xaml::Media::XamlCompositionBrushBase, Windows::UI::Xaml::Media::Brush, Windows::UI::Xaml::DependencyObject>,
+    impl::require<BackdropExposureBrush, Windows::UI::Composition::IAnimationObject, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::Media::IBrush, Windows::UI::Xaml::Media::IBrushOverrides2, Windows::UI::Xaml::Media::IXamlCompositionBrushBase, Windows::UI::Xaml::Media::IXamlCompositionBrushBaseOverrides, Windows::UI::Xaml::Media::IXamlCompositionBrushBaseProtected>
+{
+    BackdropExposureBrush(std::nullptr_t) noexcept {}
+    BackdropExposureBrush();
+    static Windows::UI::Xaml::DependencyProperty ExposureProperty();
+};
+
+struct WINRT_EBO BackdropSaturationBrush :
+    SimplePhotoViewer::IBackdropSaturationBrush,
+    impl::base<BackdropSaturationBrush, Windows::UI::Xaml::Media::XamlCompositionBrushBase, Windows::UI::Xaml::Media::Brush, Windows::UI::Xaml::DependencyObject>,
+    impl::require<BackdropSaturationBrush, Windows::UI::Composition::IAnimationObject, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::Media::IBrush, Windows::UI::Xaml::Media::IBrushOverrides2, Windows::UI::Xaml::Media::IXamlCompositionBrushBase, Windows::UI::Xaml::Media::IXamlCompositionBrushBaseOverrides, Windows::UI::Xaml::Media::IXamlCompositionBrushBaseProtected>
+{
+    BackdropSaturationBrush(std::nullptr_t) noexcept {}
+    BackdropSaturationBrush();
+    static Windows::UI::Xaml::DependencyProperty SaturationProperty();
+};
+
+struct WINRT_EBO BackdropSepiaBrush :
+    SimplePhotoViewer::IBackdropSepiaBrush,
+    impl::base<BackdropSepiaBrush, Windows::UI::Xaml::Media::XamlCompositionBrushBase, Windows::UI::Xaml::Media::Brush, Windows::UI::Xaml::DependencyObject>,
+    impl::require<BackdropSepiaBrush, Windows::UI::Composition::IAnimationObject, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::Media::IBrush, Windows::UI::Xaml::Media::IBrushOverrides2, Windows::UI::Xaml::Media::IXamlCompositionBrushBase, Windows::UI::Xaml::Media::IXamlCompositionBrushBaseOverrides, Windows::UI::Xaml::Media::IXamlCompositionBrushBaseProtected>
+{
+    BackdropSepiaBrush(std::nullptr_t) noexcept {}
+    BackdropSepiaBrush();
+    static Windows::UI::Xaml::DependencyProperty IntensityProperty();
+};
+
+struct WINRT_EBO BackdropTemperatureAndTintBrush :
+    SimplePhotoViewer::IBackdropTemperatureAndTintBrush,
+    impl::base<BackdropTemperatureAndTintBrush, Windows::UI::Xaml::Media::XamlCompositionBrushBase, Windows::UI::Xaml::Media::Brush, Windows::UI::Xaml::DependencyObject>,
+    impl::require<BackdropTemperatureAndTintBrush, Windows::UI::Composition::IAnimationObject, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::Media::IBrush, Windows::UI::Xaml::Media::IBrushOverrides2, Windows::UI::Xaml::Media::IXamlCompositionBrushBase, Windows::UI::Xaml::Media::IXamlCompositionBrushBaseOverrides, Windows::UI::Xaml::Media::IXamlCompositionBrushBaseProtected>
+{
+    BackdropTemperatureAndTintBrush(std::nullptr_t) noexcept {}
+    BackdropTemperatureAndTintBrush();
+    static Windows::UI::Xaml::DependencyProperty TemperatureProperty();
+    static Windows::UI::Xaml::DependencyProperty TintProperty();
+};
+
 struct WINRT_EBO DetailPage :
     SimplePhotoViewer::IDetailPage,
     impl::base<DetailPage, Windows::UI::Xaml::Controls::Page, Windows::UI::Xaml::Controls::UserControl, Windows::UI::Xaml::Controls::Control, Windows::UI::Xaml::FrameworkElement, Windows::UI::Xaml::UIElement, Windows::UI::Xaml::DependencyObject>,

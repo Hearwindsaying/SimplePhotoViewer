@@ -163,11 +163,11 @@ namespace winrt::SimplePhotoViewer::implementation
             _Deleteme_StackPanel = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::Button SlidePlay()
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton SlidePlay()
         {
             return _SlidePlay;
         }
-        void SlidePlay(::winrt::Windows::UI::Xaml::Controls::Button value)
+        void SlidePlay(::winrt::Windows::UI::Xaml::Controls::AppBarButton value)
         {
             _SlidePlay = value;
         }
@@ -179,15 +179,6 @@ namespace winrt::SimplePhotoViewer::implementation
         void CopyAppBarButton(::winrt::Windows::UI::Xaml::Controls::AppBarButton value)
         {
             _CopyAppBarButton = value;
-        }
-
-        ::winrt::Windows::UI::Xaml::Controls::AppBarButton ShearAppBarButton()
-        {
-            return _ShearAppBarButton;
-        }
-        void ShearAppBarButton(::winrt::Windows::UI::Xaml::Controls::AppBarButton value)
-        {
-            _ShearAppBarButton = value;
         }
 
         ::winrt::Windows::UI::Xaml::Controls::AppBarButton PasteAppBarButton()
@@ -253,13 +244,13 @@ namespace winrt::SimplePhotoViewer::implementation
             _DigitNum = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::Button Rename()
+        ::winrt::Windows::UI::Xaml::Controls::Button Rename2()
         {
-            return _Rename;
+            return _Rename2;
         }
-        void Rename(::winrt::Windows::UI::Xaml::Controls::Button value)
+        void Rename2(::winrt::Windows::UI::Xaml::Controls::Button value)
         {
-            _Rename = value;
+            _Rename2 = value;
         }
 
         ::winrt::Windows::UI::Xaml::Controls::GridView ImageGridView()
@@ -307,7 +298,7 @@ namespace winrt::SimplePhotoViewer::implementation
         struct MainPage_obj2_Bindings;
         struct MainPage_obj6_Bindings;
         struct MainPage_obj8_Bindings;
-        struct MainPage_obj40_Bindings;
+        struct MainPage_obj39_Bindings;
         struct MainPage_obj1_Bindings;
 
         ::winrt::Windows::UI::Xaml::Controls::SplitView _splitView{nullptr};
@@ -325,9 +316,8 @@ namespace winrt::SimplePhotoViewer::implementation
         ::winrt::Windows::UI::Xaml::Controls::Grid _TitleGrid{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Grid _DisplayGrid{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::StackPanel _Deleteme_StackPanel{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _SlidePlay{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::AppBarButton _SlidePlay{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::AppBarButton _CopyAppBarButton{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::AppBarButton _ShearAppBarButton{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::AppBarButton _PasteAppBarButton{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::AppBarButton _DeleteAppBarButton{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::AppBarButton _RenameButton{nullptr};
@@ -335,7 +325,7 @@ namespace winrt::SimplePhotoViewer::implementation
         ::winrt::Windows::UI::Xaml::Controls::TextBox _nameInput{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::TextBox _FirstCode{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::TextBox _DigitNum{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Button _Rename{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::Button _Rename2{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::GridView _ImageGridView{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::AutoSuggestBox _SearchAutoSuggetsBox{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::Grid _RealFolderPath_Grid{nullptr};

@@ -27,6 +27,18 @@
     <Midl Include="PageNavigationParameter.idl">
       <Filter>App</Filter>
     </Midl>
+    <Midl Include="BackdropExposureBrush.idl">
+      <Filter>CompositionBrush</Filter>
+    </Midl>
+    <Midl Include="BackdropSaturationBrush.idl">
+      <Filter>CompositionBrush</Filter>
+    </Midl>
+    <Midl Include="BackdropSepiaBrush.idl">
+      <Filter>CompositionBrush</Filter>
+    </Midl>
+    <Midl Include="BackdropTemperatureAndTintBrush.idl">
+      <Filter>CompositionBrush</Filter>
+    </Midl>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -53,6 +65,18 @@
     <ClCompile Include="BackdropBlurBrush.cpp">
       <Filter>CompositionBrush</Filter>
     </ClCompile>
+    <ClCompile Include="BackdropExposureBrush.cpp">
+      <Filter>CompositionBrush</Filter>
+    </ClCompile>
+    <ClCompile Include="BackdropSaturationBrush.cpp">
+      <Filter>CompositionBrush</Filter>
+    </ClCompile>
+    <ClCompile Include="BackdropSepiaBrush.cpp">
+      <Filter>CompositionBrush</Filter>
+    </ClCompile>
+    <ClCompile Include="BackdropTemperatureAndTintBrush.cpp">
+      <Filter>CompositionBrush</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -77,6 +101,18 @@
       <Filter>App</Filter>
     </ClInclude>
     <ClInclude Include="BackdropBlurBrush.h">
+      <Filter>CompositionBrush</Filter>
+    </ClInclude>
+    <ClInclude Include="BackdropExposureBrush.h">
+      <Filter>CompositionBrush</Filter>
+    </ClInclude>
+    <ClInclude Include="BackdropSaturationBrush.h">
+      <Filter>CompositionBrush</Filter>
+    </ClInclude>
+    <ClInclude Include="BackdropSepiaBrush.h">
+      <Filter>CompositionBrush</Filter>
+    </ClInclude>
+    <ClInclude Include="BackdropTemperatureAndTintBrush.h">
       <Filter>CompositionBrush</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,0 +1,12 @@
+namespace SimplePhotoViewer
+{
+	[default_interface]
+	runtimeclass BackdropTemperatureAndTintBrush : Windows.UI.Xaml.Media.XamlCompositionBrushBase
+	{
+		BackdropTemperatureAndTintBrush();
+		static Windows.UI.Xaml.DependencyProperty TemperatureProperty{ get; };
+		static Windows.UI.Xaml.DependencyProperty TintProperty{ get; };
+		Double Temperature;
+		Double Tint;
+	}
+}

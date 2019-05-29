@@ -149,19 +149,6 @@ namespace winrt::SimplePhotoViewer::implementation
         case 12:
             {
                 auto targetElement = target.as<::winrt::Windows::UI::Xaml::Controls::AppBarButton>();
-                this->InformationAppBarButton(targetElement);
-                auto weakThis = ::winrt::make_weak<class_type>(*this);
-                targetElement.Click([weakThis](::winrt::Windows::Foundation::IInspectable const& p0, ::winrt::Windows::UI::Xaml::RoutedEventArgs const& p1){
-                    if (auto t = weakThis.get())
-                    {
-                        ::winrt::get_self<D>(t)->InformationAppBarButton_ClickHandler(p0, p1);
-                    }
-                });
-            }
-            break;
-        case 13:
-            {
-                auto targetElement = target.as<::winrt::Windows::UI::Xaml::Controls::AppBarButton>();
                 this->SaveAppBarButton(targetElement);
                 auto weakThis = ::winrt::make_weak<class_type>(*this);
                 targetElement.Click([weakThis](::winrt::Windows::Foundation::IInspectable const& p0, ::winrt::Windows::UI::Xaml::RoutedEventArgs const& p1){
@@ -172,7 +159,162 @@ namespace winrt::SimplePhotoViewer::implementation
                 });
             }
             break;
+        case 13:
+            {
+                auto targetElement = target.as<::winrt::Windows::UI::Xaml::Controls::Slider>();
+                auto weakThis = ::winrt::make_weak<class_type>(*this);
+                targetElement.ValueChanged([weakThis](::winrt::Windows::Foundation::IInspectable const& p0, ::winrt::Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs const& p1){
+                    if (auto t = weakThis.get())
+                    {
+                        ::winrt::get_self<D>(t)->TintSlider_ValueChanged(p0, p1);
+                    }
+                });
+            }
+            break;
         case 14:
+            {
+                auto targetElement = target.as<::winrt::Windows::UI::Xaml::Controls::CheckBox>();
+                this->TaTCheckBox2(targetElement);
+                auto weakThis = ::winrt::make_weak<class_type>(*this);
+                targetElement.Checked([weakThis](::winrt::Windows::Foundation::IInspectable const& p0, ::winrt::Windows::UI::Xaml::RoutedEventArgs const& p1){
+                    if (auto t = weakThis.get())
+                    {
+                        ::winrt::get_self<D>(t)->Checkbox_Checked(p0, p1);
+                    }
+                });
+                targetElement.Unchecked([weakThis](::winrt::Windows::Foundation::IInspectable const& p0, ::winrt::Windows::UI::Xaml::RoutedEventArgs const& p1){
+                    if (auto t = weakThis.get())
+                    {
+                        ::winrt::get_self<D>(t)->Checkbox_UnChecked(p0, p1);
+                    }
+                });
+            }
+            break;
+        case 15:
+            {
+                auto targetElement = target.as<::winrt::Windows::UI::Xaml::Controls::Slider>();
+                auto weakThis = ::winrt::make_weak<class_type>(*this);
+                targetElement.ValueChanged([weakThis](::winrt::Windows::Foundation::IInspectable const& p0, ::winrt::Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs const& p1){
+                    if (auto t = weakThis.get())
+                    {
+                        ::winrt::get_self<D>(t)->TemperatureSlider_ValueChanged(p0, p1);
+                    }
+                });
+            }
+            break;
+        case 16:
+            {
+                auto targetElement = target.as<::winrt::Windows::UI::Xaml::Controls::CheckBox>();
+                this->TaTCheckBox(targetElement);
+                auto weakThis = ::winrt::make_weak<class_type>(*this);
+                targetElement.Checked([weakThis](::winrt::Windows::Foundation::IInspectable const& p0, ::winrt::Windows::UI::Xaml::RoutedEventArgs const& p1){
+                    if (auto t = weakThis.get())
+                    {
+                        ::winrt::get_self<D>(t)->Checkbox_Checked(p0, p1);
+                    }
+                });
+                targetElement.Unchecked([weakThis](::winrt::Windows::Foundation::IInspectable const& p0, ::winrt::Windows::UI::Xaml::RoutedEventArgs const& p1){
+                    if (auto t = weakThis.get())
+                    {
+                        ::winrt::get_self<D>(t)->Checkbox_UnChecked(p0, p1);
+                    }
+                });
+            }
+            break;
+        case 17:
+            {
+                auto targetElement = target.as<::winrt::Windows::UI::Xaml::Controls::Slider>();
+                auto weakThis = ::winrt::make_weak<class_type>(*this);
+                targetElement.ValueChanged([weakThis](::winrt::Windows::Foundation::IInspectable const& p0, ::winrt::Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs const& p1){
+                    if (auto t = weakThis.get())
+                    {
+                        ::winrt::get_self<D>(t)->SepiaIntensitySlider_ValueChanged(p0, p1);
+                    }
+                });
+            }
+            break;
+        case 18:
+            {
+                auto targetElement = target.as<::winrt::Windows::UI::Xaml::Controls::CheckBox>();
+                this->SepiaCheckBox(targetElement);
+                auto weakThis = ::winrt::make_weak<class_type>(*this);
+                targetElement.Checked([weakThis](::winrt::Windows::Foundation::IInspectable const& p0, ::winrt::Windows::UI::Xaml::RoutedEventArgs const& p1){
+                    if (auto t = weakThis.get())
+                    {
+                        ::winrt::get_self<D>(t)->Checkbox_Checked(p0, p1);
+                    }
+                });
+                targetElement.Unchecked([weakThis](::winrt::Windows::Foundation::IInspectable const& p0, ::winrt::Windows::UI::Xaml::RoutedEventArgs const& p1){
+                    if (auto t = weakThis.get())
+                    {
+                        ::winrt::get_self<D>(t)->Checkbox_UnChecked(p0, p1);
+                    }
+                });
+            }
+            break;
+        case 19:
+            {
+                auto targetElement = target.as<::winrt::Windows::UI::Xaml::Controls::Slider>();
+                auto weakThis = ::winrt::make_weak<class_type>(*this);
+                targetElement.ValueChanged([weakThis](::winrt::Windows::Foundation::IInspectable const& p0, ::winrt::Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs const& p1){
+                    if (auto t = weakThis.get())
+                    {
+                        ::winrt::get_self<D>(t)->SaturationSlider_ValueChanged(p0, p1);
+                    }
+                });
+            }
+            break;
+        case 20:
+            {
+                auto targetElement = target.as<::winrt::Windows::UI::Xaml::Controls::CheckBox>();
+                this->SaturationCheckBox(targetElement);
+                auto weakThis = ::winrt::make_weak<class_type>(*this);
+                targetElement.Checked([weakThis](::winrt::Windows::Foundation::IInspectable const& p0, ::winrt::Windows::UI::Xaml::RoutedEventArgs const& p1){
+                    if (auto t = weakThis.get())
+                    {
+                        ::winrt::get_self<D>(t)->Checkbox_Checked(p0, p1);
+                    }
+                });
+                targetElement.Unchecked([weakThis](::winrt::Windows::Foundation::IInspectable const& p0, ::winrt::Windows::UI::Xaml::RoutedEventArgs const& p1){
+                    if (auto t = weakThis.get())
+                    {
+                        ::winrt::get_self<D>(t)->Checkbox_UnChecked(p0, p1);
+                    }
+                });
+            }
+            break;
+        case 21:
+            {
+                auto targetElement = target.as<::winrt::Windows::UI::Xaml::Controls::Slider>();
+                auto weakThis = ::winrt::make_weak<class_type>(*this);
+                targetElement.ValueChanged([weakThis](::winrt::Windows::Foundation::IInspectable const& p0, ::winrt::Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs const& p1){
+                    if (auto t = weakThis.get())
+                    {
+                        ::winrt::get_self<D>(t)->ExposureSlider_ValueChanged(p0, p1);
+                    }
+                });
+            }
+            break;
+        case 22:
+            {
+                auto targetElement = target.as<::winrt::Windows::UI::Xaml::Controls::CheckBox>();
+                this->ExposureCheckBox(targetElement);
+                auto weakThis = ::winrt::make_weak<class_type>(*this);
+                targetElement.Checked([weakThis](::winrt::Windows::Foundation::IInspectable const& p0, ::winrt::Windows::UI::Xaml::RoutedEventArgs const& p1){
+                    if (auto t = weakThis.get())
+                    {
+                        ::winrt::get_self<D>(t)->Checkbox_Checked(p0, p1);
+                    }
+                });
+                targetElement.Unchecked([weakThis](::winrt::Windows::Foundation::IInspectable const& p0, ::winrt::Windows::UI::Xaml::RoutedEventArgs const& p1){
+                    if (auto t = weakThis.get())
+                    {
+                        ::winrt::get_self<D>(t)->Checkbox_UnChecked(p0, p1);
+                    }
+                });
+            }
+            break;
+        case 23:
             {
                 auto targetElement = target.as<::winrt::Windows::UI::Xaml::Controls::Slider>();
                 auto weakThis = ::winrt::make_weak<class_type>(*this);
@@ -184,43 +326,128 @@ namespace winrt::SimplePhotoViewer::implementation
                 });
             }
             break;
-        case 15:
+        case 24:
+            {
+                auto targetElement = target.as<::winrt::Windows::UI::Xaml::Controls::CheckBox>();
+                this->BlurCheckBox(targetElement);
+                auto weakThis = ::winrt::make_weak<class_type>(*this);
+                targetElement.Checked([weakThis](::winrt::Windows::Foundation::IInspectable const& p0, ::winrt::Windows::UI::Xaml::RoutedEventArgs const& p1){
+                    if (auto t = weakThis.get())
+                    {
+                        ::winrt::get_self<D>(t)->Checkbox_Checked(p0, p1);
+                    }
+                });
+                targetElement.Unchecked([weakThis](::winrt::Windows::Foundation::IInspectable const& p0, ::winrt::Windows::UI::Xaml::RoutedEventArgs const& p1){
+                    if (auto t = weakThis.get())
+                    {
+                        ::winrt::get_self<D>(t)->Checkbox_UnChecked(p0, p1);
+                    }
+                });
+            }
+            break;
+        case 25:
             {
                 auto targetElement = target.as<::winrt::Windows::UI::Xaml::Controls::ScrollViewer>();
                 this->FlipViewScrollViewer(targetElement);
             }
             break;
-        case 16:
+        case 26:
             {
                 auto targetElement = target.as<::winrt::Windows::UI::Xaml::Shapes::Rectangle>();
                 this->rtg(targetElement);
             }
             break;
-        case 17:
+        case 27:
             {
-                auto targetElement = target.as<::winrt::Windows::UI::Xaml::Controls::Image>();
-                this->testImage(targetElement);
+                auto targetElement = target.as<::winrt::Windows::UI::Xaml::Shapes::Rectangle>();
+                this->rtgexp(targetElement);
             }
             break;
-        case 18:
+        case 28:
+            {
+                auto targetElement = target.as<::winrt::Windows::UI::Xaml::Shapes::Rectangle>();
+                this->rtgsat(targetElement);
+            }
+            break;
+        case 29:
+            {
+                auto targetElement = target.as<::winrt::Windows::UI::Xaml::Shapes::Rectangle>();
+                this->rtgsep(targetElement);
+            }
+            break;
+        case 30:
+            {
+                auto targetElement = target.as<::winrt::Windows::UI::Xaml::Shapes::Rectangle>();
+                this->rtgtem(targetElement);
+            }
+            break;
+        case 31:
+            {
+                auto targetElement = target.as<::winrt::Windows::UI::Xaml::Shapes::Rectangle>();
+                this->test(targetElement);
+            }
+            break;
+        case 32:
+            {
+                auto targetElement = target.as<::winrt::Windows::UI::Xaml::Media::ImageBrush>();
+                this->testBrush(targetElement);
+            }
+            break;
+        case 33:
+            {
+                auto targetElement = target.as<::winrt::SimplePhotoViewer::BackdropTemperatureAndTintBrush>();
+                this->bshtemp(targetElement);
+            }
+            break;
+        case 34:
+            {
+                auto targetElement = target.as<::winrt::SimplePhotoViewer::BackdropSepiaBrush>();
+                this->bshsep(targetElement);
+            }
+            break;
+        case 35:
+            {
+                auto targetElement = target.as<::winrt::SimplePhotoViewer::BackdropSaturationBrush>();
+                this->bshsat(targetElement);
+            }
+            break;
+        case 36:
+            {
+                auto targetElement = target.as<::winrt::SimplePhotoViewer::BackdropExposureBrush>();
+                this->bshexp(targetElement);
+            }
+            break;
+        case 37:
             {
                 auto targetElement = target.as<::winrt::SimplePhotoViewer::BackdropBlurBrush>();
                 this->bsh(targetElement);
             }
             break;
-        case 19:
+        case 38:
             {
                 auto targetElement = target.as<::winrt::Windows::UI::Xaml::Controls::FlipView>();
                 this->DetailPageFlipView(targetElement);
             }
             break;
-        case 22:
+        case 41:
+            {
+                auto targetElement = target.as<::winrt::Windows::UI::Xaml::Controls::VirtualizingStackPanel>();
+                auto weakThis = ::winrt::make_weak<class_type>(*this);
+                targetElement.CleanUpVirtualizedItemEvent([weakThis](::winrt::Windows::Foundation::IInspectable const& p0, ::winrt::Windows::UI::Xaml::Controls::CleanUpVirtualizedItemEventArgs const& p1){
+                    if (auto t = weakThis.get())
+                    {
+                        ::winrt::get_self<D>(t)->FlipView_CleanUpVirtualizedItem(p0, p1);
+                    }
+                });
+            }
+            break;
+        case 42:
             {
                 auto targetElement = target.as<::winrt::Windows::UI::Xaml::Controls::ScrollViewer>();
                 this->ThumbnailScrollViewer(targetElement);
             }
             break;
-        case 23:
+        case 43:
             {
                 auto targetElement = target.as<::winrt::Windows::UI::Xaml::Controls::ListView>();
                 this->ThumbnailListView(targetElement);
@@ -231,15 +458,21 @@ namespace winrt::SimplePhotoViewer::implementation
                         ::winrt::get_self<D>(t)->ImageGridView_ItemClick(p0, p1);
                     }
                 });
+                targetElement.ContainerContentChanging([weakThis](::winrt::Windows::UI::Xaml::Controls::ListViewBase const& p0, ::winrt::Windows::UI::Xaml::Controls::ContainerContentChangingEventArgs const& p1){
+                    if (auto t = weakThis.get())
+                    {
+                        ::winrt::get_self<D>(t)->ThumbnailListView_OnContainerContentChanging(p0, p1);
+                    }
+                });
             }
             break;
-        case 25:
+        case 45:
             {
                 auto targetElement = target.as<::winrt::Windows::UI::Xaml::Controls::Grid>();
                 this->FolderPath(targetElement);
             }
             break;
-        case 26:
+        case 46:
             {
                 auto targetElement = target.as<::winrt::Windows::UI::Xaml::Controls::AppBarButton>();
                 this->Thumbnail(targetElement);
@@ -284,26 +517,26 @@ namespace winrt::SimplePhotoViewer::implementation
                     element1.Loading({&*bindings, &::winrt::SimplePhotoViewer::implementation::XamlBindings::Loading});
                 }
                 break;
-            case 20: // DetailPage.xaml line 145
+            case 39: // DetailPage.xaml line 147
                 {
-                    auto element20 = target.as<::winrt::Windows::UI::Xaml::Controls::Image>();
-                    auto objBindings = std::make_unique<DetailPage_obj20_Bindings>();
-                    objBindings->SetDataRoot(element20.DataContext());
+                    auto element39 = target.as<::winrt::Windows::UI::Xaml::Controls::Image>();
+                    auto objBindings = std::make_unique<DetailPage_obj39_Bindings>();
+                    objBindings->SetDataRoot(element39.DataContext());
                     bindings = ::winrt::make_self<::winrt::SimplePhotoViewer::implementation::XamlBindings>(std::move(objBindings));
-                    bindings->SubscribeForDataContextChanged(element20);
-                    DataTemplate::SetExtensionInstance(element20, bindings.as<::winrt::Windows::UI::Xaml::IDataTemplateExtension>());
-                    XamlBindingHelper::SetDataTemplateComponent(element20, bindings.as<::winrt::Windows::UI::Xaml::Markup::IDataTemplateComponent>());
+                    bindings->SubscribeForDataContextChanged(element39);
+                    DataTemplate::SetExtensionInstance(element39, bindings.as<::winrt::Windows::UI::Xaml::IDataTemplateExtension>());
+                    XamlBindingHelper::SetDataTemplateComponent(element39, bindings.as<::winrt::Windows::UI::Xaml::Markup::IDataTemplateComponent>());
                 }
                 break;
-            case 24: // DetailPage.xaml line 98
+            case 44: // DetailPage.xaml line 99
                 {
-                    auto element24 = target.as<::winrt::Windows::UI::Xaml::Controls::Image>();
-                    auto objBindings = std::make_unique<DetailPage_obj24_Bindings>();
-                    objBindings->SetDataRoot(element24.DataContext());
+                    auto element44 = target.as<::winrt::Windows::UI::Xaml::Controls::Image>();
+                    auto objBindings = std::make_unique<DetailPage_obj44_Bindings>();
+                    objBindings->SetDataRoot(element44.DataContext());
                     bindings = ::winrt::make_self<::winrt::SimplePhotoViewer::implementation::XamlBindings>(std::move(objBindings));
-                    bindings->SubscribeForDataContextChanged(element24);
-                    DataTemplate::SetExtensionInstance(element24, bindings.as<::winrt::Windows::UI::Xaml::IDataTemplateExtension>());
-                    XamlBindingHelper::SetDataTemplateComponent(element24, bindings.as<::winrt::Windows::UI::Xaml::Markup::IDataTemplateComponent>());
+                    bindings->SubscribeForDataContextChanged(element44);
+                    DataTemplate::SetExtensionInstance(element44, bindings.as<::winrt::Windows::UI::Xaml::IDataTemplateExtension>());
+                    XamlBindingHelper::SetDataTemplateComponent(element44, bindings.as<::winrt::Windows::UI::Xaml::Markup::IDataTemplateComponent>());
                 }
                 break;
         }
@@ -311,16 +544,16 @@ namespace winrt::SimplePhotoViewer::implementation
     }
 
     template <typename D, typename ... I>
-    struct DetailPageT<D, I...>::DetailPage_obj20_Bindings
+    struct DetailPageT<D, I...>::DetailPage_obj39_Bindings
         : public ::winrt::SimplePhotoViewer::implementation::ReferenceTypeXamlBindings<::winrt::SimplePhotoViewer::ImageSku, ::winrt::SimplePhotoViewer::implementation::XamlBindingTrackingBase>
         , public ::winrt::SimplePhotoViewer::implementation::IXamlBindingTracking
 {
-        DetailPage_obj20_Bindings()
+        DetailPage_obj39_Bindings()
         {
             InitializeTracking(this);
         }
 
-        ~DetailPage_obj20_Bindings()
+        ~DetailPage_obj39_Bindings()
         {
             ReleaseAllListeners();
         }
@@ -329,16 +562,16 @@ namespace winrt::SimplePhotoViewer::implementation
         {
             switch(connectionId)
             {
-            case 20: // DetailPage.xaml line 145
+            case 39: // DetailPage.xaml line 147
                 {
                     auto targetElement = target.as<::winrt::Windows::UI::Xaml::Controls::Image>();
-                    obj20 = targetElement;
+                    obj39 = targetElement;
                 }
                 break;
-            case 21: // DetailPage.xaml line 149
+            case 40: // DetailPage.xaml line 151
                 {
                     auto targetElement = target.as<::winrt::Windows::UI::Xaml::Media::RotateTransform>();
-                    obj21 = targetElement;
+                    obj40 = targetElement;
                 }
                 break;
             }
@@ -365,7 +598,7 @@ namespace winrt::SimplePhotoViewer::implementation
                     SetDataRoot(item);
                     if (_dataContextChangedToken.value != 0)
                     {
-                        this->obj20.get().DataContextChanged(_dataContextChangedToken);
+                        this->obj39.get().DataContextChanged(_dataContextChangedToken);
                         _dataContextChangedToken.value = 0;
                     }
                     _isInitialized = true;
@@ -378,8 +611,8 @@ namespace winrt::SimplePhotoViewer::implementation
 
     private:
         // Fields for each control that has bindings.
-        ::winrt::weak_ref<::winrt::Windows::UI::Xaml::Controls::Image> obj20;
-        ::winrt::Windows::UI::Xaml::Media::RotateTransform obj21 { nullptr };
+        ::winrt::weak_ref<::winrt::Windows::UI::Xaml::Controls::Image> obj39;
+        ::winrt::Windows::UI::Xaml::Media::RotateTransform obj40 { nullptr };
 
         // Fields for binding tracking.
         ::winrt::weak_ref<::winrt::Windows::UI::Xaml::Data::INotifyPropertyChanged> cachePC_;
@@ -404,10 +637,10 @@ namespace winrt::SimplePhotoViewer::implementation
         {
             if((phase & ((1 << 0) | NOT_PHASED | DATA_CHANGED)) != 0)
             {
-                // DetailPage.xaml line 145
-                if (obj20)
+                // DetailPage.xaml line 147
+                if (obj39)
                 {
-                    Set_Windows_UI_Xaml_Controls_Image_Source(this->obj20.get(), obj, std::nullopt);
+                    Set_Windows_UI_Xaml_Controls_Image_Source(this->obj39.get(), obj, std::nullopt);
                 }
             }
         }
@@ -416,8 +649,8 @@ namespace winrt::SimplePhotoViewer::implementation
         {
             if((phase & ((1 << 0) | NOT_PHASED | DATA_CHANGED)) != 0)
             {
-                // DetailPage.xaml line 149
-                Set_Windows_UI_Xaml_Media_RotateTransform_Angle(obj21, obj);
+                // DetailPage.xaml line 151
+                Set_Windows_UI_Xaml_Media_RotateTransform_Angle(obj40, obj);
             }
         }
 
@@ -493,16 +726,16 @@ namespace winrt::SimplePhotoViewer::implementation
     }; 
 
     template <typename D, typename ... I>
-    struct DetailPageT<D, I...>::DetailPage_obj24_Bindings
+    struct DetailPageT<D, I...>::DetailPage_obj44_Bindings
         : public ::winrt::SimplePhotoViewer::implementation::ReferenceTypeXamlBindings<::winrt::SimplePhotoViewer::ImageSku, ::winrt::SimplePhotoViewer::implementation::XamlBindingTrackingBase>
         , public ::winrt::SimplePhotoViewer::implementation::IXamlBindingTracking
 {
-        DetailPage_obj24_Bindings()
+        DetailPage_obj44_Bindings()
         {
             InitializeTracking(this);
         }
 
-        ~DetailPage_obj24_Bindings()
+        ~DetailPage_obj44_Bindings()
         {
             ReleaseAllListeners();
         }
@@ -511,10 +744,10 @@ namespace winrt::SimplePhotoViewer::implementation
         {
             switch(connectionId)
             {
-            case 24: // DetailPage.xaml line 98
+            case 44: // DetailPage.xaml line 99
                 {
                     auto targetElement = target.as<::winrt::Windows::UI::Xaml::Controls::Image>();
-                    obj24 = targetElement;
+                    obj44 = targetElement;
                 }
                 break;
             }
@@ -541,7 +774,7 @@ namespace winrt::SimplePhotoViewer::implementation
                     SetDataRoot(item);
                     if (_dataContextChangedToken.value != 0)
                     {
-                        this->obj24.get().DataContextChanged(_dataContextChangedToken);
+                        this->obj44.get().DataContextChanged(_dataContextChangedToken);
                         _dataContextChangedToken.value = 0;
                     }
                     _isInitialized = true;
@@ -554,7 +787,7 @@ namespace winrt::SimplePhotoViewer::implementation
 
     private:
         // Fields for each control that has bindings.
-        ::winrt::weak_ref<::winrt::Windows::UI::Xaml::Controls::Image> obj24;
+        ::winrt::weak_ref<::winrt::Windows::UI::Xaml::Controls::Image> obj44;
 
         // Fields for binding tracking.
         ::winrt::weak_ref<::winrt::Windows::UI::Xaml::Data::INotifyPropertyChanged> cachePC_;
@@ -578,10 +811,10 @@ namespace winrt::SimplePhotoViewer::implementation
         {
             if((phase & ((1 << 0) | NOT_PHASED | DATA_CHANGED)) != 0)
             {
-                // DetailPage.xaml line 98
-                if (obj24)
+                // DetailPage.xaml line 99
+                if (obj44)
                 {
-                    Set_Windows_UI_Xaml_Controls_Image_Source(this->obj24.get(), obj, std::nullopt);
+                    Set_Windows_UI_Xaml_Controls_Image_Source(this->obj44.get(), obj, std::nullopt);
                 }
             }
         }
@@ -697,16 +930,16 @@ namespace winrt::SimplePhotoViewer::implementation
         {
             switch(connectionId)
             {
-            case 19: // DetailPage.xaml line 135
+            case 38: // DetailPage.xaml line 136
                 {
                     auto targetElement = target.as<::winrt::Windows::UI::Xaml::Controls::FlipView>();
-                    obj19 = targetElement;
+                    obj38 = targetElement;
                 }
                 break;
-            case 23: // DetailPage.xaml line 91
+            case 43: // DetailPage.xaml line 91
                 {
                     auto targetElement = target.as<::winrt::Windows::UI::Xaml::Controls::ListView>();
-                    obj23 = targetElement;
+                    obj43 = targetElement;
                 }
                 break;
             }
@@ -720,8 +953,8 @@ namespace winrt::SimplePhotoViewer::implementation
 
     private:
         // Fields for each control that has bindings.
-        ::winrt::Windows::UI::Xaml::Controls::FlipView obj19 { nullptr };
-        ::winrt::Windows::UI::Xaml::Controls::ListView obj23 { nullptr };
+        ::winrt::Windows::UI::Xaml::Controls::FlipView obj38 { nullptr };
+        ::winrt::Windows::UI::Xaml::Controls::ListView obj43 { nullptr };
 
         // Fields for binding tracking.
         ::winrt::Windows::Foundation::Collections::IObservableVector<::winrt::Windows::Foundation::IInspectable> cacheVC_ImageSkus{nullptr};
@@ -745,10 +978,10 @@ namespace winrt::SimplePhotoViewer::implementation
             _bindingsTracking->UpdateVectorChangedListener_Object(obj, cacheVC_ImageSkus, tokenVC_ImageSkus);
             if((phase & ((1 << 0) | NOT_PHASED | DATA_CHANGED)) != 0)
             {
-                // DetailPage.xaml line 135
-                Set_Windows_UI_Xaml_Controls_ItemsControl_ItemsSource(obj19, obj, std::nullopt);
+                // DetailPage.xaml line 136
+                Set_Windows_UI_Xaml_Controls_ItemsControl_ItemsSource(obj38, obj, std::nullopt);
                 // DetailPage.xaml line 91
-                Set_Windows_UI_Xaml_Controls_ItemsControl_ItemsSource(obj23, obj, std::nullopt);
+                Set_Windows_UI_Xaml_Controls_ItemsControl_ItemsSource(obj43, obj, std::nullopt);
             }
         }
 

@@ -43,17 +43,19 @@ namespace winrt::SimplePhotoViewer::implementation
 			return this->m_currentFolderSelectedImageNumber;
 		}
 
-		void SplitViewButton_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) {}
+		void SplitViewButton_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) 
+		{ this->splitView().IsPaneOpen(!this->splitView().IsPaneOpen()); }
+
 
 		Windows::Foundation::IAsyncAction ParentFolderButton_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) 
 		{
 			Windows::Storage::StorageFolder targetFolder = co_await this->LoadDefaultFolder();
 			auto parentFolder = co_await targetFolder.GetParentAsync();
-			if (parentFolder) 
+			if (parentFolder)
 			{
 				Windows::Storage::StorageFolder parentfolder = co_await Windows::Storage::StorageFolder::GetFolderFromPathAsync(parentFolder.Path());
 				this->currentSelectedFolderPathName = parentfolder.Path();
-				this->CurrentSelectedFolder(parentfolder.Path());
+				this->CurrentSelectedFolder(parentfolder.Name());
 			}
 
 			if (this->refreshCurrentFolder_async)
@@ -87,10 +89,10 @@ namespace winrt::SimplePhotoViewer::implementation
 				this->m_bufferImageSkus.Append(imageSku);
 			}
 		}
-		void Shear_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&) {}
+
 		Windows::Foundation::IAsyncAction Paste_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&)
 		{
-			Windows::UI::Xaml::Controls::ContentDialog contentDialog{};
+			/*Windows::UI::Xaml::Controls::ContentDialog contentDialog{};
 			contentDialog.PrimaryButtonText(L"粘贴");
 			contentDialog.CloseButtonText(L"取消");
 			contentDialog.DefaultButton(Windows::UI::Xaml::Controls::ContentDialogButton::Primary);
@@ -98,20 +100,18 @@ namespace winrt::SimplePhotoViewer::implementation
 			Windows::UI::Xaml::Controls::ContentDialogResult contentDialogResult = co_await contentDialog.ShowAsync();
 			if (contentDialogResult == Windows::UI::Xaml::Controls::ContentDialogResult::None)
 				return;
-			WINRT_ASSERT(contentDialogResult == Windows::UI::Xaml::Controls::ContentDialogResult::Primary);
+			WINRT_ASSERT(contentDialogResult == Windows::UI::Xaml::Controls::ContentDialogResult::Primary);*/
 
 			auto currentSelectedItems = this->ImageGridView().SelectedItems();
-
 			Windows::Storage::StorageFolder targetFolder = co_await this->LoadDefaultFolder();
 			for (int i = 0; i < this->m_bufferImageSkus.Size(); i++) {
 				auto imageSku = this->m_bufferImageSkus.GetAt(i).try_as<SimplePhotoViewer::ImageSku>();
-				winrt::Windows::Storage::IStorageFolder filefold;
 				hstring copyFileName = imageSku.ImageNameWithType();
 				imageSku.ImageFile().CopyAsync(targetFolder, copyFileName, Windows::Storage::NameCollisionOption::GenerateUniqueName);
 				this->m_imageSkus.Append(imageSku);
 
 			}
-			
+
 			if (this->refreshCurrentFolder_async)
 			{
 				if (this->refreshCurrentFolder_async.Status() != Windows::Foundation::AsyncStatus::Completed)
@@ -321,6 +321,7 @@ namespace winrt::SimplePhotoViewer::implementation
 
 		event<Windows::UI::Xaml::Data::PropertyChangedEventHandler> m_propertyChanged;
 
+		/*private members for implementation of "Drag Canvs Selection"*/
 		bool isLeftMouseButtonDownOnWindow = false;
 		bool isDraggingSelectionRect = false;
 		Windows::UI::Input::PointerPoint origMouseDownPoint{ nullptr };

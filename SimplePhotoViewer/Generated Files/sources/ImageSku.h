@@ -13,6 +13,8 @@ namespace winrt::SimplePhotoViewer::implementation
 
         bool ImageIsSelected();
         void ImageIsSelected(bool value);
+        bool IsVirtualizing();
+        void IsVirtualizing(bool value);
         Windows::Storage::StorageFile ImageFile();
         void ImageFile(Windows::Storage::StorageFile const& value);
         Windows::Storage::FileProperties::ImageProperties ImageProperties();

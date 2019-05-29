@@ -41,6 +41,101 @@ template <typename D> Windows::UI::Xaml::DependencyProperty consume_SimplePhotoV
     return value;
 }
 
+template <typename D> double consume_SimplePhotoViewer_IBackdropExposureBrush<D>::Exposure() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IBackdropExposureBrush)->get_Exposure(&value));
+    return value;
+}
+
+template <typename D> void consume_SimplePhotoViewer_IBackdropExposureBrush<D>::Exposure(double value) const
+{
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IBackdropExposureBrush)->put_Exposure(value));
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_SimplePhotoViewer_IBackdropExposureBrushStatics<D>::ExposureProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IBackdropExposureBrushStatics)->get_ExposureProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> double consume_SimplePhotoViewer_IBackdropSaturationBrush<D>::Saturation() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IBackdropSaturationBrush)->get_Saturation(&value));
+    return value;
+}
+
+template <typename D> void consume_SimplePhotoViewer_IBackdropSaturationBrush<D>::Saturation(double value) const
+{
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IBackdropSaturationBrush)->put_Saturation(value));
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_SimplePhotoViewer_IBackdropSaturationBrushStatics<D>::SaturationProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IBackdropSaturationBrushStatics)->get_SaturationProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> double consume_SimplePhotoViewer_IBackdropSepiaBrush<D>::Intensity() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IBackdropSepiaBrush)->get_Intensity(&value));
+    return value;
+}
+
+template <typename D> void consume_SimplePhotoViewer_IBackdropSepiaBrush<D>::Intensity(double value) const
+{
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IBackdropSepiaBrush)->put_Intensity(value));
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_SimplePhotoViewer_IBackdropSepiaBrushStatics<D>::IntensityProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IBackdropSepiaBrushStatics)->get_IntensityProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> double consume_SimplePhotoViewer_IBackdropTemperatureAndTintBrush<D>::Temperature() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IBackdropTemperatureAndTintBrush)->get_Temperature(&value));
+    return value;
+}
+
+template <typename D> void consume_SimplePhotoViewer_IBackdropTemperatureAndTintBrush<D>::Temperature(double value) const
+{
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IBackdropTemperatureAndTintBrush)->put_Temperature(value));
+}
+
+template <typename D> double consume_SimplePhotoViewer_IBackdropTemperatureAndTintBrush<D>::Tint() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IBackdropTemperatureAndTintBrush)->get_Tint(&value));
+    return value;
+}
+
+template <typename D> void consume_SimplePhotoViewer_IBackdropTemperatureAndTintBrush<D>::Tint(double value) const
+{
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IBackdropTemperatureAndTintBrush)->put_Tint(value));
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_SimplePhotoViewer_IBackdropTemperatureAndTintBrushStatics<D>::TemperatureProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IBackdropTemperatureAndTintBrushStatics)->get_TemperatureProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_SimplePhotoViewer_IBackdropTemperatureAndTintBrushStatics<D>::TintProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IBackdropTemperatureAndTintBrushStatics)->get_TintProperty(put_abi(value)));
+    return value;
+}
+
 template <typename D> Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> consume_SimplePhotoViewer_IDetailPage<D>::ImageSkus() const
 {
     Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> value{ nullptr };
@@ -158,6 +253,18 @@ template <typename D> bool consume_SimplePhotoViewer_IImageSku<D>::ImageIsSelect
 template <typename D> void consume_SimplePhotoViewer_IImageSku<D>::ImageIsSelected(bool value) const
 {
     check_hresult(WINRT_SHIM(SimplePhotoViewer::IImageSku)->put_ImageIsSelected(value));
+}
+
+template <typename D> bool consume_SimplePhotoViewer_IImageSku<D>::IsVirtualizing() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IImageSku)->get_IsVirtualizing(&value));
+    return value;
+}
+
+template <typename D> void consume_SimplePhotoViewer_IImageSku<D>::IsVirtualizing(bool value) const
+{
+    check_hresult(WINRT_SHIM(SimplePhotoViewer::IImageSku)->put_IsVirtualizing(value));
 }
 
 template <typename D> Windows::Storage::StorageFile consume_SimplePhotoViewer_IImageSku<D>::ImageFile() const
@@ -386,6 +493,223 @@ struct produce<D, SimplePhotoViewer::IBackdropBlurBrushStatics> : produce_base<D
             typename D::abi_guard guard(this->shim());
             WINRT_ASSERT_DECLARATION(BlurAmountProperty, WINRT_WRAP(Windows::UI::Xaml::DependencyProperty));
             *value = detach_from<Windows::UI::Xaml::DependencyProperty>(this->shim().BlurAmountProperty());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+};
+
+template <typename D>
+struct produce<D, SimplePhotoViewer::IBackdropExposureBrush> : produce_base<D, SimplePhotoViewer::IBackdropExposureBrush>
+{
+    int32_t WINRT_CALL get_Exposure(double* value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(Exposure, WINRT_WRAP(double));
+            *value = detach_from<double>(this->shim().Exposure());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL put_Exposure(double value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(Exposure, WINRT_WRAP(void), double);
+            this->shim().Exposure(value);
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+};
+
+template <typename D>
+struct produce<D, SimplePhotoViewer::IBackdropExposureBrushStatics> : produce_base<D, SimplePhotoViewer::IBackdropExposureBrushStatics>
+{
+    int32_t WINRT_CALL get_ExposureProperty(void** value) noexcept final
+    {
+        try
+        {
+            *value = nullptr;
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(ExposureProperty, WINRT_WRAP(Windows::UI::Xaml::DependencyProperty));
+            *value = detach_from<Windows::UI::Xaml::DependencyProperty>(this->shim().ExposureProperty());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+};
+
+template <typename D>
+struct produce<D, SimplePhotoViewer::IBackdropSaturationBrush> : produce_base<D, SimplePhotoViewer::IBackdropSaturationBrush>
+{
+    int32_t WINRT_CALL get_Saturation(double* value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(Saturation, WINRT_WRAP(double));
+            *value = detach_from<double>(this->shim().Saturation());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL put_Saturation(double value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(Saturation, WINRT_WRAP(void), double);
+            this->shim().Saturation(value);
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+};
+
+template <typename D>
+struct produce<D, SimplePhotoViewer::IBackdropSaturationBrushStatics> : produce_base<D, SimplePhotoViewer::IBackdropSaturationBrushStatics>
+{
+    int32_t WINRT_CALL get_SaturationProperty(void** value) noexcept final
+    {
+        try
+        {
+            *value = nullptr;
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(SaturationProperty, WINRT_WRAP(Windows::UI::Xaml::DependencyProperty));
+            *value = detach_from<Windows::UI::Xaml::DependencyProperty>(this->shim().SaturationProperty());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+};
+
+template <typename D>
+struct produce<D, SimplePhotoViewer::IBackdropSepiaBrush> : produce_base<D, SimplePhotoViewer::IBackdropSepiaBrush>
+{
+    int32_t WINRT_CALL get_Intensity(double* value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(Intensity, WINRT_WRAP(double));
+            *value = detach_from<double>(this->shim().Intensity());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL put_Intensity(double value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(Intensity, WINRT_WRAP(void), double);
+            this->shim().Intensity(value);
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+};
+
+template <typename D>
+struct produce<D, SimplePhotoViewer::IBackdropSepiaBrushStatics> : produce_base<D, SimplePhotoViewer::IBackdropSepiaBrushStatics>
+{
+    int32_t WINRT_CALL get_IntensityProperty(void** value) noexcept final
+    {
+        try
+        {
+            *value = nullptr;
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(IntensityProperty, WINRT_WRAP(Windows::UI::Xaml::DependencyProperty));
+            *value = detach_from<Windows::UI::Xaml::DependencyProperty>(this->shim().IntensityProperty());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+};
+
+template <typename D>
+struct produce<D, SimplePhotoViewer::IBackdropTemperatureAndTintBrush> : produce_base<D, SimplePhotoViewer::IBackdropTemperatureAndTintBrush>
+{
+    int32_t WINRT_CALL get_Temperature(double* value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(Temperature, WINRT_WRAP(double));
+            *value = detach_from<double>(this->shim().Temperature());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL put_Temperature(double value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(Temperature, WINRT_WRAP(void), double);
+            this->shim().Temperature(value);
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL get_Tint(double* value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(Tint, WINRT_WRAP(double));
+            *value = detach_from<double>(this->shim().Tint());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL put_Tint(double value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(Tint, WINRT_WRAP(void), double);
+            this->shim().Tint(value);
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+};
+
+template <typename D>
+struct produce<D, SimplePhotoViewer::IBackdropTemperatureAndTintBrushStatics> : produce_base<D, SimplePhotoViewer::IBackdropTemperatureAndTintBrushStatics>
+{
+    int32_t WINRT_CALL get_TemperatureProperty(void** value) noexcept final
+    {
+        try
+        {
+            *value = nullptr;
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(TemperatureProperty, WINRT_WRAP(Windows::UI::Xaml::DependencyProperty));
+            *value = detach_from<Windows::UI::Xaml::DependencyProperty>(this->shim().TemperatureProperty());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL get_TintProperty(void** value) noexcept final
+    {
+        try
+        {
+            *value = nullptr;
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(TintProperty, WINRT_WRAP(Windows::UI::Xaml::DependencyProperty));
+            *value = detach_from<Windows::UI::Xaml::DependencyProperty>(this->shim().TintProperty());
             return 0;
         }
         catch (...) { return to_hresult(); }
@@ -644,6 +968,30 @@ struct produce<D, SimplePhotoViewer::IImageSku> : produce_base<D, SimplePhotoVie
             typename D::abi_guard guard(this->shim());
             WINRT_ASSERT_DECLARATION(ImageIsSelected, WINRT_WRAP(void), bool);
             this->shim().ImageIsSelected(value);
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL get_IsVirtualizing(bool* value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(IsVirtualizing, WINRT_WRAP(bool));
+            *value = detach_from<bool>(this->shim().IsVirtualizing());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL put_IsVirtualizing(bool value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(IsVirtualizing, WINRT_WRAP(void), bool);
+            this->shim().IsVirtualizing(value);
             return 0;
         }
         catch (...) { return to_hresult(); }
@@ -1044,6 +1392,47 @@ inline Windows::UI::Xaml::DependencyProperty BackdropBlurBrush::BlurAmountProper
     return impl::call_factory<BackdropBlurBrush, SimplePhotoViewer::IBackdropBlurBrushStatics>([&](auto&& f) { return f.BlurAmountProperty(); });
 }
 
+inline BackdropExposureBrush::BackdropExposureBrush() :
+    BackdropExposureBrush(impl::call_factory<BackdropExposureBrush>([](auto&& f) { return f.template ActivateInstance<BackdropExposureBrush>(); }))
+{}
+
+inline Windows::UI::Xaml::DependencyProperty BackdropExposureBrush::ExposureProperty()
+{
+    return impl::call_factory<BackdropExposureBrush, SimplePhotoViewer::IBackdropExposureBrushStatics>([&](auto&& f) { return f.ExposureProperty(); });
+}
+
+inline BackdropSaturationBrush::BackdropSaturationBrush() :
+    BackdropSaturationBrush(impl::call_factory<BackdropSaturationBrush>([](auto&& f) { return f.template ActivateInstance<BackdropSaturationBrush>(); }))
+{}
+
+inline Windows::UI::Xaml::DependencyProperty BackdropSaturationBrush::SaturationProperty()
+{
+    return impl::call_factory<BackdropSaturationBrush, SimplePhotoViewer::IBackdropSaturationBrushStatics>([&](auto&& f) { return f.SaturationProperty(); });
+}
+
+inline BackdropSepiaBrush::BackdropSepiaBrush() :
+    BackdropSepiaBrush(impl::call_factory<BackdropSepiaBrush>([](auto&& f) { return f.template ActivateInstance<BackdropSepiaBrush>(); }))
+{}
+
+inline Windows::UI::Xaml::DependencyProperty BackdropSepiaBrush::IntensityProperty()
+{
+    return impl::call_factory<BackdropSepiaBrush, SimplePhotoViewer::IBackdropSepiaBrushStatics>([&](auto&& f) { return f.IntensityProperty(); });
+}
+
+inline BackdropTemperatureAndTintBrush::BackdropTemperatureAndTintBrush() :
+    BackdropTemperatureAndTintBrush(impl::call_factory<BackdropTemperatureAndTintBrush>([](auto&& f) { return f.template ActivateInstance<BackdropTemperatureAndTintBrush>(); }))
+{}
+
+inline Windows::UI::Xaml::DependencyProperty BackdropTemperatureAndTintBrush::TemperatureProperty()
+{
+    return impl::call_factory<BackdropTemperatureAndTintBrush, SimplePhotoViewer::IBackdropTemperatureAndTintBrushStatics>([&](auto&& f) { return f.TemperatureProperty(); });
+}
+
+inline Windows::UI::Xaml::DependencyProperty BackdropTemperatureAndTintBrush::TintProperty()
+{
+    return impl::call_factory<BackdropTemperatureAndTintBrush, SimplePhotoViewer::IBackdropTemperatureAndTintBrushStatics>([&](auto&& f) { return f.TintProperty(); });
+}
+
 inline DetailPage::DetailPage() :
     DetailPage(impl::call_factory<DetailPage>([](auto&& f) { return f.template ActivateInstance<DetailPage>(); }))
 {}
@@ -1138,6 +1527,256 @@ struct property_SimplePhotoViewer_IBackdropBlurBrushStatics
         };
     };};
     struct list { using type = impl::typelist<named::BlurAmountProperty>; };
+};
+
+struct property_SimplePhotoViewer_IBackdropExposureBrush
+{ struct named {
+    struct Exposure
+    {
+        struct name { static constexpr std::wstring_view value{ L"Exposure"sv }; };
+        using property_type = double;
+        using target_type = winrt::SimplePhotoViewer::IBackdropExposureBrush;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.Exposure();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.Exposure(std::forward<Value>(value));
+            }
+        };
+    };};
+    struct list { using type = impl::typelist<named::Exposure>; };
+};
+
+struct property_SimplePhotoViewer_IBackdropExposureBrushStatics
+{ struct named {
+    struct ExposureProperty
+    {
+        struct name { static constexpr std::wstring_view value{ L"ExposureProperty"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+        using target_type = winrt::SimplePhotoViewer::IBackdropExposureBrushStatics;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.ExposureProperty();
+            }
+        };
+    };};
+    struct list { using type = impl::typelist<named::ExposureProperty>; };
+};
+
+struct property_SimplePhotoViewer_IBackdropSaturationBrush
+{ struct named {
+    struct Saturation
+    {
+        struct name { static constexpr std::wstring_view value{ L"Saturation"sv }; };
+        using property_type = double;
+        using target_type = winrt::SimplePhotoViewer::IBackdropSaturationBrush;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.Saturation();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.Saturation(std::forward<Value>(value));
+            }
+        };
+    };};
+    struct list { using type = impl::typelist<named::Saturation>; };
+};
+
+struct property_SimplePhotoViewer_IBackdropSaturationBrushStatics
+{ struct named {
+    struct SaturationProperty
+    {
+        struct name { static constexpr std::wstring_view value{ L"SaturationProperty"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+        using target_type = winrt::SimplePhotoViewer::IBackdropSaturationBrushStatics;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.SaturationProperty();
+            }
+        };
+    };};
+    struct list { using type = impl::typelist<named::SaturationProperty>; };
+};
+
+struct property_SimplePhotoViewer_IBackdropSepiaBrush
+{ struct named {
+    struct Intensity
+    {
+        struct name { static constexpr std::wstring_view value{ L"Intensity"sv }; };
+        using property_type = double;
+        using target_type = winrt::SimplePhotoViewer::IBackdropSepiaBrush;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.Intensity();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.Intensity(std::forward<Value>(value));
+            }
+        };
+    };};
+    struct list { using type = impl::typelist<named::Intensity>; };
+};
+
+struct property_SimplePhotoViewer_IBackdropSepiaBrushStatics
+{ struct named {
+    struct IntensityProperty
+    {
+        struct name { static constexpr std::wstring_view value{ L"IntensityProperty"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+        using target_type = winrt::SimplePhotoViewer::IBackdropSepiaBrushStatics;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.IntensityProperty();
+            }
+        };
+    };};
+    struct list { using type = impl::typelist<named::IntensityProperty>; };
+};
+
+struct property_SimplePhotoViewer_IBackdropTemperatureAndTintBrush
+{ struct named {
+    struct Temperature
+    {
+        struct name { static constexpr std::wstring_view value{ L"Temperature"sv }; };
+        using property_type = double;
+        using target_type = winrt::SimplePhotoViewer::IBackdropTemperatureAndTintBrush;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.Temperature();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.Temperature(std::forward<Value>(value));
+            }
+        };
+    };
+    struct Tint
+    {
+        struct name { static constexpr std::wstring_view value{ L"Tint"sv }; };
+        using property_type = double;
+        using target_type = winrt::SimplePhotoViewer::IBackdropTemperatureAndTintBrush;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.Tint();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.Tint(std::forward<Value>(value));
+            }
+        };
+    };};
+    struct list { using type = impl::typelist<named::Temperature, named::Tint>; };
+};
+
+struct property_SimplePhotoViewer_IBackdropTemperatureAndTintBrushStatics
+{ struct named {
+    struct TemperatureProperty
+    {
+        struct name { static constexpr std::wstring_view value{ L"TemperatureProperty"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+        using target_type = winrt::SimplePhotoViewer::IBackdropTemperatureAndTintBrushStatics;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.TemperatureProperty();
+            }
+        };
+    };
+    struct TintProperty
+    {
+        struct name { static constexpr std::wstring_view value{ L"TintProperty"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+        using target_type = winrt::SimplePhotoViewer::IBackdropTemperatureAndTintBrushStatics;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.TintProperty();
+            }
+        };
+    };};
+    struct list { using type = impl::typelist<named::TemperatureProperty, named::TintProperty>; };
 };
 
 struct property_SimplePhotoViewer_IDetailPage
@@ -1533,6 +2172,31 @@ struct property_SimplePhotoViewer_IImageSku
             }
         };
     };
+    struct IsVirtualizing
+    {
+        struct name { static constexpr std::wstring_view value{ L"IsVirtualizing"sv }; };
+        using property_type = bool;
+        using target_type = winrt::SimplePhotoViewer::IImageSku;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.IsVirtualizing();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.IsVirtualizing(std::forward<Value>(value));
+            }
+        };
+    };
     struct RenderRotation
     {
         struct name { static constexpr std::wstring_view value{ L"RenderRotation"sv }; };
@@ -1558,7 +2222,7 @@ struct property_SimplePhotoViewer_IImageSku
             }
         };
     };};
-    struct list { using type = impl::typelist<named::ImageContent, named::ImageFile, named::ImageFileType, named::ImageIsSelected, named::ImageName, named::ImageNameWithType, named::ImageProperties, named::ImageThumbnail, named::RenderRotation>; };
+    struct list { using type = impl::typelist<named::ImageContent, named::ImageFile, named::ImageFileType, named::ImageIsSelected, named::ImageName, named::ImageNameWithType, named::ImageProperties, named::ImageThumbnail, named::IsVirtualizing, named::RenderRotation>; };
 };
 
 struct property_SimplePhotoViewer_IMainPage
@@ -1777,6 +2441,236 @@ struct property_SimplePhotoViewer_BackdropBlurBrush
         };
     };};
     struct list { using type = impl::typelist<named::BlurAmount, named::BlurAmountProperty>; };
+};
+
+struct property_SimplePhotoViewer_BackdropExposureBrush
+{ struct named {
+    struct Exposure
+    {
+        struct name { static constexpr std::wstring_view value{ L"Exposure"sv }; };
+        using property_type = double;
+        using target_type = winrt::SimplePhotoViewer::BackdropExposureBrush;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.Exposure();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.Exposure(std::forward<Value>(value));
+            }
+        };
+    };
+    struct ExposureProperty
+    {
+        struct name { static constexpr std::wstring_view value{ L"ExposureProperty"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+        using target_type = winrt::SimplePhotoViewer::BackdropExposureBrush;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::true_type;
+        struct getter
+        {
+            auto operator()() const
+            {
+                return target_type::ExposureProperty();
+            }
+        };
+    };};
+    struct list { using type = impl::typelist<named::Exposure, named::ExposureProperty>; };
+};
+
+struct property_SimplePhotoViewer_BackdropSaturationBrush
+{ struct named {
+    struct Saturation
+    {
+        struct name { static constexpr std::wstring_view value{ L"Saturation"sv }; };
+        using property_type = double;
+        using target_type = winrt::SimplePhotoViewer::BackdropSaturationBrush;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.Saturation();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.Saturation(std::forward<Value>(value));
+            }
+        };
+    };
+    struct SaturationProperty
+    {
+        struct name { static constexpr std::wstring_view value{ L"SaturationProperty"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+        using target_type = winrt::SimplePhotoViewer::BackdropSaturationBrush;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::true_type;
+        struct getter
+        {
+            auto operator()() const
+            {
+                return target_type::SaturationProperty();
+            }
+        };
+    };};
+    struct list { using type = impl::typelist<named::Saturation, named::SaturationProperty>; };
+};
+
+struct property_SimplePhotoViewer_BackdropSepiaBrush
+{ struct named {
+    struct Intensity
+    {
+        struct name { static constexpr std::wstring_view value{ L"Intensity"sv }; };
+        using property_type = double;
+        using target_type = winrt::SimplePhotoViewer::BackdropSepiaBrush;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.Intensity();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.Intensity(std::forward<Value>(value));
+            }
+        };
+    };
+    struct IntensityProperty
+    {
+        struct name { static constexpr std::wstring_view value{ L"IntensityProperty"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+        using target_type = winrt::SimplePhotoViewer::BackdropSepiaBrush;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::true_type;
+        struct getter
+        {
+            auto operator()() const
+            {
+                return target_type::IntensityProperty();
+            }
+        };
+    };};
+    struct list { using type = impl::typelist<named::Intensity, named::IntensityProperty>; };
+};
+
+struct property_SimplePhotoViewer_BackdropTemperatureAndTintBrush
+{ struct named {
+    struct Tint
+    {
+        struct name { static constexpr std::wstring_view value{ L"Tint"sv }; };
+        using property_type = double;
+        using target_type = winrt::SimplePhotoViewer::BackdropTemperatureAndTintBrush;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.Tint();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.Tint(std::forward<Value>(value));
+            }
+        };
+    };
+    struct Temperature
+    {
+        struct name { static constexpr std::wstring_view value{ L"Temperature"sv }; };
+        using property_type = double;
+        using target_type = winrt::SimplePhotoViewer::BackdropTemperatureAndTintBrush;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.Temperature();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.Temperature(std::forward<Value>(value));
+            }
+        };
+    };
+    struct TemperatureProperty
+    {
+        struct name { static constexpr std::wstring_view value{ L"TemperatureProperty"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+        using target_type = winrt::SimplePhotoViewer::BackdropTemperatureAndTintBrush;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::true_type;
+        struct getter
+        {
+            auto operator()() const
+            {
+                return target_type::TemperatureProperty();
+            }
+        };
+    };
+    struct TintProperty
+    {
+        struct name { static constexpr std::wstring_view value{ L"TintProperty"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+        using target_type = winrt::SimplePhotoViewer::BackdropTemperatureAndTintBrush;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::true_type;
+        struct getter
+        {
+            auto operator()() const
+            {
+                return target_type::TintProperty();
+            }
+        };
+    };};
+    struct list { using type = impl::typelist<named::Tint, named::Temperature, named::TemperatureProperty, named::TintProperty>; };
 };
 
 struct property_SimplePhotoViewer_DetailPage
@@ -2005,6 +2899,31 @@ struct property_SimplePhotoViewer_ImageSku
             }
         };
     };
+    struct IsVirtualizing
+    {
+        struct name { static constexpr std::wstring_view value{ L"IsVirtualizing"sv }; };
+        using property_type = bool;
+        using target_type = winrt::SimplePhotoViewer::ImageSku;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.IsVirtualizing();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.IsVirtualizing(std::forward<Value>(value));
+            }
+        };
+    };
     struct ImageThumbnail
     {
         struct name { static constexpr std::wstring_view value{ L"ImageThumbnail"sv }; };
@@ -2197,7 +3116,7 @@ struct property_SimplePhotoViewer_ImageSku
             }
         };
     };};
-    struct list { using type = impl::typelist<named::RenderRotation, named::ImageThumbnail, named::ImageNameWithType, named::ImageName, named::ImageIsSelected, named::ImageFileType, named::ImageFile, named::ImageContent, named::ImageProperties>; };
+    struct list { using type = impl::typelist<named::RenderRotation, named::IsVirtualizing, named::ImageThumbnail, named::ImageNameWithType, named::ImageName, named::ImageIsSelected, named::ImageFileType, named::ImageFile, named::ImageContent, named::ImageProperties>; };
 };
 
 struct property_SimplePhotoViewer_MainPage
@@ -2378,6 +3297,22 @@ template <> struct named_property<SimplePhotoViewer::IBackdropBlurBrush> : impl:
 template <> struct properties<SimplePhotoViewer::IBackdropBlurBrush> : impl::property_SimplePhotoViewer_IBackdropBlurBrush::list {};
 template <> struct named_property<SimplePhotoViewer::IBackdropBlurBrushStatics> : impl::property_SimplePhotoViewer_IBackdropBlurBrushStatics::named {};
 template <> struct properties<SimplePhotoViewer::IBackdropBlurBrushStatics> : impl::property_SimplePhotoViewer_IBackdropBlurBrushStatics::list {};
+template <> struct named_property<SimplePhotoViewer::IBackdropExposureBrush> : impl::property_SimplePhotoViewer_IBackdropExposureBrush::named {};
+template <> struct properties<SimplePhotoViewer::IBackdropExposureBrush> : impl::property_SimplePhotoViewer_IBackdropExposureBrush::list {};
+template <> struct named_property<SimplePhotoViewer::IBackdropExposureBrushStatics> : impl::property_SimplePhotoViewer_IBackdropExposureBrushStatics::named {};
+template <> struct properties<SimplePhotoViewer::IBackdropExposureBrushStatics> : impl::property_SimplePhotoViewer_IBackdropExposureBrushStatics::list {};
+template <> struct named_property<SimplePhotoViewer::IBackdropSaturationBrush> : impl::property_SimplePhotoViewer_IBackdropSaturationBrush::named {};
+template <> struct properties<SimplePhotoViewer::IBackdropSaturationBrush> : impl::property_SimplePhotoViewer_IBackdropSaturationBrush::list {};
+template <> struct named_property<SimplePhotoViewer::IBackdropSaturationBrushStatics> : impl::property_SimplePhotoViewer_IBackdropSaturationBrushStatics::named {};
+template <> struct properties<SimplePhotoViewer::IBackdropSaturationBrushStatics> : impl::property_SimplePhotoViewer_IBackdropSaturationBrushStatics::list {};
+template <> struct named_property<SimplePhotoViewer::IBackdropSepiaBrush> : impl::property_SimplePhotoViewer_IBackdropSepiaBrush::named {};
+template <> struct properties<SimplePhotoViewer::IBackdropSepiaBrush> : impl::property_SimplePhotoViewer_IBackdropSepiaBrush::list {};
+template <> struct named_property<SimplePhotoViewer::IBackdropSepiaBrushStatics> : impl::property_SimplePhotoViewer_IBackdropSepiaBrushStatics::named {};
+template <> struct properties<SimplePhotoViewer::IBackdropSepiaBrushStatics> : impl::property_SimplePhotoViewer_IBackdropSepiaBrushStatics::list {};
+template <> struct named_property<SimplePhotoViewer::IBackdropTemperatureAndTintBrush> : impl::property_SimplePhotoViewer_IBackdropTemperatureAndTintBrush::named {};
+template <> struct properties<SimplePhotoViewer::IBackdropTemperatureAndTintBrush> : impl::property_SimplePhotoViewer_IBackdropTemperatureAndTintBrush::list {};
+template <> struct named_property<SimplePhotoViewer::IBackdropTemperatureAndTintBrushStatics> : impl::property_SimplePhotoViewer_IBackdropTemperatureAndTintBrushStatics::named {};
+template <> struct properties<SimplePhotoViewer::IBackdropTemperatureAndTintBrushStatics> : impl::property_SimplePhotoViewer_IBackdropTemperatureAndTintBrushStatics::list {};
 template <> struct named_property<SimplePhotoViewer::IDetailPage> : impl::property_SimplePhotoViewer_IDetailPage::named {};
 template <> struct properties<SimplePhotoViewer::IDetailPage> : impl::property_SimplePhotoViewer_IDetailPage::list {};
 template <> struct named_property<SimplePhotoViewer::IDirectoryItem> : impl::property_SimplePhotoViewer_IDirectoryItem::named {};
@@ -2392,6 +3327,14 @@ template <> struct named_property<SimplePhotoViewer::IPageNavigationParameter> :
 template <> struct properties<SimplePhotoViewer::IPageNavigationParameter> : impl::property_SimplePhotoViewer_IPageNavigationParameter::list {};
 template <> struct named_property<SimplePhotoViewer::BackdropBlurBrush> : impl::property_SimplePhotoViewer_BackdropBlurBrush::named {};
 template <> struct properties<SimplePhotoViewer::BackdropBlurBrush> : impl::property_SimplePhotoViewer_BackdropBlurBrush::list {};
+template <> struct named_property<SimplePhotoViewer::BackdropExposureBrush> : impl::property_SimplePhotoViewer_BackdropExposureBrush::named {};
+template <> struct properties<SimplePhotoViewer::BackdropExposureBrush> : impl::property_SimplePhotoViewer_BackdropExposureBrush::list {};
+template <> struct named_property<SimplePhotoViewer::BackdropSaturationBrush> : impl::property_SimplePhotoViewer_BackdropSaturationBrush::named {};
+template <> struct properties<SimplePhotoViewer::BackdropSaturationBrush> : impl::property_SimplePhotoViewer_BackdropSaturationBrush::list {};
+template <> struct named_property<SimplePhotoViewer::BackdropSepiaBrush> : impl::property_SimplePhotoViewer_BackdropSepiaBrush::named {};
+template <> struct properties<SimplePhotoViewer::BackdropSepiaBrush> : impl::property_SimplePhotoViewer_BackdropSepiaBrush::list {};
+template <> struct named_property<SimplePhotoViewer::BackdropTemperatureAndTintBrush> : impl::property_SimplePhotoViewer_BackdropTemperatureAndTintBrush::named {};
+template <> struct properties<SimplePhotoViewer::BackdropTemperatureAndTintBrush> : impl::property_SimplePhotoViewer_BackdropTemperatureAndTintBrush::list {};
 template <> struct named_property<SimplePhotoViewer::DetailPage> : impl::property_SimplePhotoViewer_DetailPage::named {};
 template <> struct properties<SimplePhotoViewer::DetailPage> : impl::property_SimplePhotoViewer_DetailPage::list {};
 template <> struct named_property<SimplePhotoViewer::DirectoryItem> : impl::property_SimplePhotoViewer_DirectoryItem::named {};
@@ -2408,6 +3351,14 @@ template <> struct properties<SimplePhotoViewer::PageNavigationParameter> : impl
 template <>
 struct base_type<SimplePhotoViewer::BackdropBlurBrush> { using type = Windows::UI::Xaml::Media::XamlCompositionBrushBase; };
 template <>
+struct base_type<SimplePhotoViewer::BackdropExposureBrush> { using type = Windows::UI::Xaml::Media::XamlCompositionBrushBase; };
+template <>
+struct base_type<SimplePhotoViewer::BackdropSaturationBrush> { using type = Windows::UI::Xaml::Media::XamlCompositionBrushBase; };
+template <>
+struct base_type<SimplePhotoViewer::BackdropSepiaBrush> { using type = Windows::UI::Xaml::Media::XamlCompositionBrushBase; };
+template <>
+struct base_type<SimplePhotoViewer::BackdropTemperatureAndTintBrush> { using type = Windows::UI::Xaml::Media::XamlCompositionBrushBase; };
+template <>
 struct base_type<SimplePhotoViewer::DetailPage> { using type = Windows::UI::Xaml::Controls::Page; };
 template <>
 struct base_type<SimplePhotoViewer::ExplorerItemTemplateSelector> { using type = Windows::UI::Xaml::Controls::DataTemplateSelector; };
@@ -2419,6 +3370,14 @@ WINRT_EXPORT namespace std {
 
 template<> struct hash<winrt::SimplePhotoViewer::IBackdropBlurBrush> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IBackdropBlurBrush> {};
 template<> struct hash<winrt::SimplePhotoViewer::IBackdropBlurBrushStatics> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IBackdropBlurBrushStatics> {};
+template<> struct hash<winrt::SimplePhotoViewer::IBackdropExposureBrush> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IBackdropExposureBrush> {};
+template<> struct hash<winrt::SimplePhotoViewer::IBackdropExposureBrushStatics> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IBackdropExposureBrushStatics> {};
+template<> struct hash<winrt::SimplePhotoViewer::IBackdropSaturationBrush> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IBackdropSaturationBrush> {};
+template<> struct hash<winrt::SimplePhotoViewer::IBackdropSaturationBrushStatics> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IBackdropSaturationBrushStatics> {};
+template<> struct hash<winrt::SimplePhotoViewer::IBackdropSepiaBrush> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IBackdropSepiaBrush> {};
+template<> struct hash<winrt::SimplePhotoViewer::IBackdropSepiaBrushStatics> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IBackdropSepiaBrushStatics> {};
+template<> struct hash<winrt::SimplePhotoViewer::IBackdropTemperatureAndTintBrush> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IBackdropTemperatureAndTintBrush> {};
+template<> struct hash<winrt::SimplePhotoViewer::IBackdropTemperatureAndTintBrushStatics> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IBackdropTemperatureAndTintBrushStatics> {};
 template<> struct hash<winrt::SimplePhotoViewer::IDetailPage> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IDetailPage> {};
 template<> struct hash<winrt::SimplePhotoViewer::IDirectoryItem> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IDirectoryItem> {};
 template<> struct hash<winrt::SimplePhotoViewer::IDirectoryItemFactory> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IDirectoryItemFactory> {};
@@ -2429,6 +3388,10 @@ template<> struct hash<winrt::SimplePhotoViewer::IMainPage> : winrt::impl::hash_
 template<> struct hash<winrt::SimplePhotoViewer::IPageNavigationParameter> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IPageNavigationParameter> {};
 template<> struct hash<winrt::SimplePhotoViewer::IPageNavigationParameterFactory> : winrt::impl::hash_base<winrt::SimplePhotoViewer::IPageNavigationParameterFactory> {};
 template<> struct hash<winrt::SimplePhotoViewer::BackdropBlurBrush> : winrt::impl::hash_base<winrt::SimplePhotoViewer::BackdropBlurBrush> {};
+template<> struct hash<winrt::SimplePhotoViewer::BackdropExposureBrush> : winrt::impl::hash_base<winrt::SimplePhotoViewer::BackdropExposureBrush> {};
+template<> struct hash<winrt::SimplePhotoViewer::BackdropSaturationBrush> : winrt::impl::hash_base<winrt::SimplePhotoViewer::BackdropSaturationBrush> {};
+template<> struct hash<winrt::SimplePhotoViewer::BackdropSepiaBrush> : winrt::impl::hash_base<winrt::SimplePhotoViewer::BackdropSepiaBrush> {};
+template<> struct hash<winrt::SimplePhotoViewer::BackdropTemperatureAndTintBrush> : winrt::impl::hash_base<winrt::SimplePhotoViewer::BackdropTemperatureAndTintBrush> {};
 template<> struct hash<winrt::SimplePhotoViewer::DetailPage> : winrt::impl::hash_base<winrt::SimplePhotoViewer::DetailPage> {};
 template<> struct hash<winrt::SimplePhotoViewer::DirectoryItem> : winrt::impl::hash_base<winrt::SimplePhotoViewer::DirectoryItem> {};
 template<> struct hash<winrt::SimplePhotoViewer::ExplorerItemTemplateSelector> : winrt::impl::hash_base<winrt::SimplePhotoViewer::ExplorerItemTemplateSelector> {};

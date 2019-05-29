@@ -2,6 +2,10 @@
 
 #include "pch.h"
 #include "BackdropBlurBrush.h"
+#include "BackdropExposureBrush.h"
+#include "BackdropSaturationBrush.h"
+#include "BackdropSepiaBrush.h"
+#include "BackdropTemperatureAndTintBrush.h"
 #include "DetailPage.h"
 #include "DirectoryItem.h"
 #include "ExplorerItemTemplateSelector.h"
@@ -45,6 +49,30 @@ int32_t WINRT_CALL WINRT_GetActivationFactory(void* classId, void** factory) noe
         if (requal(name, L"SimplePhotoViewer.BackdropBlurBrush"))
         {
             *factory = winrt::detach_abi(winrt::make<winrt::SimplePhotoViewer::factory_implementation::BackdropBlurBrush>());
+            return 0;
+        }
+
+        if (requal(name, L"SimplePhotoViewer.BackdropExposureBrush"))
+        {
+            *factory = winrt::detach_abi(winrt::make<winrt::SimplePhotoViewer::factory_implementation::BackdropExposureBrush>());
+            return 0;
+        }
+
+        if (requal(name, L"SimplePhotoViewer.BackdropSaturationBrush"))
+        {
+            *factory = winrt::detach_abi(winrt::make<winrt::SimplePhotoViewer::factory_implementation::BackdropSaturationBrush>());
+            return 0;
+        }
+
+        if (requal(name, L"SimplePhotoViewer.BackdropSepiaBrush"))
+        {
+            *factory = winrt::detach_abi(winrt::make<winrt::SimplePhotoViewer::factory_implementation::BackdropSepiaBrush>());
+            return 0;
+        }
+
+        if (requal(name, L"SimplePhotoViewer.BackdropTemperatureAndTintBrush"))
+        {
+            *factory = winrt::detach_abi(winrt::make<winrt::SimplePhotoViewer::factory_implementation::BackdropTemperatureAndTintBrush>());
             return 0;
         }
 

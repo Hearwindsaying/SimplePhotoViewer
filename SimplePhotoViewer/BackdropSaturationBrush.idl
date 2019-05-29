@@ -1,0 +1,10 @@
+namespace SimplePhotoViewer
+{
+	[default_interface]
+	runtimeclass BackdropSaturationBrush : Windows.UI.Xaml.Media.XamlCompositionBrushBase
+	{
+		BackdropSaturationBrush();
+		static Windows.UI.Xaml.DependencyProperty SaturationProperty{ get; };
+		Double Saturation;
+	}
+}

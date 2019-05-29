@@ -1,0 +1,10 @@
+namespace SimplePhotoViewer
+{
+	[default_interface]
+	runtimeclass BackdropSepiaBrush : Windows.UI.Xaml.Media.XamlCompositionBrushBase
+	{
+		BackdropSepiaBrush();
+		static Windows.UI.Xaml.DependencyProperty IntensityProperty{ get; };
+		Double Intensity;
+	}
+}

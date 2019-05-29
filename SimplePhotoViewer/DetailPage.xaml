@@ -89,10 +89,11 @@
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Stretch">
                     <ListView   x:Name="ThumbnailListView"
-                            IsItemClickEnabled="True"
-                            ItemClick="ImageGridView_ItemClick"
-                            ItemsSource="{x:Bind ImageSkus, Mode=OneWay}"
-                            SelectionMode="Extended" Opacity="1" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                IsItemClickEnabled="True"
+                                ItemClick="ImageGridView_ItemClick"
+                                ContainerContentChanging="ThumbnailListView_OnContainerContentChanging"
+                                ItemsSource="{x:Bind ImageSkus, Mode=OneWay}"
+                                SelectionMode="Extended" Opacity="1" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="local:ImageSku">
                                 <Image x:Name="ItemImage"
@@ -134,6 +135,7 @@
                         VerticalAlignment="Stretch">
                     <FlipView x:Name="DetailPageFlipView" IsEnabled="True" Opacity="1" Visibility="Visible"
                               ItemsSource="{x:Bind Mode=OneWay, Path=ImageSkus}" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWith="ThumbnailScrollViewer" RelativePanel.AlignBottomWith="Tooler" 
+                              
                               >
                         <!--<FlipView.Foreground>
                             <local:BackdropBlurBrush>
@@ -153,27 +155,46 @@
                         </FlipView.ItemTemplate>
 
                         <ItemsPanelTemplate>
-                            <VirtualizingStackPanel />
+                            <VirtualizingStackPanel CleanUpVirtualizedItemEvent="FlipView_CleanUpVirtualizedItem" 
+                                                    x:Name="FlipView_VirtualizingStackPanel"/>
                         </ItemsPanelTemplate>
                     </FlipView>
                 </ScrollViewer>
 
-                <Rectangle x:Name="rtg" HorizontalAlignment="Stretch" Grid.RowSpan="2" VerticalAlignment="Stretch">
+                <Rectangle x:Name="rtg" HorizontalAlignment="Stretch" Grid.RowSpan="2" VerticalAlignment="Stretch" Visibility="Collapsed">
                     <Rectangle.Fill>
                         <local:BackdropBlurBrush x:Name="bsh" BlurAmount="0"/>
-                        <!--<ImageBrush ImageSource="/Assets/folder.png" />-->
                     </Rectangle.Fill>
                 </Rectangle>
 
-                <Image x:Name="testImage" Visibility="Collapsed">
-                </Image>
-                <!--debug-->
-                <!--<Rectangle x:Name="rtg2" Visibility="Collapsed" HorizontalAlignment="Stretch" Grid.RowSpan="2" VerticalAlignment="Stretch">
+                <Rectangle x:Name="rtgexp" HorizontalAlignment="Stretch" Grid.RowSpan="2" VerticalAlignment="Stretch" Visibility="Collapsed">
                     <Rectangle.Fill>
-                       
-                        <ImageBrush/>
+                        <local:BackdropExposureBrush x:Name="bshexp" Exposure="0.0"/>
                     </Rectangle.Fill>
-                </Rectangle>-->
+                </Rectangle>
+
+                <Rectangle x:Name="rtgsat" HorizontalAlignment="Stretch" Grid.RowSpan="2" VerticalAlignment="Stretch" Visibility="Collapsed">
+                    <Rectangle.Fill>
+                        <local:BackdropSaturationBrush x:Name="bshsat" Saturation="0.0"/>
+                    </Rectangle.Fill>
+                </Rectangle>
+
+                <Rectangle x:Name="rtgsep" HorizontalAlignment="Stretch" Grid.RowSpan="2" VerticalAlignment="Stretch" Visibility="Collapsed">
+                    <Rectangle.Fill>
+                        <local:BackdropSepiaBrush x:Name="bshsep" Intensity="0.0"/>
+                    </Rectangle.Fill>
+                </Rectangle>
+
+                <Rectangle x:Name="rtgtem" HorizontalAlignment="Stretch" Grid.RowSpan="2" VerticalAlignment="Stretch" Visibility="Collapsed">
+                    <Rectangle.Fill>
+                        <local:BackdropTemperatureAndTintBrush x:Name="bshtemp" Temperature="0.5" Tint="0.0"/>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <Rectangle x:Name="test" Visibility="Collapsed">
+                    <Rectangle.Fill>
+                        <ImageBrush x:Name="testBrush"></ImageBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
                 
             </Grid>
 
@@ -209,40 +230,54 @@
 
 
                         <AppBarButton x:Name="EditAppBarButton" Click="Edit_ClickHandler"
-                                Icon="Edit" Label="调整" 
-                                ToolTipService.ToolTip="图片编辑" Background="Transparent"
+                                Icon="Edit" Label="编辑"
+                                ToolTipService.ToolTip="点击启用后将屏蔽主视图操作" Background="Transparent"
                                 >
                             <AppBarButton.Flyout>
                                 <Flyout>
-                                    <StackPanel>
+                                    <StackPanel Orientation="Vertical">
                                         <StackPanel Orientation="Horizontal" >
-                                            <TextBlock Text="Blur Amount" VerticalAlignment="Center" Margin="14,0,10,0"/>
-                                            <Slider Width="200" TickFrequency="10" TickPlacement="Outside"
+                                            <TextBlock Text="高斯模糊" VerticalAlignment="Center" Margin="14,0,10,0"/>
+                                            <Slider Width="200" TickFrequency="10" TickPlacement="Outside" HorizontalAlignment="Center"
                                                     ValueChanged="BlurAmountSlider_ValueChanged"/>
+                                            <CheckBox x:Name="BlurCheckBox" Checked="Checkbox_Checked" Unchecked="Checkbox_UnChecked"/>
+
                                         </StackPanel>
-                                        <!--<StackPanel Orientation="Horizontal" >
-                                            <TextBlock Text="冷暖度" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                                            <Slider Width="200" TickFrequency="10" TickPlacement="Outside"/>
+                                        <StackPanel Orientation="Horizontal" >
+                                            <TextBlock Text="曝光" VerticalAlignment="Center" Margin="14,0,10,0"/>
+                                            <Slider Width="200" TickFrequency="0.1" TickPlacement="Outside" Minimum="-2" Maximum="2"
+                                                    ValueChanged="ExposureSlider_ValueChanged" StepFrequency="0.1"/>
+                                            <CheckBox x:Name="ExposureCheckBox" Checked="Checkbox_Checked" Unchecked="Checkbox_UnChecked"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" >
+                                            <TextBlock Text="饱和度" VerticalAlignment="Center" Margin="14,0,10,0"/>
+                                            <Slider Width="200" TickFrequency="0.1" TickPlacement="Outside" Minimum="0" Maximum="1"
+                                                    ValueChanged="SaturationSlider_ValueChanged" StepFrequency="0.05"/>
+                                            <CheckBox x:Name="SaturationCheckBox" Checked="Checkbox_Checked" Unchecked="Checkbox_UnChecked"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" >
+                                            <TextBlock Text="褐色" VerticalAlignment="Center" Margin="14,0,10,0"/>
+                                            <Slider Width="200" TickFrequency="0.1" TickPlacement="Outside" Minimum="0" Maximum="1"
+                                                    ValueChanged="SepiaIntensitySlider_ValueChanged" StepFrequency="0.05"/>
+                                            <CheckBox x:Name="SepiaCheckBox" Checked="Checkbox_Checked" Unchecked="Checkbox_UnChecked"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" >
+                                            <TextBlock Text="温度" VerticalAlignment="Center" Margin="14,0,10,0"/>
+                                            <Slider Width="200" TickFrequency="0.1" TickPlacement="Outside" Minimum="-1" Maximum="1"
+                                                    ValueChanged="TemperatureSlider_ValueChanged" StepFrequency="0.05"/>
+                                            <CheckBox x:Name="TaTCheckBox" Checked="Checkbox_Checked" Unchecked="Checkbox_UnChecked"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" >
                                             <TextBlock Text="色调" VerticalAlignment="Center" Margin="14,0,10,0"/>
-                                            <Slider Width="200" TickFrequency="10" TickPlacement="Outside"/>
+                                            <Slider Width="200" TickFrequency="0.1" TickPlacement="Outside" Minimum="-1" Maximum="1"
+                                                    ValueChanged="TintSlider_ValueChanged" StepFrequency="0.05"/>
+                                            <CheckBox x:Name="TaTCheckBox2" Checked="Checkbox_Checked" Unchecked="Checkbox_UnChecked"/>
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal" >
-                                            <TextBlock Text="对比度" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                                            <Slider Width="200" TickFrequency="10" TickPlacement="Outside"/>
-                                        </StackPanel>-->
-
                                     </StackPanel>
+
                                 </Flyout>
                             </AppBarButton.Flyout>
                         </AppBarButton>
-                        <AppBarButton x:Name="InformationAppBarButton" Label="信息" Click="InformationAppBarButton_ClickHandler">
-                            <AppBarButton.Icon>
-                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE946;"/>
-                            </AppBarButton.Icon>
-                        </AppBarButton>
-
                         <AppBarButton x:Name="SaveAppBarButton" Click="Save_ClickHandler" Icon="Save" Label="保存" IsEnabled="False"/>
 
                     </StackPanel>

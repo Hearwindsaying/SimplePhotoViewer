@@ -118,15 +118,6 @@ namespace winrt::SimplePhotoViewer::implementation
             _EditAppBarButton = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::AppBarButton InformationAppBarButton()
-        {
-            return _InformationAppBarButton;
-        }
-        void InformationAppBarButton(::winrt::Windows::UI::Xaml::Controls::AppBarButton value)
-        {
-            _InformationAppBarButton = value;
-        }
-
         ::winrt::Windows::UI::Xaml::Controls::AppBarButton SaveAppBarButton()
         {
             return _SaveAppBarButton;
@@ -134,6 +125,60 @@ namespace winrt::SimplePhotoViewer::implementation
         void SaveAppBarButton(::winrt::Windows::UI::Xaml::Controls::AppBarButton value)
         {
             _SaveAppBarButton = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::CheckBox TaTCheckBox2()
+        {
+            return _TaTCheckBox2;
+        }
+        void TaTCheckBox2(::winrt::Windows::UI::Xaml::Controls::CheckBox value)
+        {
+            _TaTCheckBox2 = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::CheckBox TaTCheckBox()
+        {
+            return _TaTCheckBox;
+        }
+        void TaTCheckBox(::winrt::Windows::UI::Xaml::Controls::CheckBox value)
+        {
+            _TaTCheckBox = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::CheckBox SepiaCheckBox()
+        {
+            return _SepiaCheckBox;
+        }
+        void SepiaCheckBox(::winrt::Windows::UI::Xaml::Controls::CheckBox value)
+        {
+            _SepiaCheckBox = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::CheckBox SaturationCheckBox()
+        {
+            return _SaturationCheckBox;
+        }
+        void SaturationCheckBox(::winrt::Windows::UI::Xaml::Controls::CheckBox value)
+        {
+            _SaturationCheckBox = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::CheckBox ExposureCheckBox()
+        {
+            return _ExposureCheckBox;
+        }
+        void ExposureCheckBox(::winrt::Windows::UI::Xaml::Controls::CheckBox value)
+        {
+            _ExposureCheckBox = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Controls::CheckBox BlurCheckBox()
+        {
+            return _BlurCheckBox;
+        }
+        void BlurCheckBox(::winrt::Windows::UI::Xaml::Controls::CheckBox value)
+        {
+            _BlurCheckBox = value;
         }
 
         ::winrt::Windows::UI::Xaml::Controls::ScrollViewer FlipViewScrollViewer()
@@ -154,13 +199,94 @@ namespace winrt::SimplePhotoViewer::implementation
             _rtg = value;
         }
 
-        ::winrt::Windows::UI::Xaml::Controls::Image testImage()
+        ::winrt::Windows::UI::Xaml::Shapes::Rectangle rtgexp()
         {
-            return _testImage;
+            return _rtgexp;
         }
-        void testImage(::winrt::Windows::UI::Xaml::Controls::Image value)
+        void rtgexp(::winrt::Windows::UI::Xaml::Shapes::Rectangle value)
         {
-            _testImage = value;
+            _rtgexp = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Shapes::Rectangle rtgsat()
+        {
+            return _rtgsat;
+        }
+        void rtgsat(::winrt::Windows::UI::Xaml::Shapes::Rectangle value)
+        {
+            _rtgsat = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Shapes::Rectangle rtgsep()
+        {
+            return _rtgsep;
+        }
+        void rtgsep(::winrt::Windows::UI::Xaml::Shapes::Rectangle value)
+        {
+            _rtgsep = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Shapes::Rectangle rtgtem()
+        {
+            return _rtgtem;
+        }
+        void rtgtem(::winrt::Windows::UI::Xaml::Shapes::Rectangle value)
+        {
+            _rtgtem = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Shapes::Rectangle test()
+        {
+            return _test;
+        }
+        void test(::winrt::Windows::UI::Xaml::Shapes::Rectangle value)
+        {
+            _test = value;
+        }
+
+        ::winrt::Windows::UI::Xaml::Media::ImageBrush testBrush()
+        {
+            return _testBrush;
+        }
+        void testBrush(::winrt::Windows::UI::Xaml::Media::ImageBrush value)
+        {
+            _testBrush = value;
+        }
+
+        ::winrt::SimplePhotoViewer::BackdropTemperatureAndTintBrush bshtemp()
+        {
+            return _bshtemp;
+        }
+        void bshtemp(::winrt::SimplePhotoViewer::BackdropTemperatureAndTintBrush value)
+        {
+            _bshtemp = value;
+        }
+
+        ::winrt::SimplePhotoViewer::BackdropSepiaBrush bshsep()
+        {
+            return _bshsep;
+        }
+        void bshsep(::winrt::SimplePhotoViewer::BackdropSepiaBrush value)
+        {
+            _bshsep = value;
+        }
+
+        ::winrt::SimplePhotoViewer::BackdropSaturationBrush bshsat()
+        {
+            return _bshsat;
+        }
+        void bshsat(::winrt::SimplePhotoViewer::BackdropSaturationBrush value)
+        {
+            _bshsat = value;
+        }
+
+        ::winrt::SimplePhotoViewer::BackdropExposureBrush bshexp()
+        {
+            return _bshexp;
+        }
+        void bshexp(::winrt::SimplePhotoViewer::BackdropExposureBrush value)
+        {
+            _bshexp = value;
         }
 
         ::winrt::SimplePhotoViewer::BackdropBlurBrush bsh()
@@ -223,8 +349,8 @@ namespace winrt::SimplePhotoViewer::implementation
         bool _contentLoaded{false};
 
     private:
-        struct DetailPage_obj20_Bindings;
-        struct DetailPage_obj24_Bindings;
+        struct DetailPage_obj39_Bindings;
+        struct DetailPage_obj44_Bindings;
         struct DetailPage_obj1_Bindings;
 
         ::winrt::Windows::UI::Xaml::Controls::Grid _Display{nullptr};
@@ -237,11 +363,25 @@ namespace winrt::SimplePhotoViewer::implementation
         ::winrt::Windows::UI::Xaml::Controls::AppBarButton _RotateAppBarButton{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::AppBarButton _CancelAppBarButton{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::AppBarButton _EditAppBarButton{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::AppBarButton _InformationAppBarButton{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::AppBarButton _SaveAppBarButton{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::CheckBox _TaTCheckBox2{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::CheckBox _TaTCheckBox{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::CheckBox _SepiaCheckBox{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::CheckBox _SaturationCheckBox{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::CheckBox _ExposureCheckBox{nullptr};
+        ::winrt::Windows::UI::Xaml::Controls::CheckBox _BlurCheckBox{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::ScrollViewer _FlipViewScrollViewer{nullptr};
         ::winrt::Windows::UI::Xaml::Shapes::Rectangle _rtg{nullptr};
-        ::winrt::Windows::UI::Xaml::Controls::Image _testImage{nullptr};
+        ::winrt::Windows::UI::Xaml::Shapes::Rectangle _rtgexp{nullptr};
+        ::winrt::Windows::UI::Xaml::Shapes::Rectangle _rtgsat{nullptr};
+        ::winrt::Windows::UI::Xaml::Shapes::Rectangle _rtgsep{nullptr};
+        ::winrt::Windows::UI::Xaml::Shapes::Rectangle _rtgtem{nullptr};
+        ::winrt::Windows::UI::Xaml::Shapes::Rectangle _test{nullptr};
+        ::winrt::Windows::UI::Xaml::Media::ImageBrush _testBrush{nullptr};
+        ::winrt::SimplePhotoViewer::BackdropTemperatureAndTintBrush _bshtemp{nullptr};
+        ::winrt::SimplePhotoViewer::BackdropSepiaBrush _bshsep{nullptr};
+        ::winrt::SimplePhotoViewer::BackdropSaturationBrush _bshsat{nullptr};
+        ::winrt::SimplePhotoViewer::BackdropExposureBrush _bshexp{nullptr};
         ::winrt::SimplePhotoViewer::BackdropBlurBrush _bsh{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::FlipView _DetailPageFlipView{nullptr};
         ::winrt::Windows::UI::Xaml::Controls::ScrollViewer _ThumbnailScrollViewer{nullptr};

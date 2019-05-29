@@ -41,6 +41,7 @@ namespace winrt::SimplePhotoViewer::implementation
 		//this->currentSelectedFolderPathName = L"D:\\";
 		this->m_currentSelectedFolderName = L"TestResource";
 		//auto defaultFolder = this->LoadDefaultFolder();
+
 	}
 
     Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> MainPage::ImageSkus() const 
@@ -113,19 +114,8 @@ namespace winrt::SimplePhotoViewer::implementation
 				return item == curItem;
 			});
 			this->m_imageSkus.RemoveAt(curItemIndex);
-			//currentSelectedItems.RemoveAt(deleteCounter++);
 		}
-		//for (const auto& curItem : currentSelectedItems)
-		//{
-		//	auto imageSku = curItem.try_as<SimplePhotoViewer::ImageSku>();
-		//	imageSku.ImageFile().DeleteAsync();
-		//	auto curItemIndex = SimplePhotoViewer::find_index(this->m_imageSkus.First(), [curItem](auto const& item)->bool
-		//	{
-		//		return item == curItem;
-		//	});
-		//	//this->m_imageSkus.RemoveAt(curItemIndex);
-		//	//currentSelectedItems.RemoveAt(deleteCounter++);
-		//}
+
 		currentSelectedItems.Clear();
 	}
 
@@ -134,12 +124,15 @@ namespace winrt::SimplePhotoViewer::implementation
 		using AutoSuggestionBoxTextChangeReason = Windows::UI::Xaml::Controls::AutoSuggestionBoxTextChangeReason;
 		if (sender.Text() == L"")
 			if (this->ImageGridView().ItemsSource() != this->m_imageSkus)
+			{
 				this->ImageGridView().ItemsSource(this->m_imageSkus);
+			}
+				
 
 
-		if (args.Reason() == AutoSuggestionBoxTextChangeReason::UserInput)
+		if (args.Reason() == AutoSuggestionBoxTextChangeReason::UserInput || args.Reason() == AutoSuggestionBoxTextChangeReason::SuggestionChosen)
 		{
-			//perform searching and update corresponding ItemSource
+			//perform searching and update corresponding ItemSourc			
 			this->m_searchResults = single_threaded_observable_vector<Windows::Foundation::IInspectable>();
 			SimplePhotoViewer::find_all(this->m_imageSkus.First(), 
 				[sender](Windows::Foundation::IInspectable const& imageSku)->bool
@@ -173,11 +166,6 @@ namespace winrt::SimplePhotoViewer::implementation
 			}
 			
 		}
-		/*else if (args.Reason() == AutoSuggestionBoxTextChangeReason::SuggestionChosen)
-		{
-			wchar_t testchar[20] = { 's','g','c' };
-			OutputDebugString(testchar);
-		}*/
 	}
 
 	void MainPage::SearchBox_SuggestionChosen(Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, Windows::UI::Xaml::Controls::AutoSuggestBoxSuggestionChosenEventArgs const& args)
@@ -188,18 +176,34 @@ namespace winrt::SimplePhotoViewer::implementation
 			if (selectedResult.ImageNameWithType() == L"无法找到结果")
 				return;
 			sender.Text(selectedResult.ImageNameWithType());
+
+			/*perform searching again*/
+			//perform searching and update corresponding ItemSource
+			this->m_searchResults = single_threaded_observable_vector<Windows::Foundation::IInspectable>();
+			auto findItr = SimplePhotoViewer::find_if(this->m_imageSkus.First(),
+				[sender](Windows::Foundation::IInspectable const& imageSku)->bool
+			{
+				auto imageSkuItem = imageSku.try_as<SimplePhotoViewer::ImageSku>();
+				if (imageSkuItem)
+				{
+					return imageSkuItem.ImageNameWithType() == sender.Text();
+				}
+				return false;
+			});
+			if (findItr.HasCurrent())
+			{
+				this->m_searchResults.Append(findItr.Current());
+			}
+
+			if (this->m_searchResults.Size())
+			{
+				this->SearchAutoSuggetsBox().ItemsSource(this->m_searchResults);
+			}
 		}
 	}
 
 	void MainPage::SearchBox_QuerySubmitted(Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, Windows::UI::Xaml::Controls::AutoSuggestBoxQuerySubmittedEventArgs const& args)
 	{
-		//you need to raise propertyChanged event or UI won't get responsed;
-		//failed using:
-		//this->ImageSkus(this->searchResults);
-		//this->m_imageSkus = this->searchResults;
-		/*auto test = this->m_searchResults;
-		
-		this->ImageSkus(test);*/
 		this->ImageGridView().ItemsSource(this->m_searchResults);
 	}
 
@@ -236,20 +240,7 @@ namespace winrt::SimplePhotoViewer::implementation
 		auto info = winrt::make<ImageSku>(properties, file, file.DisplayName(), file.DisplayType(), file.Name());
 		co_return info;
 	}
-	/*Refresh current displaying folder using specified storageFolder*/
-	/*See also:DirectoryItem_Invoked()*/
-	/*Windows::Foundation::IAsyncAction MainPage::CancellationPropagatorAsync()
-	{
-		auto cancellation_token{ co_await winrt::get_cancellation_token() };
-		auto nested_coroutine{ this->RefreshCurrentFolder(nullptr) };
-		cancellation_token.callback([=] {nested_coroutine.Cancel(); });
-		co_await nested_coroutine;
-	}*/
-	/*Windows::Foundation::IAsyncAction MainPage::RefreshCurrentFolderCoroutineAsync()
-	{
-		auto cancellation_propagator{ this->CancellationPropagatorAsync() };
 
-	}*/
 
 	Windows::Foundation::IAsyncAction MainPage::RefreshCurrentFolder(Windows::Storage::StorageFolder const storageFolder)
 	{
@@ -368,6 +359,9 @@ namespace winrt::SimplePhotoViewer::implementation
 		}
 
 		auto itemFolder = args.InvokedItem().try_as<SimplePhotoViewer::DirectoryItem>().ItemFolder();
+
+		if (strong_this->CurrentSelectedFolder() == itemFolder.Name())
+			co_return;
 		strong_this->currentSelectedFolderPathName = itemFolder.Path();
 		strong_this->CurrentSelectedFolder(itemFolder.Name());
 
@@ -387,23 +381,17 @@ namespace winrt::SimplePhotoViewer::implementation
 
 	Windows::Foundation::IAsyncAction MainPage::OnContainerContentChanging(Windows::UI::Xaml::Controls::ListViewBase sender, Windows::UI::Xaml::Controls::ContainerContentChangingEventArgs args)
 	{
-		auto elementVisual = Windows::UI::Xaml::Hosting::ElementCompositionPreview::GetElementVisual(args.ItemContainer());
 		auto stackPanelChildren = args.ItemContainer().ContentTemplateRoot().as<Windows::UI::Xaml::Controls::StackPanel>().Children();
 		auto image = stackPanelChildren.GetAt(0).as< Windows::UI::Xaml::Controls::Image>();
 		//auto image = args.ItemContainer().ContentTemplateRoot().as<Windows::UI::Xaml::Controls::Image>();
 
 		if (args.InRecycleQueue())
 		{
-			elementVisual.ImplicitAnimations(nullptr);
-
 			image.Source(nullptr);
 		}
 
 		if (args.Phase() == 0)
 		{
-			///Add implicit animation to each visual.
-			//elementVisual.ImplicitAnimations(m_elementImplicitAnimation);
-
 			args.RegisterUpdateCallback([&](auto sender, auto args)
 			{
 				OnContainerContentChanging(sender, args);
@@ -450,7 +438,7 @@ namespace winrt::SimplePhotoViewer::implementation
 		this->DeleteAppBarButton().IsEnabled(selectedNum ? true : false);
 		this->RenameButton().IsEnabled(selectedNum ? true : false); //-
 		this->CopyAppBarButton().IsEnabled(selectedNum ? true : false);
-		this->nameInput().IsEnabled(selectedNum ? true : false); //-
+		//this->nameInput().IsEnabled(selectedNum ? true : false); //-
 	}
 
 	/*Load current folder selected by TreeViewItem*/
@@ -497,32 +485,25 @@ namespace winrt::SimplePhotoViewer::implementation
 
 					node.HasUnrealizedChildren(false);
 				}
-				else
-				{
-					wchar_t testchar[20] = { 'e','r','1' };
-					OutputDebugString(testchar);
-					return;
-				}
 			}
-			else
-			{
-				wchar_t testchar[20] = { 'e','r','r' };
-				OutputDebugString(testchar);
-				return;
-			}
-		}
-		else
-		{
-			return;
 		}
 	}
 
 
 	void MainPage::Windows_MouseDown(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
 	{
-		this->isLeftMouseButtonDownOnWindow = true;
-		this->origMouseDownPoint = e.GetCurrentPoint(this->PointerDetectedGrid());
-		e.Handled(true);
+		if (e.Pointer().PointerDeviceType() == Windows::Devices::Input::PointerDeviceType::Mouse)
+		{
+			auto properties = e.GetCurrentPoint(this->PointerDetectedGrid()).Properties();
+			if (properties.IsRightButtonPressed())
+			{
+				// Right button pressed
+				this->isLeftMouseButtonDownOnWindow = true;
+				this->origMouseDownPoint = e.GetCurrentPoint(this->PointerDetectedGrid());
+				e.Handled(true);
+			}
+		}
+		
 	}
 	void MainPage::Windows_MouseHold(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
 	{
@@ -562,11 +543,8 @@ namespace winrt::SimplePhotoViewer::implementation
 			if (dragDistance > 1.f)
 			{
 				this->isDraggingSelectionRect = true;
-				//todo:delete me
-				//this->ImageGridView().DeselectRange(ItemIndexRange(0,ImageGridView().Length());
 				this->InitDragSelectionRect(this->origMouseDownPoint.Position(), curMouseDownPoint.Position());
 			}
-
 		}
 		e.Handled(true);
 	}

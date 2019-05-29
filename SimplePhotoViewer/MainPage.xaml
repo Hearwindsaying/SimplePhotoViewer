@@ -39,8 +39,8 @@
         <DataTemplate x:Key="ImageGridView_DefaultItemTemplate" x:DataType="local:ImageSku">
             <StackPanel>
                 <Image x:Name="ItemImage" Source="{x:Bind ImageThumbnail, Mode=OneWay}"
-                                                 Stretch="Uniform" Opacity="1" IsDoubleTapEnabled="True" DoubleTapped="GridViewItem_DoubleTapped"
-                                                 Height="90" Width="120" Margin="2">
+                       Stretch="Uniform" Opacity="1" IsDoubleTapEnabled="True" DoubleTapped="GridViewItem_DoubleTapped"
+                       Height="90" Width="120" Margin="2">
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind ImageName, Mode=OneWay}"/>
                     </ToolTipService.ToolTip>
@@ -70,8 +70,10 @@
             FolderTemplate="{StaticResource FolderTemplate}"
             FileTemplate="{StaticResource FileTemplate}">
         </local:ExplorerItemTemplateSelector>
+
+       
     </Page.Resources>
-    
+
     <SplitView x:Name="splitView" PaneBackground="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
            IsPaneOpen="True"  OpenPaneLength="200" CompactPaneLength="38" DisplayMode="CompactInline">
         <!--左边栏-->
@@ -124,7 +126,7 @@
 
                 <!--第三行：treeview-->
                 <Grid Grid.Row ="2" x:Name="TreeView_Grid">
-                    <ScrollViewer HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch">
+                    <ScrollViewer Margin="0,0,0,0">
                         <muxcontrols:TreeView x:Name="DirectoryTreeView" 
                            Height="848"
                            ItemsSource="{x:Bind TreeViewFolders, Mode=OneWay}"
@@ -135,20 +137,7 @@
                            Collapsed="DirectoryItem_Collapsed"
                            ItemInvoked="DirectoryItem_Invoked" Width="200" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch"
                            ItemTemplateSelector="{StaticResource ExplorerItemTemplateSelector}">
-                            <!--<muxcontrols:TreeView.ItemTemplate>
-                                <DataTemplate x:DataType="local:DirectoryItem">
-                                    <muxcontrols:TreeViewItem ItemsSource="{x:Bind SubItems, Mode=OneWay}" >
-                                        <StackPanel Orientation="Horizontal">
-                                            <Image Width="20">
-                                                <Image.Source>
-                                                    <BitmapImage UriSource="/Assets/folder.png" DecodePixelHeight="100" />
-                                                </Image.Source>
-                                            </Image>
-                                            <TextBlock Text="{x:Bind Item}" />
-                                        </StackPanel>
-                                    </muxcontrols:TreeViewItem>
-                                </DataTemplate>
-                            </muxcontrols:TreeView.ItemTemplate>-->
+
                         </muxcontrols:TreeView>
                     </ScrollViewer>
                 </Grid>
@@ -234,7 +223,7 @@
 
                         </Grid>
                         <Grid Grid.Column="1">
-                            <AutoSuggestBox Name="SearchAutoSuggetsBox" 
+                            <AutoSuggestBox x:Name="SearchAutoSuggetsBox" 
                                         PlaceholderText="在当前文件夹中搜索" QueryIcon="Find"
                                         MinWidth="180" MaxWidth="200" Opacity="0.7"
                                         HorizontalAlignment="Right" 
@@ -261,9 +250,8 @@
                         </Grid.ColumnDefinitions>
 
 
-                        <ScrollViewer Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                      >
-                        <GridView x:Name="ImageGridView"
+                        <ScrollViewer Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <GridView x:Name="ImageGridView"
                                     IsItemClickEnabled="True" 
                                     ItemsSource="{x:Bind ImageSkus, Mode=OneWay}" 
                                     SelectionMode="Extended"
@@ -274,7 +262,7 @@
                                   
                                     ItemsPanel="{StaticResource ImageGridView_ItemsPanelTemplate}"
                                     ItemTemplate="{StaticResource ImageGridView_DefaultItemTemplate}">
-                        </GridView>
+                            </GridView>
                         </ScrollViewer>
 
                     </Grid>
@@ -290,8 +278,6 @@
                         <StackPanel Name="Deleteme_StackPanel" Orientation="Horizontal">
                             <AppBarButton x:Name="CopyAppBarButton" Click="Copy_ClickHandler" IsEnabled="False"
                                       Icon="Copy" Label="复制" Background="Transparent"/>
-                            <AppBarButton x:Name="ShearAppBarButton" Click="Shear_ClickHandler" IsEnabled="False"
-                                      Icon="Cut" Label="剪切" Background="Transparent"/>
                             <AppBarButton x:Name="PasteAppBarButton" Click="Paste_ClickHandler" IsEnabled="False"
                                       Icon="Paste" Label="粘贴" Background="Transparent"/>
                             <AppBarButton x:Name="DeleteAppBarButton" Click="Delete_ClickHandler" IsEnabled="False"
@@ -311,12 +297,12 @@
                                             <TextBox x:Name="DigitNum"
                                                      Header="请输入编号位数:" PlaceholderText="(可选)" IsEnabled="True"
                                                      Width="200" HorizontalAlignment="Left"/>
-                                            <Button x:Name="Rename" Content="确认" Click="Rename_ClickHandler" />
+                                            <Button x:Name="Rename2" Content="确认" Click="Rename_ClickHandler" />
                                         </StackPanel>
                                     </Flyout>
                                 </AppBarButton.Flyout>
                             </AppBarButton>
-                            
+
                             <AppBarButton x:Name="OpenAppBarButton" Click="OpenFile_ClickHandler" 
                                       Icon="OpenFile" Label="导入" ToolTipService.ToolTip="导入文件夹" Background="Transparent"/>
                         </StackPanel>
@@ -324,9 +310,9 @@
                         <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
                             <TextBlock Text="{x:Bind CurrentFolderSelectedImageNumber, Mode=OneWay}" VerticalAlignment="Center" Margin="0,0,20,0"/>
                             <TextBlock Text="{x:Bind CurrentFolderImageNumber, Mode=OneWay}" VerticalAlignment="Center" Margin="0,0,20,0"/>
-                            <Button Name="SlidePlay" Click="SlidePlay_ClickHandler"
-                                FontFamily="Segoe MDL2 Assets" Content="&#xE786;"
-                                ToolTipService.ToolTip="幻灯片播放" Background="Transparent" HorizontalAlignment="Right"
+                            <AppBarButton x:Name="SlidePlay" Click="SlidePlay_ClickHandler"
+                                Icon="SlideShow" Label="播放"
+                                 Background="Transparent" HorizontalAlignment="Right"
                                 />
                         </StackPanel>
                     </Grid>

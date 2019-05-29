@@ -5,6 +5,11 @@
 #pragma once
 
 #include "BackdropBlurBrush.h"
+#include "BackdropExposureBrush.h"
+#include "BackdropExposureBrush.h"
+#include "BackdropSaturationBrush.h"
+#include "BackdropSepiaBrush.h"
+#include "BackdropTemperatureAndTintBrush.h"
 #include "ImageSku.h"
 #include "DetailPage.g.h"
 
@@ -21,7 +26,9 @@ namespace winrt::SimplePhotoViewer::implementation
 
 		Windows::Foundation::IAsyncAction OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs e);
 		void GoBack_ClickHandler(Windows::Foundation::IInspectable const& param, Windows::UI::Xaml::RoutedEventArgs const&);
-		Windows::Foundation::IAsyncAction ImageGridView_ItemClick(Windows::Foundation::IInspectable const sender, Windows::UI::Xaml::Controls::ItemClickEventArgs const e);
+		void ImageGridView_ItemClick(Windows::Foundation::IInspectable const sender, Windows::UI::Xaml::Controls::ItemClickEventArgs const e);
+		Windows::Foundation::IAsyncAction ThumbnailListView_OnContainerContentChanging(Windows::UI::Xaml::Controls::ListViewBase sender, Windows::UI::Xaml::Controls::ContainerContentChangingEventArgs args);
+		void FlipView_CleanUpVirtualizedItem(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::CleanUpVirtualizedItemEventArgs const& e);
 
 		Windows::Foundation::IAsyncAction PlayButton_ClickHandler(Windows::Foundation::IInspectable const, Windows::UI::Xaml::RoutedEventArgs const);
 		void PauseButton_ClickHandler(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::RoutedEventArgs const&);
@@ -45,6 +52,53 @@ namespace winrt::SimplePhotoViewer::implementation
 		Windows::Foundation::IAsyncAction Edit_ClickHandler(Windows::Foundation::IInspectable const, Windows::UI::Xaml::RoutedEventArgs const);
 		Windows::Foundation::IAsyncAction InformationAppBarButton_ClickHandler(Windows::Foundation::IInspectable const, Windows::UI::Xaml::RoutedEventArgs const);
 		void BlurAmountSlider_ValueChanged(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs const&);
+		void ExposureSlider_ValueChanged(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs const&);
+		void SaturationSlider_ValueChanged(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs const&);
+		void SepiaIntensitySlider_ValueChanged(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs const&);
+		void TemperatureSlider_ValueChanged(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs const&);
+		void TintSlider_ValueChanged(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs const&);
+
+		void Checkbox_Checked(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const&)
+		{
+			auto checkbox = sender.try_as<Windows::UI::Xaml::Controls::CheckBox>();
+			auto rectangle = this->rtg();
+			if(checkbox.Name() == L"BlurCheckBox")
+				rectangle = this->rtg();
+			else if (checkbox.Name() == L"ExposureCheckBox")
+				rectangle = this->rtgexp();
+			else if (checkbox.Name() == L"SaturationCheckBox")
+				rectangle = this->rtgsat();
+			else if (checkbox.Name() == L"SepiaCheckBox")
+				rectangle = this->rtgsep();
+			else if (checkbox.Name() == L"TaTCheckBox" || checkbox.Name() == L"TaTCheckBox2")
+				rectangle = this->rtgtem();
+
+			//if(checkbox.IsChecked())
+				rectangle.Visibility(winrt::Windows::UI::Xaml::Visibility::Visible);
+			//else
+			//	rectangle.Visibility(winrt::Windows::UI::Xaml::Visibility::Collapsed);
+		}
+		void Checkbox_UnChecked(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const&)
+		{
+			auto checkbox = sender.try_as<Windows::UI::Xaml::Controls::CheckBox>();
+			auto rectangle = this->rtg();
+			if (checkbox.Name() == L"BlurCheckBox")
+				rectangle = this->rtg();
+			else if (checkbox.Name() == L"ExposureCheckBox")
+				rectangle = this->rtgexp();
+			else if (checkbox.Name() == L"SaturationCheckBox")
+				rectangle = this->rtgsat();
+			else if (checkbox.Name() == L"SepiaCheckBox")
+				rectangle = this->rtgsep();
+			else if (checkbox.Name() == L"TaTCheckBox" || checkbox.Name() == L"TaTCheckBox2")
+				rectangle = this->rtgtem();
+
+			//if (checkbox.IsChecked())
+			//	rectangle.Visibility(winrt::Windows::UI::Xaml::Visibility::Visible);
+			//else
+				rectangle.Visibility(winrt::Windows::UI::Xaml::Visibility::Collapsed);
+		}
+	
 
 	private:
 		void ConcentrateControls()
@@ -54,7 +108,6 @@ namespace winrt::SimplePhotoViewer::implementation
 			this->ZoomInAppBarButton().IsEnabled(false);
 			this->ZoomOutAppBarButton().IsEnabled(false);
 			this->EditAppBarButton().IsEnabled(false);
-			this->InformationAppBarButton().IsEnabled(false);
 			this->CancelAppBarButton().IsEnabled(true);
 			this->SaveAppBarButton().IsEnabled(true);
 		}
@@ -65,7 +118,6 @@ namespace winrt::SimplePhotoViewer::implementation
 			this->ZoomInAppBarButton().IsEnabled(true);
 			this->ZoomOutAppBarButton().IsEnabled(true);
 			this->EditAppBarButton().IsEnabled(true);
-			this->InformationAppBarButton().IsEnabled(true);
 			this->CancelAppBarButton().IsEnabled(false);
 			this->SaveAppBarButton().IsEnabled(false);
 		}

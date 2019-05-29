@@ -29,6 +29,62 @@ struct WINRT_EBO IBackdropBlurBrushStatics :
     IBackdropBlurBrushStatics(std::nullptr_t = nullptr) noexcept {}
 };
 
+struct WINRT_EBO IBackdropExposureBrush :
+    Windows::Foundation::IInspectable,
+    impl::consume_t<IBackdropExposureBrush>
+{
+    IBackdropExposureBrush(std::nullptr_t = nullptr) noexcept {}
+};
+
+struct WINRT_EBO IBackdropExposureBrushStatics :
+    Windows::Foundation::IInspectable,
+    impl::consume_t<IBackdropExposureBrushStatics>
+{
+    IBackdropExposureBrushStatics(std::nullptr_t = nullptr) noexcept {}
+};
+
+struct WINRT_EBO IBackdropSaturationBrush :
+    Windows::Foundation::IInspectable,
+    impl::consume_t<IBackdropSaturationBrush>
+{
+    IBackdropSaturationBrush(std::nullptr_t = nullptr) noexcept {}
+};
+
+struct WINRT_EBO IBackdropSaturationBrushStatics :
+    Windows::Foundation::IInspectable,
+    impl::consume_t<IBackdropSaturationBrushStatics>
+{
+    IBackdropSaturationBrushStatics(std::nullptr_t = nullptr) noexcept {}
+};
+
+struct WINRT_EBO IBackdropSepiaBrush :
+    Windows::Foundation::IInspectable,
+    impl::consume_t<IBackdropSepiaBrush>
+{
+    IBackdropSepiaBrush(std::nullptr_t = nullptr) noexcept {}
+};
+
+struct WINRT_EBO IBackdropSepiaBrushStatics :
+    Windows::Foundation::IInspectable,
+    impl::consume_t<IBackdropSepiaBrushStatics>
+{
+    IBackdropSepiaBrushStatics(std::nullptr_t = nullptr) noexcept {}
+};
+
+struct WINRT_EBO IBackdropTemperatureAndTintBrush :
+    Windows::Foundation::IInspectable,
+    impl::consume_t<IBackdropTemperatureAndTintBrush>
+{
+    IBackdropTemperatureAndTintBrush(std::nullptr_t = nullptr) noexcept {}
+};
+
+struct WINRT_EBO IBackdropTemperatureAndTintBrushStatics :
+    Windows::Foundation::IInspectable,
+    impl::consume_t<IBackdropTemperatureAndTintBrushStatics>
+{
+    IBackdropTemperatureAndTintBrushStatics(std::nullptr_t = nullptr) noexcept {}
+};
+
 struct WINRT_EBO IDetailPage :
     Windows::Foundation::IInspectable,
     impl::consume_t<IDetailPage>

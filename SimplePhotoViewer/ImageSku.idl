@@ -7,6 +7,7 @@ namespace SimplePhotoViewer
 		ImageSku(String defaultTipString);
 
 		Boolean ImageIsSelected{ get; set; };
+		Boolean IsVirtualizing{ get; set; };
 
 		Windows.Storage.StorageFile ImageFile{ get; set; }; 
 		Windows.Storage.FileProperties.ImageProperties ImageProperties{ get; };

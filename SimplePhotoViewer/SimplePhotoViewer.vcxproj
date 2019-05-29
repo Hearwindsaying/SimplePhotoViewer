@@ -76,6 +76,7 @@
     <AppxBundlePlatforms>x64</AppxBundlePlatforms>
     <AppInstallerUpdateFrequency>1</AppInstallerUpdateFrequency>
     <AppInstallerCheckForUpdateFrequency>OnApplicationRun</AppInstallerCheckForUpdateFrequency>
+    <AppxPackageDir>D:\SimplePhotoViewerPackage\</AppxPackageDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -99,6 +100,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BackdropBlurBrush.h" />
+    <ClInclude Include="BackdropExposureBrush.h" />
+    <ClInclude Include="BackdropSaturationBrush.h" />
+    <ClInclude Include="BackdropSepiaBrush.h" />
+    <ClInclude Include="BackdropTemperatureAndTintBrush.h" />
     <ClInclude Include="DetailPage.h">
       <DependentUpon>DetailPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -147,6 +152,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BackdropBlurBrush.cpp" />
+    <ClCompile Include="BackdropExposureBrush.cpp" />
+    <ClCompile Include="BackdropSaturationBrush.cpp" />
+    <ClCompile Include="BackdropSepiaBrush.cpp" />
+    <ClCompile Include="BackdropTemperatureAndTintBrush.cpp" />
     <ClCompile Include="DetailPage.cpp">
       <DependentUpon>DetailPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -171,6 +180,10 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Midl>
     <Midl Include="BackdropBlurBrush .idl" />
+    <Midl Include="BackdropExposureBrush.idl" />
+    <Midl Include="BackdropSaturationBrush.idl" />
+    <Midl Include="BackdropSepiaBrush.idl" />
+    <Midl Include="BackdropTemperatureAndTintBrush.idl" />
     <Midl Include="DetailPage.idl">
       <DependentUpon>DetailPage.xaml</DependentUpon>
       <SubType>Code</SubType>

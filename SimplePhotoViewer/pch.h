@@ -41,6 +41,9 @@
 #include <winrt/Windows.UI.h>
 #include <winrt/Windows.UI.Composition.h>
 
+#include <winrt/Windows.ApplicationModel.DataTransfer.h>
+#include <winrt/Windows.ApplicationModel.h>
+
 #include <winrt/Windows.Storage.h>
 #include <winrt/Windows.Storage.Search.h>
 #include <winrt/Windows.Storage.Streams.h>

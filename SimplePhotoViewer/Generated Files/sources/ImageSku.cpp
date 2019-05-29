@@ -28,6 +28,16 @@ namespace winrt::SimplePhotoViewer::implementation
         throw hresult_not_implemented();
     }
 
+    bool ImageSku::IsVirtualizing()
+    {
+        throw hresult_not_implemented();
+    }
+
+    void ImageSku::IsVirtualizing(bool value)
+    {
+        throw hresult_not_implemented();
+    }
+
     Windows::Storage::StorageFile ImageSku::ImageFile()
     {
         throw hresult_not_implemented();

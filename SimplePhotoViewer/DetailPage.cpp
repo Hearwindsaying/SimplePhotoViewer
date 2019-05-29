@@ -22,6 +22,12 @@ using namespace Windows::Foundation::Numerics;
 using namespace Windows::UI::Xaml::Hosting;
 using namespace Windows::UI::Composition;
 
+using namespace Windows::ApplicationModel::DataTransfer;
+using namespace Windows::Storage;
+using namespace Windows::Storage::Streams;
+using namespace Windows::UI::Xaml::Media::Imaging;
+using namespace Windows::Graphics::Imaging;
+
 namespace winrt::SimplePhotoViewer::implementation
 {
     DetailPage::DetailPage():m_compositor(Window::Current().Compositor())
@@ -60,8 +66,8 @@ namespace winrt::SimplePhotoViewer::implementation
 
 		//this->m_imageSkus = pageParameter.GetAt(0).try_as< Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable>>();
 		//auto selectedIndex = unbox_value<int>( pageParameter.GetAt(1));
-
-		for (auto i = 0; i < 5; ++i)
+		constexpr int nextNumConst = 3;
+		for (auto i = 0; i < nextNumConst; ++i)
 		{
 			/*Load next 5 images*/
 			if ((i + mainPageSelectedIndex) >= this->m_imageSkus.Size())
@@ -74,6 +80,7 @@ namespace winrt::SimplePhotoViewer::implementation
 			bitmap.SetSource(stream);
 			singleImageSku.ImageContent(bitmap);
 			//stream.Close();
+			singleImageSku.IsVirtualizing(false);
 		}
 
 		/*this->DetailPageFlipView().SelectedIndex(1);*/
@@ -81,9 +88,9 @@ namespace winrt::SimplePhotoViewer::implementation
 		//this->ThumbnailListView().SelectedIndex(0);
 
 		/*Issue fixed:corruption due to the non-initalization of ThumbnailListView*/
-		/*Note that we'd better register the SelectionChanged event manually after loading all items.
-		/*If binding in xaml, be careful that ThumbnailListView may not get initialized yet.*/
-		this->DetailPageFlipView().SelectionChanged([this](winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const& e)->Windows::Foundation::IAsyncAction
+		/*Note that we'd better register the SelectionChanged event manually after loading items.
+		/*If binding in xaml, be careful that ThumbnailListView may not have been initialized yet.*/
+		this->DetailPageFlipView().SelectionChanged([this, nextNumConst](winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const& e)->Windows::Foundation::IAsyncAction
 		{
 			auto flipView = sender.try_as<Windows::UI::Xaml::Controls::FlipView>();
 			if (flipView.SelectedItem())
@@ -118,28 +125,77 @@ namespace winrt::SimplePhotoViewer::implementation
 							auto position = transform.TransformPoint(Windows::Foundation::Point(0, 0));
 							this->ThumbnailScrollViewer().ChangeView(position.X, position.Y, nullptr);
 
-							/*Load the next 5 images*/
-							for (auto i = 0; i < 5; ++i)
+							auto selectedIndexVector = std::vector<int>(3);
+							auto selectedIndexBase = 0;
+
+							/*Load the current and next 2 images*/
+							for (auto i = 0; i < nextNumConst; ++i)
 							{
 								auto flipViewSelectedItem = flipView.SelectedItem();
 								auto selectedImageSkuItemIndex = SimplePhotoViewer::find_index(this->m_imageSkus.First(), [flipViewSelectedItem](auto const& item)->bool
 								{
 									return item == flipViewSelectedItem;
 								});
+								
 
 								if ((i + selectedImageSkuItemIndex) >= this->m_imageSkus.Size())
 									break;
 								auto singleItem = this->m_imageSkus.GetAt(i + selectedImageSkuItemIndex);
+								/*selectedIndexVector[i] = i + selectedImageSkuItemIndex;*/
+								selectedIndexBase = selectedImageSkuItemIndex;
 
 								auto singleImageSku = singleItem.try_as<SimplePhotoViewer::ImageSku>();
-								if (singleImageSku.ImageContent())
-									continue;
+								if (singleImageSku.ImageContent() && !singleImageSku.IsVirtualizing())/*current imageSku does have content so just skip the very item*/
+								{
+									/*Windows::UI::Xaml::Media::Imaging::BitmapImage bitmapImage{};
+									if(singleImageSku.ImageContent() != bitmapImage)*/
+										continue;
+								}
+									
 
 								Windows::Storage::Streams::IRandomAccessStream stream{ co_await singleImageSku.ImageFile().OpenAsync(Windows::Storage::FileAccessMode::Read) };
 								Windows::UI::Xaml::Media::Imaging::BitmapImage bitmap{};
 								bitmap.SetSource(stream);
 								singleImageSku.ImageContent(bitmap);
 								//stream.Close();
+								singleImageSku.IsVirtualizing(false);
+								
+								/*for (auto&& imageSku : this->m_imageSkus)
+								{
+									auto selectorItem = this->DetailPageFlipView().ContainerFromItem(imageSku).try_as<Windows::UI::Xaml::Controls::FlipViewItem>();
+									if (!selectorItem)
+									{
+										Windows::UI::Xaml::Media::Imaging::BitmapImage bitmapImage{};
+										
+										imageSku.as<SimplePhotoViewer::ImageSku>().ImageContent(bitmapImage);
+									}
+								}*/
+							}
+
+							auto imageSkuSize = this->m_imageSkus.Size();
+							for (auto i = 0; i < imageSkuSize; ++i)
+							{
+#define CHECK_INDEX(x) (x>=0&&x<imageSkuSize)
+#define IS_INDEX(x) (x == i)
+								if ((CHECK_INDEX(selectedIndexBase - 3) && IS_INDEX(selectedIndexBase - 3)) ||
+									(CHECK_INDEX(selectedIndexBase - 2) && IS_INDEX(selectedIndexBase - 2)) ||
+									(CHECK_INDEX(selectedIndexBase - 1) && IS_INDEX(selectedIndexBase - 1)) ||
+									(IS_INDEX(selectedIndexBase)) ||
+									(CHECK_INDEX(selectedIndexBase + 1) && IS_INDEX(selectedIndexBase + 1)) ||
+									(CHECK_INDEX(selectedIndexBase + 2) && IS_INDEX(selectedIndexBase + 2)) ||
+									(CHECK_INDEX(selectedIndexBase + 3) && IS_INDEX(selectedIndexBase + 3)))
+								{
+									//this->m_imageSkus.GetAt(i).as<SimplePhotoViewer::ImageSku>().IsVirtualizing(false);
+									continue;
+								}
+									
+								
+								Windows::UI::Xaml::Media::Imaging::BitmapImage bitmapImage{};
+
+								this->m_imageSkus.GetAt(i).as<SimplePhotoViewer::ImageSku>().ImageContent(bitmapImage);
+								this->m_imageSkus.GetAt(i).as<SimplePhotoViewer::ImageSku>().IsVirtualizing(true);
+#undef CHECK_INDEX
+#undef IS_INDEX
 							}
 						}
 					}
@@ -155,53 +211,72 @@ namespace winrt::SimplePhotoViewer::implementation
 		}
 	}
 
-	Windows::Foundation::IAsyncAction DetailPage::ImageGridView_ItemClick(Windows::Foundation::IInspectable const sender, Windows::UI::Xaml::Controls::ItemClickEventArgs const e)
+	void DetailPage::ImageGridView_ItemClick(Windows::Foundation::IInspectable const sender, Windows::UI::Xaml::Controls::ItemClickEventArgs const e)
 	{
 		auto clickedItem = e.ClickedItem();
 		this->DetailPageFlipView().SelectedItem(clickedItem);
 
-		auto currentImageSku = clickedItem.try_as<SimplePhotoViewer::ImageSku>();
-		auto thumbnailImage = currentImageSku.ImageThumbnail();
-
-
-		if (!thumbnailImage)//UI Virtualization(OnContainerChanged) should be used instead
+		/*for (auto&& imageSku : this->m_imageSkus)
 		{
-			auto thumbnail = co_await currentImageSku.ImageFile().GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::SingleItem);
-			//or:auto thumbnail = co_await file.GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::PicturesView);
-			Windows::UI::Xaml::Media::Imaging::BitmapImage bitmapImage{};
-			bitmapImage.SetSource(thumbnail);
-			thumbnail.Close();
+			auto selectorItem = this->DetailPageFlipView().ContainerFromItem(imageSku).try_as<Windows::UI::Xaml::Controls::FlipViewItem>();
+			if (!selectorItem)
+			{
+				auto i = 0;
+			}
+		}*/
+	}
 
-			//auto thumbnail = co_await impleType->GetImageThumbnailAsync();
-			currentImageSku.ImageThumbnail(bitmapImage);
-			//image.Source(bitmapImage);
+	Windows::Foundation::IAsyncAction DetailPage::ThumbnailListView_OnContainerContentChanging(Windows::UI::Xaml::Controls::ListViewBase sender, Windows::UI::Xaml::Controls::ContainerContentChangingEventArgs args)
+	{
+		auto image = args.ItemContainer().ContentTemplateRoot().as<Windows::UI::Xaml::Controls::Image>();
+
+		if (args.InRecycleQueue())
+		{
+			image.Source(nullptr);
 		}
 
-		for (auto i = 0; i < 10; ++i)
+		if (args.Phase() == 0)
 		{
-			auto thumbnailSelectedItem = this->ThumbnailListView().SelectedItem();
-			auto selectedImageSkuItemIndex = SimplePhotoViewer::find_index(this->m_imageSkus.First(), [thumbnailSelectedItem](auto const& item)->bool
+			args.RegisterUpdateCallback([&](auto sender, auto args)
 			{
-				return item == thumbnailSelectedItem;
+				this->ThumbnailListView_OnContainerContentChanging(sender, args);
 			});
 
-			if ((i + selectedImageSkuItemIndex) >= this->m_imageSkus.Size())
-				break;
-			auto singleItem = this->m_imageSkus.GetAt(i + selectedImageSkuItemIndex);
-
-			auto singleImageSku = singleItem.try_as<SimplePhotoViewer::ImageSku>();
-			if (singleImageSku.ImageThumbnail())
-				continue;
-
-			Windows::UI::Xaml::Media::Imaging::BitmapImage bitmapImage{};
-			auto thumbnail = co_await singleImageSku.ImageFile().GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::SingleItem);
-			bitmapImage.SetSource(thumbnail);
-			thumbnail.Close();
-			singleImageSku.ImageThumbnail(bitmapImage);
+			args.Handled(true);
 		}
-		//this->DetailPageFlipView().ItemTemplate().
-		/*this->ThumbnailListView().ScrollIntoView();*/
-		/*this->ThumbnailListView().ScrollIntoView(m_imageSkus.GetAt(10));*/
+
+		if (args.Phase() == 1)
+		{
+			// It's phase 1, so show this item's image.
+			image.Opacity(100);
+
+			auto item = unbox_value<SimplePhotoViewer::ImageSku>(args.Item());
+			ImageSku* impleType = from_abi<ImageSku>(item);
+
+			try
+			{
+				auto thumbnail = co_await impleType->ImageFile().GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode::SingleItem);
+				Windows::UI::Xaml::Media::Imaging::BitmapImage bitmapImage{};
+				bitmapImage.SetSource(thumbnail);
+				thumbnail.Close();
+				image.Source(bitmapImage);
+			}
+			catch (winrt::hresult_error)
+			{
+				// File could be corrupt, or it might have an image file
+				// extension, but not really be an image file.
+				Windows::UI::Xaml::Media::Imaging::BitmapImage bitmapImage{};
+				//Uri uri{ image.BaseUri().AbsoluteUri(), L"Assets/StoreLogo.png" };
+				//bitmapImage.UriSource(uri);
+				image.Source(bitmapImage);
+			}
+		}
+	}
+
+	void DetailPage::FlipView_CleanUpVirtualizedItem(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::CleanUpVirtualizedItemEventArgs const& e)
+	{
+		auto imageSku = e.Value().as<SimplePhotoViewer::ImageSku>();
+		imageSku.ImageContent(nullptr);
 	}
 
 	void DetailPage::GoBack_ClickHandler(Windows::Foundation::IInspectable const& param, Windows::UI::Xaml::RoutedEventArgs const&)
@@ -323,31 +398,33 @@ namespace winrt::SimplePhotoViewer::implementation
 
 
 			//// Attempt to generate a new thumbnail to reflect any rotation operation.
-			encoder.IsThumbnailGenerated(true);
+			encoder.IsThumbnailGenerated(false);
 
-			try
-			{
-				co_await encoder.FlushAsync();
-			}
-			catch (hresult_error const& ex)
-			{
-				HRESULT hr = ex.to_abi();
-				switch (hr)
-				{
-				case WINCODEC_ERR_UNSUPPORTEDOPERATION:
-					// If the encoder does not support writing a thumbnail, then try again
-					// but disable thumbnail generation.
-					encoder.IsThumbnailGenerated(false);
-					break;
-				default:
-					throw;
-				}
-			}
+			//try
+			//{
+			//	co_await encoder.FlushAsync();
+			//}
+			//catch (hresult_error const& ex)
+			//{
+			//	HRESULT hr = ex.to_abi();
+			//	switch (hr)
+			//	{
+			//	case WINCODEC_ERR_UNSUPPORTEDOPERATION:
+			//		// If the encoder does not support writing a thumbnail, then try again
+			//		// but disable thumbnail generation.
+			//		encoder.IsThumbnailGenerated(false);
+			//		break;
+			//	default:
+			//		throw;
+			//	}
+			//}
 
 			if (encoder.IsThumbnailGenerated() == false)
 			{
 				co_await encoder.FlushAsync();
 			}
+			
+
 
 			// Now that the file has been written to the temporary stream, copy the data to the file.
 			memStream.Seek(0);
@@ -391,6 +468,54 @@ namespace winrt::SimplePhotoViewer::implementation
 
 	Windows::Foundation::IAsyncAction DetailPage::InformationAppBarButton_ClickHandler(Windows::Foundation::IInspectable const, Windows::UI::Xaml::RoutedEventArgs const)
 	{
+		//auto dataPackage = DataPackage{};
+
+		//RenderTargetBitmap renderTargetBitmap{};
+		//co_await renderTargetBitmap.RenderAsync(Display());
+
+		//IBuffer pixelBuffer = co_await renderTargetBitmap.GetPixelsAsync();
+		//auto softwareBitmap = SoftwareBitmap::CreateCopyFromBuffer
+		//(pixelBuffer, BitmapPixelFormat::Bgra8, 1024,768);
+
+		//auto softwareBitmapsource = SoftwareBitmapSource{};
+		//auto correctSB = softwareBitmap.Convert(softwareBitmap, BitmapPixelFormat::Bgra8, BitmapAlphaMode::Premultiplied);
+		//softwareBitmapsource.SetBitmapAsync(correctSB);
+		//this->testBrush().ImageSource(renderTargetBitmap);
+		//this->test().Visibility(winrt::Windows::UI::Xaml::Visibility::Visible);
+
+
+		//auto ms = InMemoryRandomAccessStream();
+		//{
+		//	BitmapEncoder encoder = co_await BitmapEncoder::CreateAsync(BitmapEncoder::JpegEncoderId(), ms);
+		//	encoder.SetSoftwareBitmap(softwareBitmap);
+
+		//	try
+		//	{
+		//		co_await encoder.FlushAsync();
+		//	}
+		//	catch (...) {}
+
+		//	dataPackage.SetBitmap(RandomAccessStreamReference::CreateFromStream(ms));
+
+		//	Clipboard::SetContent(dataPackage);
+		//	//array = new byte[ms.Size];
+		//	//co_await ms.ReadAsync(array.AsBuffer(), (uint)ms.Size, InputStreamOptions.None);
+		//}
+		// COMMENT OUT EXACTLY ONE OF TECHNIQUE 1/2
+		// TECHNIQUE 1; QI for IBufferByteAccess.
+		//auto bufferByteAccess{ pixelBuffer.as<::IBufferByteAccess>() };
+		//uint8_t * pTargetBytes{ nullptr };
+		//bufferByteAccess->Buffer(&pTargetBytes);
+		//// TECHNIQUE 2; use a C++/WinRT helper function (and delete the definition of IBufferByteAccess in pch.h).
+		////uint8_t * pTargetBytes{ m_writeableBitmap.PixelBuffer().data() };
+		//std::vector<uint8_t> dst;
+		//for (auto i=0;i<100*100*4;++i)
+		//{
+		//	dst.push_back(*(pTargetBytes++));
+		//}
+
+
+		//anyExampleImage().Source(m_writeableBitmap);
 		co_return;
 	}
 
@@ -398,10 +523,50 @@ namespace winrt::SimplePhotoViewer::implementation
 	{
 		//this->ConcentrateControls();
 		auto slider = sender.try_as<Windows::UI::Xaml::Controls::Slider>();
-		if(slider)
+		if (slider)
 			this->bsh().BlurAmount(slider.Value());
 		//auto fillBrush = this->BackdropBlur_Rectangle().Fill();
 	}
 
+	void DetailPage::ExposureSlider_ValueChanged(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs const&)
+	{
+		//this->ConcentrateControls();
+		auto slider = sender.try_as<Windows::UI::Xaml::Controls::Slider>();
+		if (slider)
+			this->bshexp().Exposure(slider.Value());
+		//auto fillBrush = this->BackdropBlur_Rectangle().Fill();
+	}
+	void DetailPage::SaturationSlider_ValueChanged(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs const&)
+	{
+		//this->ConcentrateControls();
+		auto slider = sender.try_as<Windows::UI::Xaml::Controls::Slider>();
+		if (slider)
+			this->bshsat().Saturation(slider.Value());
+		//auto fillBrush = this->BackdropBlur_Rectangle().Fill();
+	}
+	void DetailPage::SepiaIntensitySlider_ValueChanged(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs const&)
+	{
+		//this->ConcentrateControls();
+		auto slider = sender.try_as<Windows::UI::Xaml::Controls::Slider>();
+		if (slider)
+			this->bshsep().Intensity(slider.Value());
+		//auto fillBrush = this->BackdropBlur_Rectangle().Fill();
+	}
+	void DetailPage::TemperatureSlider_ValueChanged(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs const&)
+	{
+		//this->ConcentrateControls();
+		auto slider = sender.try_as<Windows::UI::Xaml::Controls::Slider>();
+		if (slider)
+			this->bshtemp().Temperature(slider.Value());
+		//auto fillBrush = this->BackdropBlur_Rectangle().Fill();
+	}
+	void DetailPage::TintSlider_ValueChanged(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs const&)
+	{
+		//this->ConcentrateControls();
+		auto slider = sender.try_as<Windows::UI::Xaml::Controls::Slider>();
+		if (slider)
+			this->bshtemp().Tint(slider.Value());
+		//auto fillBrush = this->BackdropBlur_Rectangle().Fill();
+	}
 
 }

@@ -1,0 +1,10 @@
+namespace SimplePhotoViewer
+{
+	[default_interface]
+	runtimeclass BackdropExposureBrush : Windows.UI.Xaml.Media.XamlCompositionBrushBase
+	{
+		BackdropExposureBrush();
+		static Windows.UI.Xaml.DependencyProperty ExposureProperty{ get; };
+		Double Exposure;
+	}
+}

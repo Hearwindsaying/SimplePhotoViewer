@@ -41,6 +41,15 @@ namespace winrt::SimplePhotoViewer::implementation
 			this->m_imageIsSelected = IsSelected;
 		}
 
+		bool IsVirtualizing() const
+		{
+			return this->m_isVirtualizing;
+		}
+		void IsVirtualizing(bool const value)
+		{
+			this->m_isVirtualizing = value;
+		}
+
 		void RenderRotation(double const value) 
 		{ 
 			this->m_renderRotation = value; 
@@ -67,6 +76,7 @@ namespace winrt::SimplePhotoViewer::implementation
 
 		//non-observable memeber:
 		bool m_imageIsSelected = false;
+		bool m_isVirtualizing = true;/*no image is loaded at first, setting their isVirtualizing to true*/
 
 		//rendering rotate transform angle:
 		double m_renderRotation = 0.0;

@@ -57,6 +57,14 @@ WINRT_EXPORT namespace winrt::SimplePhotoViewer {
 
 struct IBackdropBlurBrush;
 struct IBackdropBlurBrushStatics;
+struct IBackdropExposureBrush;
+struct IBackdropExposureBrushStatics;
+struct IBackdropSaturationBrush;
+struct IBackdropSaturationBrushStatics;
+struct IBackdropSepiaBrush;
+struct IBackdropSepiaBrushStatics;
+struct IBackdropTemperatureAndTintBrush;
+struct IBackdropTemperatureAndTintBrushStatics;
 struct IDetailPage;
 struct IDirectoryItem;
 struct IDirectoryItemFactory;
@@ -67,6 +75,10 @@ struct IMainPage;
 struct IPageNavigationParameter;
 struct IPageNavigationParameterFactory;
 struct BackdropBlurBrush;
+struct BackdropExposureBrush;
+struct BackdropSaturationBrush;
+struct BackdropSepiaBrush;
+struct BackdropTemperatureAndTintBrush;
 struct DetailPage;
 struct DirectoryItem;
 struct ExplorerItemTemplateSelector;
@@ -81,6 +93,14 @@ namespace winrt::impl {
 
 template <> struct category<SimplePhotoViewer::IBackdropBlurBrush>{ using type = interface_category; };
 template <> struct category<SimplePhotoViewer::IBackdropBlurBrushStatics>{ using type = interface_category; };
+template <> struct category<SimplePhotoViewer::IBackdropExposureBrush>{ using type = interface_category; };
+template <> struct category<SimplePhotoViewer::IBackdropExposureBrushStatics>{ using type = interface_category; };
+template <> struct category<SimplePhotoViewer::IBackdropSaturationBrush>{ using type = interface_category; };
+template <> struct category<SimplePhotoViewer::IBackdropSaturationBrushStatics>{ using type = interface_category; };
+template <> struct category<SimplePhotoViewer::IBackdropSepiaBrush>{ using type = interface_category; };
+template <> struct category<SimplePhotoViewer::IBackdropSepiaBrushStatics>{ using type = interface_category; };
+template <> struct category<SimplePhotoViewer::IBackdropTemperatureAndTintBrush>{ using type = interface_category; };
+template <> struct category<SimplePhotoViewer::IBackdropTemperatureAndTintBrushStatics>{ using type = interface_category; };
 template <> struct category<SimplePhotoViewer::IDetailPage>{ using type = interface_category; };
 template <> struct category<SimplePhotoViewer::IDirectoryItem>{ using type = interface_category; };
 template <> struct category<SimplePhotoViewer::IDirectoryItemFactory>{ using type = interface_category; };
@@ -91,6 +111,10 @@ template <> struct category<SimplePhotoViewer::IMainPage>{ using type = interfac
 template <> struct category<SimplePhotoViewer::IPageNavigationParameter>{ using type = interface_category; };
 template <> struct category<SimplePhotoViewer::IPageNavigationParameterFactory>{ using type = interface_category; };
 template <> struct category<SimplePhotoViewer::BackdropBlurBrush>{ using type = class_category; };
+template <> struct category<SimplePhotoViewer::BackdropExposureBrush>{ using type = class_category; };
+template <> struct category<SimplePhotoViewer::BackdropSaturationBrush>{ using type = class_category; };
+template <> struct category<SimplePhotoViewer::BackdropSepiaBrush>{ using type = class_category; };
+template <> struct category<SimplePhotoViewer::BackdropTemperatureAndTintBrush>{ using type = class_category; };
 template <> struct category<SimplePhotoViewer::DetailPage>{ using type = class_category; };
 template <> struct category<SimplePhotoViewer::DirectoryItem>{ using type = class_category; };
 template <> struct category<SimplePhotoViewer::ExplorerItemTemplateSelector>{ using type = class_category; };
@@ -100,6 +124,14 @@ template <> struct category<SimplePhotoViewer::PageNavigationParameter>{ using t
 template <> struct category<SimplePhotoViewer::XamlMetaDataProvider>{ using type = class_category; };
 template <> struct name<SimplePhotoViewer::IBackdropBlurBrush>{ static constexpr auto & value{ L"SimplePhotoViewer.IBackdropBlurBrush" }; };
 template <> struct name<SimplePhotoViewer::IBackdropBlurBrushStatics>{ static constexpr auto & value{ L"SimplePhotoViewer.IBackdropBlurBrushStatics" }; };
+template <> struct name<SimplePhotoViewer::IBackdropExposureBrush>{ static constexpr auto & value{ L"SimplePhotoViewer.IBackdropExposureBrush" }; };
+template <> struct name<SimplePhotoViewer::IBackdropExposureBrushStatics>{ static constexpr auto & value{ L"SimplePhotoViewer.IBackdropExposureBrushStatics" }; };
+template <> struct name<SimplePhotoViewer::IBackdropSaturationBrush>{ static constexpr auto & value{ L"SimplePhotoViewer.IBackdropSaturationBrush" }; };
+template <> struct name<SimplePhotoViewer::IBackdropSaturationBrushStatics>{ static constexpr auto & value{ L"SimplePhotoViewer.IBackdropSaturationBrushStatics" }; };
+template <> struct name<SimplePhotoViewer::IBackdropSepiaBrush>{ static constexpr auto & value{ L"SimplePhotoViewer.IBackdropSepiaBrush" }; };
+template <> struct name<SimplePhotoViewer::IBackdropSepiaBrushStatics>{ static constexpr auto & value{ L"SimplePhotoViewer.IBackdropSepiaBrushStatics" }; };
+template <> struct name<SimplePhotoViewer::IBackdropTemperatureAndTintBrush>{ static constexpr auto & value{ L"SimplePhotoViewer.IBackdropTemperatureAndTintBrush" }; };
+template <> struct name<SimplePhotoViewer::IBackdropTemperatureAndTintBrushStatics>{ static constexpr auto & value{ L"SimplePhotoViewer.IBackdropTemperatureAndTintBrushStatics" }; };
 template <> struct name<SimplePhotoViewer::IDetailPage>{ static constexpr auto & value{ L"SimplePhotoViewer.IDetailPage" }; };
 template <> struct name<SimplePhotoViewer::IDirectoryItem>{ static constexpr auto & value{ L"SimplePhotoViewer.IDirectoryItem" }; };
 template <> struct name<SimplePhotoViewer::IDirectoryItemFactory>{ static constexpr auto & value{ L"SimplePhotoViewer.IDirectoryItemFactory" }; };
@@ -110,6 +142,10 @@ template <> struct name<SimplePhotoViewer::IMainPage>{ static constexpr auto & v
 template <> struct name<SimplePhotoViewer::IPageNavigationParameter>{ static constexpr auto & value{ L"SimplePhotoViewer.IPageNavigationParameter" }; };
 template <> struct name<SimplePhotoViewer::IPageNavigationParameterFactory>{ static constexpr auto & value{ L"SimplePhotoViewer.IPageNavigationParameterFactory" }; };
 template <> struct name<SimplePhotoViewer::BackdropBlurBrush>{ static constexpr auto & value{ L"SimplePhotoViewer.BackdropBlurBrush" }; };
+template <> struct name<SimplePhotoViewer::BackdropExposureBrush>{ static constexpr auto & value{ L"SimplePhotoViewer.BackdropExposureBrush" }; };
+template <> struct name<SimplePhotoViewer::BackdropSaturationBrush>{ static constexpr auto & value{ L"SimplePhotoViewer.BackdropSaturationBrush" }; };
+template <> struct name<SimplePhotoViewer::BackdropSepiaBrush>{ static constexpr auto & value{ L"SimplePhotoViewer.BackdropSepiaBrush" }; };
+template <> struct name<SimplePhotoViewer::BackdropTemperatureAndTintBrush>{ static constexpr auto & value{ L"SimplePhotoViewer.BackdropTemperatureAndTintBrush" }; };
 template <> struct name<SimplePhotoViewer::DetailPage>{ static constexpr auto & value{ L"SimplePhotoViewer.DetailPage" }; };
 template <> struct name<SimplePhotoViewer::DirectoryItem>{ static constexpr auto & value{ L"SimplePhotoViewer.DirectoryItem" }; };
 template <> struct name<SimplePhotoViewer::ExplorerItemTemplateSelector>{ static constexpr auto & value{ L"SimplePhotoViewer.ExplorerItemTemplateSelector" }; };
@@ -119,16 +155,28 @@ template <> struct name<SimplePhotoViewer::PageNavigationParameter>{ static cons
 template <> struct name<SimplePhotoViewer::XamlMetaDataProvider>{ static constexpr auto & value{ L"SimplePhotoViewer.XamlMetaDataProvider" }; };
 template <> struct guid_storage<SimplePhotoViewer::IBackdropBlurBrush>{ static constexpr guid value{ 0x0F4754CA,0x2754,0x513B,{ 0x90,0x3C,0xC0,0x24,0x83,0x24,0x13,0xAD } }; };
 template <> struct guid_storage<SimplePhotoViewer::IBackdropBlurBrushStatics>{ static constexpr guid value{ 0x1C213B43,0x330B,0x5618,{ 0xB3,0x05,0x57,0xD9,0xDE,0x77,0x84,0x5C } }; };
+template <> struct guid_storage<SimplePhotoViewer::IBackdropExposureBrush>{ static constexpr guid value{ 0x9853ABBB,0xB681,0x5E0D,{ 0x9D,0xB3,0x65,0x33,0x27,0x61,0x6D,0x90 } }; };
+template <> struct guid_storage<SimplePhotoViewer::IBackdropExposureBrushStatics>{ static constexpr guid value{ 0x0A87BAC1,0xB691,0x542A,{ 0xA9,0x4A,0x2A,0x69,0x2D,0xDB,0xD1,0xCF } }; };
+template <> struct guid_storage<SimplePhotoViewer::IBackdropSaturationBrush>{ static constexpr guid value{ 0x0747728D,0x9DF6,0x55AF,{ 0xBF,0x09,0xE1,0x69,0x1A,0xE0,0xA0,0xEB } }; };
+template <> struct guid_storage<SimplePhotoViewer::IBackdropSaturationBrushStatics>{ static constexpr guid value{ 0xCA023A5F,0xF0EB,0x5F44,{ 0xA6,0x3D,0x48,0x40,0xDE,0x4B,0xF7,0x17 } }; };
+template <> struct guid_storage<SimplePhotoViewer::IBackdropSepiaBrush>{ static constexpr guid value{ 0xB55C67BC,0xFFA1,0x5A1B,{ 0xA6,0xD7,0xB2,0x14,0xE2,0xAF,0xE0,0x3E } }; };
+template <> struct guid_storage<SimplePhotoViewer::IBackdropSepiaBrushStatics>{ static constexpr guid value{ 0xB88FDEF1,0x54CD,0x55B5,{ 0xA1,0x9F,0x19,0x52,0x9F,0x6D,0xC2,0xF8 } }; };
+template <> struct guid_storage<SimplePhotoViewer::IBackdropTemperatureAndTintBrush>{ static constexpr guid value{ 0xD0E23817,0x36A3,0x5448,{ 0x91,0xF4,0x17,0x64,0x5F,0x88,0x50,0xB0 } }; };
+template <> struct guid_storage<SimplePhotoViewer::IBackdropTemperatureAndTintBrushStatics>{ static constexpr guid value{ 0xCE3FCF9B,0x8425,0x54FF,{ 0x95,0x6F,0xC4,0xE2,0xE2,0x6B,0x9E,0xF8 } }; };
 template <> struct guid_storage<SimplePhotoViewer::IDetailPage>{ static constexpr guid value{ 0x9A6327D8,0xB530,0x5D48,{ 0x97,0xCD,0x81,0x86,0x99,0x1B,0x0E,0x2F } }; };
 template <> struct guid_storage<SimplePhotoViewer::IDirectoryItem>{ static constexpr guid value{ 0xF2622683,0x28F7,0x5F8F,{ 0x80,0xA4,0x82,0x3D,0xB1,0xB3,0xF3,0xB2 } }; };
 template <> struct guid_storage<SimplePhotoViewer::IDirectoryItemFactory>{ static constexpr guid value{ 0x7BEFC8C0,0x6F19,0x5386,{ 0xA3,0xE2,0xDF,0x87,0x35,0x72,0xB2,0xE9 } }; };
 template <> struct guid_storage<SimplePhotoViewer::IExplorerItemTemplateSelector>{ static constexpr guid value{ 0x16A14019,0xF278,0x51DD,{ 0x96,0x4B,0x58,0x11,0xB6,0x0E,0xA5,0x19 } }; };
-template <> struct guid_storage<SimplePhotoViewer::IImageSku>{ static constexpr guid value{ 0x721C8435,0x27F3,0x5500,{ 0xA9,0xAD,0x2E,0x40,0x5F,0x84,0xB5,0x68 } }; };
+template <> struct guid_storage<SimplePhotoViewer::IImageSku>{ static constexpr guid value{ 0x9190E3D6,0x6F43,0x57B5,{ 0xB5,0xBD,0xE0,0xA7,0xF4,0xCB,0x66,0xF2 } }; };
 template <> struct guid_storage<SimplePhotoViewer::IImageSkuFactory>{ static constexpr guid value{ 0x036DF874,0x154D,0x5B24,{ 0x9E,0xED,0x79,0xA3,0x30,0x14,0xA0,0x14 } }; };
 template <> struct guid_storage<SimplePhotoViewer::IMainPage>{ static constexpr guid value{ 0xB50FFCC1,0x6D4B,0x5557,{ 0xA8,0xE0,0x13,0xE7,0xDF,0x45,0x87,0x2D } }; };
 template <> struct guid_storage<SimplePhotoViewer::IPageNavigationParameter>{ static constexpr guid value{ 0xB6E2879B,0x0373,0x5A16,{ 0x89,0x47,0x62,0x18,0x6B,0x7B,0xE7,0x24 } }; };
 template <> struct guid_storage<SimplePhotoViewer::IPageNavigationParameterFactory>{ static constexpr guid value{ 0xEE6DB67D,0xBAAB,0x5E10,{ 0xA5,0x93,0x42,0x2A,0x57,0xC9,0x4C,0xBF } }; };
 template <> struct default_interface<SimplePhotoViewer::BackdropBlurBrush>{ using type = SimplePhotoViewer::IBackdropBlurBrush; };
+template <> struct default_interface<SimplePhotoViewer::BackdropExposureBrush>{ using type = SimplePhotoViewer::IBackdropExposureBrush; };
+template <> struct default_interface<SimplePhotoViewer::BackdropSaturationBrush>{ using type = SimplePhotoViewer::IBackdropSaturationBrush; };
+template <> struct default_interface<SimplePhotoViewer::BackdropSepiaBrush>{ using type = SimplePhotoViewer::IBackdropSepiaBrush; };
+template <> struct default_interface<SimplePhotoViewer::BackdropTemperatureAndTintBrush>{ using type = SimplePhotoViewer::IBackdropTemperatureAndTintBrush; };
 template <> struct default_interface<SimplePhotoViewer::DetailPage>{ using type = SimplePhotoViewer::IDetailPage; };
 template <> struct default_interface<SimplePhotoViewer::DirectoryItem>{ using type = SimplePhotoViewer::IDirectoryItem; };
 template <> struct default_interface<SimplePhotoViewer::ExplorerItemTemplateSelector>{ using type = SimplePhotoViewer::IExplorerItemTemplateSelector; };
@@ -146,6 +194,53 @@ template <> struct abi<SimplePhotoViewer::IBackdropBlurBrush>{ struct type : IIn
 template <> struct abi<SimplePhotoViewer::IBackdropBlurBrushStatics>{ struct type : IInspectable
 {
     virtual int32_t WINRT_CALL get_BlurAmountProperty(void** value) noexcept = 0;
+};};
+
+template <> struct abi<SimplePhotoViewer::IBackdropExposureBrush>{ struct type : IInspectable
+{
+    virtual int32_t WINRT_CALL get_Exposure(double* value) noexcept = 0;
+    virtual int32_t WINRT_CALL put_Exposure(double value) noexcept = 0;
+};};
+
+template <> struct abi<SimplePhotoViewer::IBackdropExposureBrushStatics>{ struct type : IInspectable
+{
+    virtual int32_t WINRT_CALL get_ExposureProperty(void** value) noexcept = 0;
+};};
+
+template <> struct abi<SimplePhotoViewer::IBackdropSaturationBrush>{ struct type : IInspectable
+{
+    virtual int32_t WINRT_CALL get_Saturation(double* value) noexcept = 0;
+    virtual int32_t WINRT_CALL put_Saturation(double value) noexcept = 0;
+};};
+
+template <> struct abi<SimplePhotoViewer::IBackdropSaturationBrushStatics>{ struct type : IInspectable
+{
+    virtual int32_t WINRT_CALL get_SaturationProperty(void** value) noexcept = 0;
+};};
+
+template <> struct abi<SimplePhotoViewer::IBackdropSepiaBrush>{ struct type : IInspectable
+{
+    virtual int32_t WINRT_CALL get_Intensity(double* value) noexcept = 0;
+    virtual int32_t WINRT_CALL put_Intensity(double value) noexcept = 0;
+};};
+
+template <> struct abi<SimplePhotoViewer::IBackdropSepiaBrushStatics>{ struct type : IInspectable
+{
+    virtual int32_t WINRT_CALL get_IntensityProperty(void** value) noexcept = 0;
+};};
+
+template <> struct abi<SimplePhotoViewer::IBackdropTemperatureAndTintBrush>{ struct type : IInspectable
+{
+    virtual int32_t WINRT_CALL get_Temperature(double* value) noexcept = 0;
+    virtual int32_t WINRT_CALL put_Temperature(double value) noexcept = 0;
+    virtual int32_t WINRT_CALL get_Tint(double* value) noexcept = 0;
+    virtual int32_t WINRT_CALL put_Tint(double value) noexcept = 0;
+};};
+
+template <> struct abi<SimplePhotoViewer::IBackdropTemperatureAndTintBrushStatics>{ struct type : IInspectable
+{
+    virtual int32_t WINRT_CALL get_TemperatureProperty(void** value) noexcept = 0;
+    virtual int32_t WINRT_CALL get_TintProperty(void** value) noexcept = 0;
 };};
 
 template <> struct abi<SimplePhotoViewer::IDetailPage>{ struct type : IInspectable
@@ -185,6 +280,8 @@ template <> struct abi<SimplePhotoViewer::IImageSku>{ struct type : IInspectable
 {
     virtual int32_t WINRT_CALL get_ImageIsSelected(bool* value) noexcept = 0;
     virtual int32_t WINRT_CALL put_ImageIsSelected(bool value) noexcept = 0;
+    virtual int32_t WINRT_CALL get_IsVirtualizing(bool* value) noexcept = 0;
+    virtual int32_t WINRT_CALL put_IsVirtualizing(bool value) noexcept = 0;
     virtual int32_t WINRT_CALL get_ImageFile(void** value) noexcept = 0;
     virtual int32_t WINRT_CALL put_ImageFile(void* value) noexcept = 0;
     virtual int32_t WINRT_CALL get_ImageProperties(void** value) noexcept = 0;
@@ -248,6 +345,69 @@ struct consume_SimplePhotoViewer_IBackdropBlurBrushStatics
 template <> struct consume<SimplePhotoViewer::IBackdropBlurBrushStatics> { template <typename D> using type = consume_SimplePhotoViewer_IBackdropBlurBrushStatics<D>; };
 
 template <typename D>
+struct consume_SimplePhotoViewer_IBackdropExposureBrush
+{
+    double Exposure() const;
+    void Exposure(double value) const;
+};
+template <> struct consume<SimplePhotoViewer::IBackdropExposureBrush> { template <typename D> using type = consume_SimplePhotoViewer_IBackdropExposureBrush<D>; };
+
+template <typename D>
+struct consume_SimplePhotoViewer_IBackdropExposureBrushStatics
+{
+    Windows::UI::Xaml::DependencyProperty ExposureProperty() const;
+};
+template <> struct consume<SimplePhotoViewer::IBackdropExposureBrushStatics> { template <typename D> using type = consume_SimplePhotoViewer_IBackdropExposureBrushStatics<D>; };
+
+template <typename D>
+struct consume_SimplePhotoViewer_IBackdropSaturationBrush
+{
+    double Saturation() const;
+    void Saturation(double value) const;
+};
+template <> struct consume<SimplePhotoViewer::IBackdropSaturationBrush> { template <typename D> using type = consume_SimplePhotoViewer_IBackdropSaturationBrush<D>; };
+
+template <typename D>
+struct consume_SimplePhotoViewer_IBackdropSaturationBrushStatics
+{
+    Windows::UI::Xaml::DependencyProperty SaturationProperty() const;
+};
+template <> struct consume<SimplePhotoViewer::IBackdropSaturationBrushStatics> { template <typename D> using type = consume_SimplePhotoViewer_IBackdropSaturationBrushStatics<D>; };
+
+template <typename D>
+struct consume_SimplePhotoViewer_IBackdropSepiaBrush
+{
+    double Intensity() const;
+    void Intensity(double value) const;
+};
+template <> struct consume<SimplePhotoViewer::IBackdropSepiaBrush> { template <typename D> using type = consume_SimplePhotoViewer_IBackdropSepiaBrush<D>; };
+
+template <typename D>
+struct consume_SimplePhotoViewer_IBackdropSepiaBrushStatics
+{
+    Windows::UI::Xaml::DependencyProperty IntensityProperty() const;
+};
+template <> struct consume<SimplePhotoViewer::IBackdropSepiaBrushStatics> { template <typename D> using type = consume_SimplePhotoViewer_IBackdropSepiaBrushStatics<D>; };
+
+template <typename D>
+struct consume_SimplePhotoViewer_IBackdropTemperatureAndTintBrush
+{
+    double Temperature() const;
+    void Temperature(double value) const;
+    double Tint() const;
+    void Tint(double value) const;
+};
+template <> struct consume<SimplePhotoViewer::IBackdropTemperatureAndTintBrush> { template <typename D> using type = consume_SimplePhotoViewer_IBackdropTemperatureAndTintBrush<D>; };
+
+template <typename D>
+struct consume_SimplePhotoViewer_IBackdropTemperatureAndTintBrushStatics
+{
+    Windows::UI::Xaml::DependencyProperty TemperatureProperty() const;
+    Windows::UI::Xaml::DependencyProperty TintProperty() const;
+};
+template <> struct consume<SimplePhotoViewer::IBackdropTemperatureAndTintBrushStatics> { template <typename D> using type = consume_SimplePhotoViewer_IBackdropTemperatureAndTintBrushStatics<D>; };
+
+template <typename D>
 struct consume_SimplePhotoViewer_IDetailPage
 {
     Windows::Foundation::Collections::IObservableVector<Windows::Foundation::IInspectable> ImageSkus() const;
@@ -293,6 +453,8 @@ struct consume_SimplePhotoViewer_IImageSku
 {
     bool ImageIsSelected() const;
     void ImageIsSelected(bool value) const;
+    bool IsVirtualizing() const;
+    void IsVirtualizing(bool value) const;
     Windows::Storage::StorageFile ImageFile() const;
     void ImageFile(Windows::Storage::StorageFile const& value) const;
     Windows::Storage::FileProperties::ImageProperties ImageProperties() const;
